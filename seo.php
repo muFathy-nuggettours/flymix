@@ -19,7 +19,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -103,7 +103,7 @@ if (!$canonical){
 	$section_title = str_replace(array("{1}", "{2}"), array($clean_origin, $clean_destination), $route);
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }
@@ -123,7 +123,7 @@ include "modules/search.php"; ?>
 <? } else { ?>
 
 <!-- Booking -->
-<h2 class="page_subtitle large"><?=readLanguage(booking,book_now)?></h2>
+<h2 class="page_subtitle large"><?=readLanguage('booking','book_now')?></h2>
 <div class=inline_search>
 <? $search["from"] = $origin_airport["iata"];
 $search["to"] = $destination_airport["iata"];
@@ -145,29 +145,29 @@ include "modules/search.php"; ?>
 			<!-- Information -->
 			<? if ($origin["source"]=="system_database_countries"){ ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(pages,country_code)?></small><br><?=strtoupper($page_data["code"])?></div>
-					<div><small><?=readLanguage(pages,continent)?></small><br><?=$page_data["continent"]?></div>
-					<div><small><?=readLanguage(pages,phone_code)?></small><br>+<?=$page_data["phone_code"]?></div>
-					<div><small><?=readLanguage(currencies,currency)?></small><br><?=$page_data[$suffix . "currency_name"]?></div>
-					<div><small><?=readLanguage(currencies,currency_code)?></small><br><?=$page_data["currency_code"]?></div>
-					<div><small><?=readLanguage(currencies,currency_symbol)?></small><br><?=$page_data["currency_symbol"]?></div>
+					<div><small><?=readLanguage('pages','country_code')?></small><br><?=strtoupper($page_data["code"])?></div>
+					<div><small><?=readLanguage('pages','continent')?></small><br><?=$page_data["continent"]?></div>
+					<div><small><?=readLanguage('pages','phone_code')?></small><br>+<?=$page_data["phone_code"]?></div>
+					<div><small><?=readLanguage('currencies','currency')?></small><br><?=$page_data[$suffix . "currency_name"]?></div>
+					<div><small><?=readLanguage('currencies','currency_code')?></small><br><?=$page_data["currency_code"]?></div>
+					<div><small><?=readLanguage('currencies','currency_symbol')?></small><br><?=$page_data["currency_symbol"]?></div>
 				</div>
 			<? } ?>
 			<? if ($origin["source"]=="system_database_regions"){ ?>
 				<? $country = getData("system_database_countries", "code", $page_data["country"]); ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,code)?></small><br><?=$page_data["code"]?></div>
+					<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','code')?></small><br><?=$page_data["code"]?></div>
 				</div>
 			<? } ?>
 			<? if ($origin["source"]=="system_database_airports"){ ?>
 				<? $country = getData("system_database_countries", "code", $page_data["country"]);
 				$region = getID($page_data["region"], "system_database_regions"); ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,city)?></small><br><a href="regions/<?=createCanonical($region[$suffix . "name"])?>/"><?=$region[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,code)?></small><br><?=strtoupper($page_data["iata"])?></div>
-					<? if ($page_data["website"]){ ?><div><small><?=readLanguage(accounts,website)?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
+					<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','city')?></small><br><a href="regions/<?=createCanonical($region[$suffix . "name"])?>/"><?=$region[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','code')?></small><br><?=strtoupper($page_data["iata"])?></div>
+					<? if ($page_data["website"]){ ?><div><small><?=readLanguage('accounts','website')?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
 				</div>			
 			<? } ?>
 		</div>
@@ -186,29 +186,29 @@ include "modules/search.php"; ?>
 			<!-- Information -->
 			<? if ($destination["source"]=="system_database_countries"){ ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(pages,country_code)?></small><br><?=strtoupper($page_data["code"])?></div>
-					<div><small><?=readLanguage(pages,continent)?></small><br><?=$page_data["continent"]?></div>
-					<div><small><?=readLanguage(pages,phone_code)?></small><br>+<?=$page_data["phone_code"]?></div>
-					<div><small><?=readLanguage(currencies,currency)?></small><br><?=$page_data[$suffix . "currency_name"]?></div>
-					<div><small><?=readLanguage(currencies,currency_code)?></small><br><?=$page_data["currency_code"]?></div>
-					<div><small><?=readLanguage(currencies,currency_symbol)?></small><br><?=$page_data["currency_symbol"]?></div>
+					<div><small><?=readLanguage('pages','country_code')?></small><br><?=strtoupper($page_data["code"])?></div>
+					<div><small><?=readLanguage('pages','continent')?></small><br><?=$page_data["continent"]?></div>
+					<div><small><?=readLanguage('pages','phone_code')?></small><br>+<?=$page_data["phone_code"]?></div>
+					<div><small><?=readLanguage('currencies','currency')?></small><br><?=$page_data[$suffix . "currency_name"]?></div>
+					<div><small><?=readLanguage('currencies','currency_code')?></small><br><?=$page_data["currency_code"]?></div>
+					<div><small><?=readLanguage('currencies','currency_symbol')?></small><br><?=$page_data["currency_symbol"]?></div>
 				</div>
 			<? } ?>
 			<? if ($destination["source"]=="system_database_regions"){ ?>
 				<? $country = getData("system_database_countries", "code", $page_data["country"]); ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,code)?></small><br><?=$page_data["code"]?></div>
+					<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','code')?></small><br><?=$page_data["code"]?></div>
 				</div>
 			<? } ?>
 			<? if ($destination["source"]=="system_database_airports"){ ?>
 				<? $country = getData("system_database_countries", "code", $page_data["country"]);
 				$region = getID($page_data["region"], "system_database_regions"); ?>
 				<div class=custom_info_card>
-					<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,city)?></small><br><a href="regions/<?=createCanonical($region[$suffix . "name"])?>/"><?=$region[$suffix . "name"]?></a></div>
-					<div><small><?=readLanguage(pages,code)?></small><br><?=strtoupper($page_data["iata"])?></div>
-					<? if ($page_data["website"]){ ?><div><small><?=readLanguage(accounts,website)?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
+					<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=createCanonical($country[$suffix . "name"])?>/"><?=$country[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','city')?></small><br><a href="regions/<?=createCanonical($region[$suffix . "name"])?>/"><?=$region[$suffix . "name"]?></a></div>
+					<div><small><?=readLanguage('pages','code')?></small><br><?=strtoupper($page_data["iata"])?></div>
+					<? if ($page_data["website"]){ ?><div><small><?=readLanguage('accounts','website')?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
 				</div>			
 			<? } ?>
 		</div>
@@ -228,7 +228,7 @@ include "modules/search.php"; ?>
 		<!-- Gallery -->
 		<? $gallery = json_decode($page_data["gallery"],true);
 		if (count($gallery)){ ?>
-		<div class=subtitle><?=readLanguage(sections,page_gallery)?></div>
+		<div class=subtitle><?=readLanguage('sections','page_gallery')?></div>
 		<div class="row grid-container">
 		<? foreach ($gallery AS $key=>$value){ ?>
 			<div class="col-md-4 col-sm-5 col-xs-10 grid-item">

@@ -10,7 +10,7 @@ if ($delete){
 	$record_data = getID($delete, $mysqltable);
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
 	mysqlQuery("DELETE FROM $mysqltable_custom WHERE module_uniqid=" . $record_data["uniqid"]);
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
@@ -83,7 +83,7 @@ if ($delete){
 		buildWebsiteTheme();
 	}
 	
-	$success = readLanguage(records,added);
+	$success = readLanguage('records','added');
 
 //==== EDIT Record ====
 } else if ($post["token"] && $edit){
@@ -126,7 +126,7 @@ if ($delete){
 		buildWebsiteTheme();
 	}
 	
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //==== Insert Blocks ====
@@ -181,13 +181,13 @@ if ($post["token"]){
 //Read and Set Operation [Custom]
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","clone"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit","clone"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -288,11 +288,11 @@ textarea.css_code {
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,placeholder)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','placeholder')?>: <i class=requ></i></td>
 	<td colspan=3><input type=text name=placeholder value="<?=$entry["placeholder"]?>" data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,tags)?>:</td>
+	<td class=title><?=readLanguage('builder','tags')?>:</td>
 	<td colspan=3>
 		<select name=tags[] id=tags multiple>
 		<? $appended_tags = array();
@@ -311,7 +311,7 @@ textarea.css_code {
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,type)?>:</td>
+	<td class=title><?=readLanguage('builder','type')?>:</td>
 	<td colspan=3>
 		<div class=check_container id=type>
 			<? foreach ($data_module_types AS $key=>$value){
@@ -328,9 +328,9 @@ textarea.css_code {
 
 <!-- Tabs -->
 <ul class="nav nav-tabs tab-inline-header margin-top">
-	<li role=presentation class=active><a href="#settings" data-toggle=tab role=tab><i class="fas fa-cogs"></i><span>&nbsp;&nbsp;<?=readLanguage(builder,module_settings)?></span></a></li>
-	<li role=presentation><a href="#content" data-toggle=tab role=tab><i class="fas fa-laptop"></i><span>&nbsp;&nbsp;<?=readLanguage(builder,module_content)?></span></a></li>
-	<li role=presentation><a href="#css" data-toggle=tab role=tab><i class="fas fa-palette"></i><span>&nbsp;&nbsp;<?=readLanguage(builder,custom_css)?></span></a></li>
+	<li role=presentation class=active><a href="#settings" data-toggle=tab role=tab><i class="fas fa-cogs"></i><span>&nbsp;&nbsp;<?=readLanguage('builder','module_settings')?></span></a></li>
+	<li role=presentation><a href="#content" data-toggle=tab role=tab><i class="fas fa-laptop"></i><span>&nbsp;&nbsp;<?=readLanguage('builder','module_content')?></span></a></li>
+	<li role=presentation><a href="#css" data-toggle=tab role=tab><i class="fas fa-palette"></i><span>&nbsp;&nbsp;<?=readLanguage('builder','custom_css')?></span></a></li>
 </ul>
 
 <div class=tab-content><!-- Start Tab Content -->
@@ -342,36 +342,36 @@ textarea.css_code {
 <!-- Module Settings -->
 <div class="data_table_container margin-bottom"><table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,class_module)?>:</td>
+	<td class=title><?=readLanguage('builder','class_module')?>:</td>
 	<td>
 		<div class=class_input class-bind=module_class class-properties="<?=$entry["module_class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(builder,class_title)?>:</td>
+	<td class=title><?=readLanguage('builder','class_title')?>:</td>
 	<td>
 		<div class=class_input class-bind=title_container_class class-properties="<?=$entry["title_container_class"]?>"></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,class_content)?>:</td>
+	<td class=title><?=readLanguage('builder','class_content')?>:</td>
 	<td>
 		<div class=class_input class-bind=content_container_class class-properties="<?=$entry["content_container_class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(builder,class_buttons)?>:</td>
+	<td class=title><?=readLanguage('builder','class_buttons')?>:</td>
 	<td>
 		<div class=class_input class-bind=buttons_container_class class-properties="<?=$entry["buttons_container_class"]?>"></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,attributes)?>:</td>
+	<td class=title><?=readLanguage('builder','attributes')?>:</td>
 	<td colspan=3 data-multiple=custom_attributes>
-		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('custom_attributes')"><?=readLanguage(operations,insert)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('custom_attributes')"><?=readLanguage('operations','insert')?></button>
 		<input type=hidden name=custom_attributes>
 		<ul multiple-sortable>
 			<li data-template>
 				<div class="d-flex align-items-center">
 					<div class="grabbable grabbable_icon"><i class="fas fa-bars"></i></div>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage(builder,attributes_attribute)?>" disabled>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage(builder,attributes_value)?>">&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage('builder','attributes_attribute')?>" disabled>&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage('builder','attributes_value')?>">&nbsp;&nbsp;
 					<a class="btn btn-danger btn-sm remove"><i class="fas fa-times"></i></a>
 				</div>
 			</li>
@@ -385,7 +385,7 @@ textarea.css_code {
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,container)?>:</td>
+	<td class=title><?=readLanguage('builder','container')?>:</td>
 	<td>
 		<div class=switch><label><?=$data_no_yes[0]?><input type=checkbox name=container id=container value=1 onchange="toggleVisibility(this)" <?=($entry["container"] || (!$edit && !$clone) ? "checked" : "")?>><span class=lever></span><?=$data_no_yes[1]?></label></div>
 		<script>
@@ -394,7 +394,7 @@ textarea.css_code {
 		});
 		</script>
 	</td>
-	<td class=title><?=readLanguage(builder,background_custom)?>:</td>
+	<td class=title><?=readLanguage('builder','background_custom')?>:</td>
 	<td>
 		<div class=switch><label><?=$data_no_yes[0]?><input type=checkbox name=background_custom id=background_custom value=1 onchange="toggleVisibility(this)" <?=($entry["background_custom"] ? "checked" : "")?>><span class=lever></span><?=$data_no_yes[1]?></label></div>
 		<script>
@@ -405,32 +405,32 @@ textarea.css_code {
 	</td>
 </tr>
 <tr visibility-control=container visibility-value=1>
-	<td class=title><?=readLanguage(builder,class_container)?>:</td>
+	<td class=title><?=readLanguage('builder','class_container')?>:</td>
 	<td colspan=3>
 		<div class=class_input class-bind=container_class class-properties="<?=$entry["container_class"]?>"></div>	
 	</td>
 </tr>
 <tr visibility-control=background_custom visibility-value=1>
-	<td class=title><?=readLanguage(builder,background_file)?>:</td>
+	<td class=title><?=readLanguage('builder','background_file')?>:</td>
 	<td colspan=3><div class=attachment>
 		<div>
 			<input type=hidden name=background_custom_clone value="<?=$entry["background_file"]?>">
 			<input type=file name=background_file accept=".bmp,.jpeg,.jpg,.png,.gif,.mp4" allowed-mimes="image/bmp,image/jpeg,image/png,image/gif,video/mp4">
 		</div>
-		<? if ($entry["background_file"]){ echo fileBlock("../uploads/classes/" . $entry["background_file"], readLanguage(builder,background_file)); } ?>
+		<? if ($entry["background_file"]){ echo fileBlock("../uploads/classes/" . $entry["background_file"], readLanguage('builder','background_file')); } ?>
 	</div></td>
 </tr>
 <tr visibility-control=background_custom visibility-value=1>
-	<td class=title><?=readLanguage(builder,background_attributes)?>:</td>
+	<td class=title><?=readLanguage('builder','background_attributes')?>:</td>
 	<td colspan=3 data-multiple=background_attributes>
-		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('background_attributes')"><?=readLanguage(operations,insert)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('background_attributes')"><?=readLanguage('operations','insert')?></button>
 		<input type=hidden name=background_attributes>
 		<ul multiple-sortable>
 			<li data-template>
 				<div class="d-flex align-items-center">
 					<div class="grabbable grabbable_icon"><i class="fas fa-bars"></i></div>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage(builder,attributes_attribute)?>" disabled>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage(builder,attributes_value)?>">&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage('builder','attributes_attribute')?>" disabled>&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage('builder','attributes_value')?>">&nbsp;&nbsp;
 					<a class="btn btn-danger btn-sm remove"><i class="fas fa-times"></i></a>
 				</div>
 			</li>
@@ -446,18 +446,18 @@ textarea.css_code {
 </table></div>
 
 <!-- Modile Title -->
-<div class=subtitle><?=readLanguage(inputs,title)?></div>
+<div class=subtitle><?=readLanguage('inputs','title')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>:</td>
+	<td class=title><?=readLanguage('inputs','title')?>:</td>
 	<td colspan=3><input type=text name=title value="<?=$entry["title"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,css_class)?>:</td>
+	<td class=title><?=readLanguage('builder','css_class')?>:</td>
 	<td>
 		<div class=class_input class-bind=title_class class-properties="<?=$entry["title_class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(builder,animation)?>:</td>
+	<td class=title><?=readLanguage('builder','animation')?>:</td>
 	<td>
 		<div class=animation_input animation-bind=title_animation animation-properties="<?=base64_encode($entry["title_animation"])?>"></div>
 	</td>
@@ -465,18 +465,18 @@ textarea.css_code {
 </table>
 
 <!-- Modile Subtitle -->
-<div class=subtitle><?=readLanguage(inputs,subtitle)?></div>
+<div class=subtitle><?=readLanguage('inputs','subtitle')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,subtitle)?>:</td>
+	<td class=title><?=readLanguage('inputs','subtitle')?>:</td>
 	<td colspan=3><input type=text name=subtitle value="<?=$entry["subtitle"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,css_class)?>:</td>
+	<td class=title><?=readLanguage('builder','css_class')?>:</td>
 	<td>
 		<div class=class_input class-bind=subtitle_class class-properties="<?=$entry["subtitle_class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(builder,animation)?>:</td>
+	<td class=title><?=readLanguage('builder','animation')?>:</td>
 	<td>
 		<div class=animation_input animation-bind=subtitle_animation animation-properties="<?=base64_encode($entry["subtitle_animation"])?>"></div>
 	</td>
@@ -484,12 +484,12 @@ textarea.css_code {
 </table>
 
 <!-- Modile Buttons -->
-<div class=subtitle><?=readLanguage(builder,module_buttons)?></div>
+<div class=subtitle><?=readLanguage('builder','module_buttons')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,module_buttons)?>:</td>
+	<td class=title><?=readLanguage('builder','module_buttons')?>:</td>
 	<td data-multiple=buttons colspan=3>
-		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('buttons')"><?=readLanguage(operations,insert)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('buttons')"><?=readLanguage('operations','insert')?></button>
 		<input type=hidden name=buttons>
 		<ul multiple-sortable>
 		<li data-template>
@@ -500,10 +500,10 @@ textarea.css_code {
 			</td>
 			<td>
 				<ul class=inline_input>
-					<li><p><small><?=readLanguage(inputs,title)?></small></p><input type=text data-name=title data-validation=required disabled></li>
-					<li style="flex-basis:20%"><p><small><?=readLanguage(inputs,url)?></small></p><select data-name=url><?=$data_menu_items?></select></li>
-					<li style="flex-basis:20%"><p><small><?=readLanguage(builder,css_class)?></small></p><div class=class_input button-class=class></div></li>
-					<li style="flex-basis:20%"><p><small><?=readLanguage(builder,animation)?></small></p><div class=animation_input button-animation=animation></div></li>
+					<li><p><small><?=readLanguage('inputs','title')?></small></p><input type=text data-name=title data-validation=required disabled></li>
+					<li style="flex-basis:20%"><p><small><?=readLanguage('inputs','url')?></small></p><select data-name=url><?=$data_menu_items?></select></li>
+					<li style="flex-basis:20%"><p><small><?=readLanguage('builder','css_class')?></small></p><div class=class_input button-class=class></div></li>
+					<li style="flex-basis:20%"><p><small><?=readLanguage('builder','animation')?></small></p><div class=animation_input button-animation=animation></div></li>
 				</ul>					
 			</td>
 			</tr></table>
@@ -553,41 +553,41 @@ textarea.css_code {
 <input type=hidden name=blocks id=blocks data-validation=required>
 
 <!-- Content Settings -->
-<div class=subtitle><?=readLanguage(builder,module_content_settings)?></div>
+<div class=subtitle><?=readLanguage('builder','module_content_settings')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,flex_justify)?>:</td>
+	<td class=title><?=readLanguage('builder','flex_justify')?>:</td>
 	<td>
 		<select block-options name=custom_justify id=custom_justify>
-			<option value=flex-start><?=readLanguage(builder,flex_justify_start)?></option>
-			<option value=flex-end><?=readLanguage(builder,flex_justify_end)?></option>
-			<option value=center><?=readLanguage(builder,flex_justify_center)?></option>
-			<option value=space-between><?=readLanguage(builder,flex_justify_space_between)?></option>
-			<option value=space-around><?=readLanguage(builder,flex_justify_space_around)?></option>
-			<option value=space-evenly><?=readLanguage(builder,flex_justify_space_evenly)?></option>
+			<option value=flex-start><?=readLanguage('builder','flex_justify_start')?></option>
+			<option value=flex-end><?=readLanguage('builder','flex_justify_end')?></option>
+			<option value=center><?=readLanguage('builder','flex_justify_center')?></option>
+			<option value=space-between><?=readLanguage('builder','flex_justify_space_between')?></option>
+			<option value=space-around><?=readLanguage('builder','flex_justify_space_around')?></option>
+			<option value=space-evenly><?=readLanguage('builder','flex_justify_space_evenly')?></option>
 		</select>
 		<? if ($entry["custom_justify"]){ ?><script>setSelectValue("#custom_justify","<?=$entry["custom_justify"]?>")</script><? } ?>
 	</td>
-	<td class=title><?=readLanguage(builder,flex_align)?>:</td>
+	<td class=title><?=readLanguage('builder','flex_align')?>:</td>
 	<td>
 		<select block-options name=custom_align id=custom_align>
-			<option value=stretch><?=readLanguage(builder,flex_align_stretch)?></option>
-			<option value=center><?=readLanguage(builder,flex_align_center)?></option>
-			<option value=flex-start><?=readLanguage(builder,flex_align_start)?></option>
-			<option value=flex-end><?=readLanguage(builder,flex_align_end)?></option>
-			<option value=baseline><?=readLanguage(builder,flex_align_baseline)?></option>
+			<option value=stretch><?=readLanguage('builder','flex_align_stretch')?></option>
+			<option value=center><?=readLanguage('builder','flex_align_center')?></option>
+			<option value=flex-start><?=readLanguage('builder','flex_align_start')?></option>
+			<option value=flex-end><?=readLanguage('builder','flex_align_end')?></option>
+			<option value=baseline><?=readLanguage('builder','flex_align_baseline')?></option>
 		</select>
 		<? if ($entry["custom_align"]){ ?><script>setSelectValue("#custom_align","<?=$entry["custom_align"]?>")</script><? } ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,module_spacings)?>:</td>
+	<td class=title><?=readLanguage('builder','module_spacings')?>:</td>
 	<td>
 		<input type=hidden name=custom_spacing id=custom_spacing>
 		<ul class=inline_input json-fixed-data=custom_spacing>
 		<? foreach ($data_screen_sizes AS $size=>$icon){
 			print "<li><div class=input-addon><span before><i class='$icon'></i></span><select data-name='$size' block-options>";  ?>
-				<option value=0><?=readLanguage(builder,none)?></option>
+				<option value=0><?=readLanguage('builder','none')?></option>
 				<option value=5>5</option><option value=10>10</option>
 				<option value=15>15</option><option value=20>20</option>
 				<option value=25>25</option><option value=30>30</option>
@@ -604,14 +604,14 @@ textarea.css_code {
 		<? } ?>
 		</script>
 	</td>
-	<td class=title><?=readLanguage(builder,module_separators)?>:</td>
+	<td class=title><?=readLanguage('builder','module_separators')?>:</td>
 	<td>
 		<input type=hidden name=custom_separator id=custom_separator>
 		<ul class=inline_input json-fixed-data=custom_separator>
 		<? foreach ($data_screen_sizes AS $size=>$icon){
 			print "<li><div class=input-addon><span before><i class='$icon'></i></span><select data-name='$size'>";  ?>
-				<option value=""><?=readLanguage(builder,auto)?></option>
-				<option value=0><?=readLanguage(builder,none)?></option>
+				<option value=""><?=readLanguage('builder','auto')?></option>
+				<option value=0><?=readLanguage('builder','none')?></option>
 				<option value=5>5</option><option value=10>10</option>
 				<option value=15>15</option><option value=20>20</option>
 				<option value=25>25</option><option value=30>30</option>
@@ -625,7 +625,7 @@ textarea.css_code {
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,flex_wrap)?>:</td>
+	<td class=title><?=readLanguage('builder','flex_wrap')?>:</td>
 	<td colspan=3>
 		<select block-options name=custom_wrap id=custom_wrap><option value=wrap><?=$data_no_yes[1]?></option><option value=nowrap><?=$data_no_yes[0]?></option></select>
 		<? if ($entry["custom_wrap"]){ ?><script>setSelectValue("#custom_wrap","<?=$entry["custom_wrap"]?>")</script><? } ?>
@@ -634,7 +634,7 @@ textarea.css_code {
 </table>
 
 <!-- Content -->
-<div class=subtitle><span><?=readLanguage(builder,module_content)?></span><a class="btn btn-primary btn-sm btn-insert" onclick="insertBlock()"><?=readLanguage(operations,insert)?></a></div>
+<div class=subtitle><span><?=readLanguage('builder','module_content')?></span><a class="btn btn-primary btn-sm btn-insert" onclick="insertBlock()"><?=readLanguage('operations','insert')?></a></div>
 
 <!-- Module Content -->
 <div class=module_rows data-spacing=0>
@@ -644,11 +644,11 @@ textarea.css_code {
 <!-- Module Content Options -->
 <div class="data_table_container block_content" style="display:none"><table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,placeholder)?>:</td>
-	<td colspan=3><input type=text name=block_placeholder value="<?=readLanguage(builder,module_component)?>"></td>
+	<td class=title><?=readLanguage('builder','placeholder')?>:</td>
+	<td colspan=3><input type=text name=block_placeholder value="<?=readLanguage('builder','module_component')?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,width)?>:</td>
+	<td class=title><?=readLanguage('builder','width')?>:</td>
 	<td>
 		<ul class=inline_input>
 		<? foreach ($data_screen_sizes AS $size=>$icon){
@@ -660,39 +660,39 @@ textarea.css_code {
 		} ?>
 		</ul>
 	</td>
-	<td class=title><?=readLanguage(builder,type)?>:</td>
+	<td class=title><?=readLanguage('builder','type')?>:</td>
 	<td>
 		<select name=block_type>
-			<option value=0><?=readLanguage(builder,content_type_mixed)?></option>
-			<option value=1><?=readLanguage(builder,content_type_built_in)?></option>
-			<option value=2><?=readLanguage(builder,content_type_variable)?></option>
-			<option value=3><?=readLanguage(builder,content_type_custom)?></option>
-			<option value=4><?=readLanguage(builder,content_type_display)?></option>
-			<option value=5><?=readLanguage(builder,content_type_form)?></option>
+			<option value=0><?=readLanguage('builder','content_type_mixed')?></option>
+			<option value=1><?=readLanguage('builder','content_type_built_in')?></option>
+			<option value=2><?=readLanguage('builder','content_type_variable')?></option>
+			<option value=3><?=readLanguage('builder','content_type_custom')?></option>
+			<option value=4><?=readLanguage('builder','content_type_display')?></option>
+			<option value=5><?=readLanguage('builder','content_type_form')?></option>
 		</select>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,class_container)?>:</td>
+	<td class=title><?=readLanguage('builder','class_container')?>:</td>
 	<td>
 		<div class=class_input class-bind=block_class></div>
 	</td>
-	<td class=title><?=readLanguage(builder,animation)?>:</td>
+	<td class=title><?=readLanguage('builder','animation')?>:</td>
 	<td>
 		<div class=animation_input animation-bind=block_animation></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,attributes)?>:</td>
+	<td class=title><?=readLanguage('builder','attributes')?>:</td>
 	<td colspan=3 data-multiple=block_attributes>
-		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('block_attributes')"><?=readLanguage(operations,insert)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('block_attributes')"><?=readLanguage('operations','insert')?></button>
 		<input type=hidden name=block_attributes>
 		<ul multiple-sortable>
 			<li data-template>
 				<div class="d-flex align-items-center">
 					<div class="grabbable grabbable_icon"><i class="fas fa-bars"></i></div>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage(builder,attributes_attribute)?>" disabled>&nbsp;&nbsp;
-					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage(builder,attributes_value)?>">&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=attribute data-validation=required placeholder="<?=readLanguage('builder','attributes_attribute')?>" disabled>&nbsp;&nbsp;
+					<input type=text class=ltr-input data-name=value placeholder="<?=readLanguage('builder','attributes_value')?>">&nbsp;&nbsp;
 					<a class="btn btn-danger btn-sm remove"><i class="fas fa-times"></i></a>
 				</div>
 			</li>
@@ -702,19 +702,19 @@ textarea.css_code {
 
 <!-- Mixed Content -->
 <tr data-content=0>
-	<td class=title><?=readLanguage(builder,content_type_mixed)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_mixed')?>:</td>
 	<td colspan=3>
 		<textarea class=contentEditor name=mixed_content id=mixed_content></textarea>
-		<div class=input_description><?=readLanguage(builder,content_type_mixed_note)?></div>
+		<div class=input_description><?=readLanguage('builder','content_type_mixed_note')?></div>
 	</td>
 </tr>
 
 <!-- Built-In Module -->
 <tr data-content=1>
-	<td class=title><?=readLanguage(builder,content_type_built_in)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_built_in')?>:</td>
 	<td colspan=3>
 		<select name=built_module id=built_module>
-		<option value=""><?=readLanguage(builder,none)?></option>
+		<option value=""><?=readLanguage('builder','none')?></option>
 		<? $built_in_modules = retrieveDirectoryFiles("../modules/", "php");
 		foreach ($built_in_modules AS $module){
 			$module_selector = basename($module, ".php");
@@ -727,7 +727,7 @@ textarea.css_code {
 
 <!-- Page Variable -->
 <tr data-content=2>
-	<td class=title><?=readLanguage(builder,content_type_variable)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_variable')?>:</td>
 	<td colspan=3>
 		<input type=text name=page_variable id=page_variable>
 	</td>
@@ -735,10 +735,10 @@ textarea.css_code {
 
 <!-- Custom Module -->
 <tr data-content=3>
-	<td class=title><?=readLanguage(builder,content_type_custom)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_custom')?>:</td>
 	<td colspan=3>
 		<select name=custom_module id=custom_module>
-		<option value=""><?=readLanguage(builder,none)?></option>
+		<option value=""><?=readLanguage('builder','none')?></option>
 		<?=populateData("SELECT * FROM $mysqltable WHERE FIND_IN_SET(2,type) AND id!=" . ($edit ? $edit : 0), "uniqid", "placeholder")?>
 		</select>
 		<script>$("#custom_module").select2()</script>
@@ -747,10 +747,10 @@ textarea.css_code {
 
 <!-- Slider -->
 <tr data-content=4>
-	<td class=title><?=readLanguage(builder,content_type_display)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_display')?>:</td>
 	<td colspan=3>
 		<select name=custom_display id=custom_display>
-		<option value=""><?=readLanguage(builder,none)?></option>
+		<option value=""><?=readLanguage('builder','none')?></option>
 		<?=populateData("SELECT * FROM " . $suffix . "website_custom_displays", "uniqid", "placeholder")?>
 		</select>
 		<script>$("#custom_display").select2()</script>
@@ -759,10 +759,10 @@ textarea.css_code {
 
 <!-- Form -->
 <tr data-content=5>
-	<td class=title><?=readLanguage(builder,content_type_form)?>:</td>
+	<td class=title><?=readLanguage('builder','content_type_form')?>:</td>
 	<td colspan=3>
 		<select name=custom_form id=custom_form>
-		<option value=""><?=readLanguage(builder,none)?></option>
+		<option value=""><?=readLanguage('builder','none')?></option>
 		<?=populateData("SELECT * FROM " . $suffix . "website_forms", "uniqid", "placeholder")?>
 		</select>
 		<script>$("#custom_form").select2()</script>
@@ -774,7 +774,7 @@ textarea.css_code {
 <!-- ===== CSS Class ===== -->
 
 <div class=tab-pane role=tabpanel id="css">
-<div class="alert alert-warning class_selector"><?=readLanguage(builder,custom_css_selector)?> <b>.<?=$module_uniqid?></b></div>
+<div class="alert alert-warning class_selector"><?=readLanguage('builder','custom_css_selector')?> <b>.<?=$module_uniqid?></b></div>
 <textarea class=css_code name=custom_css><?=$entry["custom_css"]?></textarea>
 <script>
 	$("[name=custom_css]").keydown(function(e){
@@ -911,7 +911,7 @@ function insertBlock(data=null){
 		object.data("class", "");
 		object.data("attributes", "");
 		object.data("content", "");
-		object.find("span").text("<?=readLanguage(builder,module_component)?>");	
+		object.find("span").text("<?=readLanguage('builder','module_component')?>");	
 		setActiveBlock(object);
 	}
 
@@ -1080,8 +1080,8 @@ function onBeforeValidation(){
 <div class=crud_separator></div>
 <?
 $custom_list = array(
-	["label"=>readLanguage(builder,duplicate), "icon"=>"fas fa-clone", "href"=>"$base_name.php?clone=%s"],
-	["label"=>readLanguage(crud,button_export), "icon"=>"fas fa-download", "click"=>"exportBuilder('module', '%d[uniqid]', '%d[placeholder]')"],
+	["label"=>readLanguage('builder','duplicate'), "icon"=>"fas fa-clone", "href"=>"$base_name.php?clone=%s"],
+	["label"=>readLanguage('crud','button_export'), "icon"=>"fas fa-download", "click"=>"exportBuilder('module', '%d[uniqid]', '%d[placeholder]')"],
 );
 $custom_list = htmlentities(json_encode($custom_list, JSON_UNESCAPED_UNICODE));
 
@@ -1090,11 +1090,11 @@ $crud_data["order_by"] = "priority DESC";
 $crud_data["delete_record_message"] = "placeholder";
 $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("uniqid",readLanguage(builder,selector),"200px","center",null,false,true),
-	array("type",readLanguage(builder,type),"200px","center","implodeVariable('%s','data_module_types')",true,false),
-	array("placeholder",readLanguage(builder,placeholder),"300px","center",null,false,true),
-	array("tags",readLanguage(builder,tags),"300px","center","implodeVariable('%s')",true,false),
-	array("id", readLanguage(crud,button_operations), "140px", "fixed-right", "customDropdown(\"$custom_list\", '<i class=\"fas fa-cogs\"></i>&nbsp;" . readLanguage(crud,button_operations) . "')", false, true),
+	array("uniqid",readLanguage('builder','selector'),"200px","center",null,false,true),
+	array("type",readLanguage('builder','type'),"200px","center","implodeVariable('%s','data_module_types')",true,false),
+	array("placeholder",readLanguage('builder','placeholder'),"300px","center",null,false,true),
+	array("tags",readLanguage('builder','tags'),"300px","center","implodeVariable('%s')",true,false),
+	array("id", readLanguage('crud','button_operations'), "140px", "fixed-right", "customDropdown(\"$custom_list\", '<i class=\"fas fa-cogs\"></i>&nbsp;" . readLanguage('crud','button_operations') . "')", false, true),
 );
 require_once("crud/crud.php");
 ?>

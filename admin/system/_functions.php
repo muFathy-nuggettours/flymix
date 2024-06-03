@@ -2958,6 +2958,7 @@ function customFormInput($element){
 		$placeholder = "placeholder='" . $props["placeholder"] . "'";
 	}
 
+	$options = "";
 	//Input types
 	switch ($type){
 		//Heading
@@ -3250,13 +3251,13 @@ function builtInSchemas(){
 	global $data_no_yes;
 	
 	//Read labels by language
-	$label["id"] = readLanguage(general,id);
-	$label["type"] = readLanguage(builder,type);
-	$label["parent"] = readLanguage(builder,page_parent);
-	$label["title"] = readLanguage(inputs,title);
-	$label["date"] = readLanguage(inputs,date);
-	$label["hidden"] = readLanguage(inputs,hidden);
-	$label["priority"] = readLanguage(general,priority);
+	$label["id"] = readLanguage('general','id');
+	$label["type"] = readLanguage('builder','type');
+	$label["parent"] = readLanguage('builder','page_parent');
+	$label["title"] = readLanguage('inputs','title');
+	$label["date"] = readLanguage('inputs','date');
+	$label["hidden"] = readLanguage('inputs','hidden');
+	$label["priority"] = readLanguage('general','priority');
 	
 	//en_website_pages_custom
 	$website_pages_custom = array(
@@ -3266,7 +3267,7 @@ function builtInSchemas(){
 	foreach ($website_pages_custom AS $language=>$table){
 		if (mysqlNum(mysqlQuery("SHOW TABLES LIKE '$table'"))){
 			$schema[$table] = [
-				'label' => readLanguage(builder,pages) . " ($language)",
+				'label' => readLanguage('builder','pages') . " ($language)",
 				'fields' => [
 					'id' => ['label' => $label["id"], 'type' => 'number'],
 					'type' => ['label' => $label["type"], 'type' => 'list', 'source' => $data_pages_types],		
@@ -3327,6 +3328,7 @@ function minifyCSS($input){
 function buildCSSClasses(){
 	$css = "../website/_classes.css";
 	
+	$classes = "";
 	$result = mysqlQuery("SELECT * FROM website_classes");
 	while ($entry = mysqlFetch($result)){
 		$classes .= $entry["css"] . "\r\n\r\n";
@@ -3347,6 +3349,7 @@ function buildCSSModules(){
 	global $supported_languages;
 	$css = "../website/_modules.css";
 	
+	$classes = "";
 	foreach ($supported_languages AS $language){
 		$result = mysqlQuery("SELECT * FROM " . $language . "_website_modules_custom");
 		while ($entry = mysqlFetch($result)){
@@ -3374,6 +3377,7 @@ function buildWebsiteTheme($debug=false){
 	//----- Website Components -----
 
 	//Original Theme
+	$theme_website = "";
 	$theme_website .= "\r\n\r\n/* Theme */\r\n\r\n";
 	$theme_website .= str_replace($original_colors, $template_colors, file_get_contents("../website/_theme.css"));
 
@@ -3980,7 +3984,6 @@ function renderWebsiteMenu($type=0){
 	$result = mysqlQuery("SELECT * FROM " . $suffix . "website_menu WHERE type=$type ORDER BY priority DESC");
 	while ($entry = mysqlFetch($result)){
 		$multiple_children = false;
-		
 		//Custom child menus
 		if ($entry["sub_menus_type"]==1){
 			$sub_menus = json_decode($entry["sub_menus"], true);
@@ -4049,22 +4052,23 @@ function renderWebsiteMenu($type=0){
 			$sub_menus = null;
 		}
 
+		
 		//Dropdown menu
-		if (count($sub_menus)){
+		if (isset($sub_menus)){
 			$menu_links = "";
 			foreach ($sub_menus AS $sub_menu){
-				$image = explode(":", $sub_menu[content][icon])[1];
-				$icon = ($image ? null : $sub_menu[content][icon]);
-				$side = ($icon ? "<i class='" . $sub_menu[content][icon] . " fa-fw'></i>" : ($image ? "<img src='$image'>" : null));
-				$menu_links .= "<li class='" . ($sub_menu[children] ? "multiple" : "single") . "'><a href='" . $sub_menu[content][url] . "'>" . ($side ? $side . "&nbsp;&nbsp;" : "") . "<span>" . $sub_menu[content][title] . "</span></a>";
-				if ($sub_menu[children]){
+				$image = explode(":", $sub_menu['content']['icon'])[1];
+				$icon = ($image ? null : $sub_menu['content']['icon']);
+				$side = ($icon ? "<i class='" . $sub_menu['content']['icon'] . " fa-fw'></i>" : ($image ? "<img src='$image'>" : null));
+				$menu_links .= "<li class='" . ($sub_menu['children'] ? "multiple" : "single") . "'><a href='" . $sub_menu['content']['url'] . "'>" . ($side ? $side . "&nbsp;&nbsp;" : "") . "<span>" . $sub_menu['content']['title'] . "</span></a>";
+				if ($sub_menu['children']){
 					$multiple_children = true;
 					$menu_links .= "<ul class=children>";
-					foreach ($sub_menu[children] AS $sub_menu_item){
-						$image = explode(":", $sub_menu_item[content][icon])[1];
-						$icon = ($image ? null : $sub_menu_item[content][icon]);
-						$side = ($icon ? "<i class='" . $sub_menu_item[content][icon] . " fa-fw'></i>" : ($image ? "<img src='$image'>" : null));
-						$menu_links .= "<li><a href='" . $sub_menu_item[content][url] . "'>" . ($side ? $side . "&nbsp;&nbsp;" : "") . "<span>" . $sub_menu_item[content][title] . "</span></a></li>";
+					foreach ($sub_menu['children'] AS $sub_menu_item){
+						$image = explode(":", $sub_menu_item['content']['icon'])[1];
+						$icon = ($image ? null : $sub_menu_item['content']['icon']);
+						$side = ($icon ? "<i class='" . $sub_menu_item['content']['icon'] . " fa-fw'></i>" : ($image ? "<img src='$image'>" : null));
+						$menu_links .= "<li><a href='" . $sub_menu_item['content']['url'] . "'>" . ($side ? $side . "&nbsp;&nbsp;" : "") . "<span>" . $sub_menu_item['content']['title'] . "</span></a></li>";
 					}
 					$menu_links .= "</ul>";
 				}

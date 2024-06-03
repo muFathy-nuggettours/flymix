@@ -61,18 +61,18 @@ $crud_data_encrypted = encryptText(json_encode($crud_data, JSON_UNESCAPED_UNICOD
 	<!-- Buttons -->
 	<div class=crud_buttons>
 		<!-- Reset, Add and Search -->
-		<button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudResetTable()"><i class="fas fa-sync"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_reload)?></button>&nbsp;&nbsp;
-		<? if ($crud_data["buttons"][0]){ ?><button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudSetOperation()"><i class="fas fa-plus"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_add)?></button>&nbsp;&nbsp;<? } ?>
-		<? if ($crud_data["buttons"][1]){ ?><button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudTriggerSearch()"><i class="fas fa-search"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_search)?></button>&nbsp;&nbsp;<? } ?>
+		<button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudResetTable()"><i class="fas fa-sync"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_reload')?></button>&nbsp;&nbsp;
+		<? if ($crud_data["buttons"][0]){ ?><button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudSetOperation()"><i class="fas fa-plus"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_add')?></button>&nbsp;&nbsp;<? } ?>
+		<? if ($crud_data["buttons"][1]){ ?><button class="btn btn-default btn-md crud-btn" onclick="<?=$crud_id?>.crudTriggerSearch()"><i class="fas fa-search"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_search')?></button>&nbsp;&nbsp;<? } ?>
 		
 		<!-- Export -->
 		<? if ($crud_data["export_raw"] || $crud_data["export_excel"] || $crud_data["export_pdf"]){ ?>
 		<div class=dropdown>
-			<button class="btn btn-default btn-md crud-btn" data-toggle=dropdown><i class="fas fa-file-download"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_export)?>&nbsp;&nbsp;<span class="fas fa-angle-down"></span></button>
+			<button class="btn btn-default btn-md crud-btn" data-toggle=dropdown><i class="fas fa-file-download"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_export')?>&nbsp;&nbsp;<span class="fas fa-angle-down"></span></button>
 			<ul class="dropdown-menu animate compact">
-				<? if ($crud_data["export_raw"]){ ?><li><a onclick="<?=$crud_id?>.crudExportRaw()"><i class="fas fa-print"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_raw)?></a></li><? } ?>
-				<? if ($crud_data["export_excel"]){ ?><li><a onclick="<?=$crud_id?>.crudExportExcel()"><i class="fas fa-file-excel"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_excel)?></a></li><? } ?>
-				<? if ($crud_data["export_pdf"]){ ?><li><a onclick="<?=$crud_id?>.crudExportPDF()"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_pdf)?></a></li><? } ?>
+				<? if ($crud_data["export_raw"]){ ?><li><a onclick="<?=$crud_id?>.crudExportRaw()"><i class="fas fa-print"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_raw')?></a></li><? } ?>
+				<? if ($crud_data["export_excel"]){ ?><li><a onclick="<?=$crud_id?>.crudExportExcel()"><i class="fas fa-file-excel"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_excel')?></a></li><? } ?>
+				<? if ($crud_data["export_pdf"]){ ?><li><a onclick="<?=$crud_id?>.crudExportPDF()"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_pdf')?></a></li><? } ?>
 			</ul>
 		</div>&nbsp;&nbsp;
 		<? } ?>
@@ -80,7 +80,7 @@ $crud_data_encrypted = encryptText(json_encode($crud_data, JSON_UNESCAPED_UNICOD
 		<!-- Multiple Operations -->
 		<? if ($crud_data["multiple_operations"]){ ?>
 		<div class=dropdown>
-			<button class="btn btn-default btn-md crud-btn" data-toggle=dropdown aria-haspopup=true aria-expanded=false><i class="fas fa-cogs"></i>&nbsp;&nbsp;<?=readLanguage(crud,button_operations)?>&nbsp;&nbsp;<span class="fas fa-angle-down"></span></button>
+			<button class="btn btn-default btn-md crud-btn" data-toggle=dropdown aria-haspopup=true aria-expanded=false><i class="fas fa-cogs"></i>&nbsp;&nbsp;<?=readLanguage('crud','button_operations')?>&nbsp;&nbsp;<span class="fas fa-angle-down"></span></button>
 			<ul class="dropdown-menu animate compact">
 				<? foreach ($crud_data["multiple_operations"] AS $key=>$operation){ ?>
 				<li><a onclick="<?=$crud_id?>.crudMultipleOperations('<?=$operation[1]?>','<?=$operation[0]?>')"><i class="<?=$operation[2]?>"></i>&nbsp;&nbsp;<?=$operation[1]?></a></li>
@@ -92,7 +92,7 @@ $crud_data_encrypted = encryptText(json_encode($crud_data, JSON_UNESCAPED_UNICOD
 
 	<!-- Records per page -->
 	<div class=crud_records>
-		<span><?=readLanguage(crud,page_records)?></span>&nbsp;&nbsp;
+		<span><?=readLanguage('crud','page_records')?></span>&nbsp;&nbsp;
 		<select data-records-per-page onchange="<?=$crud_id?>.crudRecordsPerPage(this.value)">
 			<option value=5>5</option>
 			<option value=10>10</option>
@@ -171,14 +171,14 @@ $crud_data_encrypted = encryptText(json_encode($crud_data, JSON_UNESCAPED_UNICOD
 	<!-- Tips -->
 	<? if (!$crud_data["hide_tips"]){ ?>
 	<div class=crud_tips>
-		<?=readLanguage(crud,tip_update)?>
-		<? if ($crud_data["order_field"]){ print "<br>" . readLanguage(crud,tip_arrange); } ?>
+		<?=readLanguage('crud','tip_update')?>
+		<? if ($crud_data["order_field"]){ print "<br>" . readLanguage('crud','tip_arrange'); } ?>
 	</div>
 	<? } ?>
 
 	<!-- Save order button -->
 	<? if ($crud_data["order_field"]){ ?>
-		<button class="btn btn-default btn-md crud-btn" data-crud-save-order onclick="<?=$crud_id?>.crudSaveOrderRows()"><i class="fas fa-save"></i>&nbsp;&nbsp;<?=readLanguage(crud,save_arrangment)?></button>
+		<button class="btn btn-default btn-md crud-btn" data-crud-save-order onclick="<?=$crud_id?>.crudSaveOrderRows()"><i class="fas fa-save"></i>&nbsp;&nbsp;<?=readLanguage('crud','save_arrangment')?></button>
 	<? } ?>
 
 	<!-- Pagination -->
@@ -187,7 +187,7 @@ $crud_data_encrypted = encryptText(json_encode($crud_data, JSON_UNESCAPED_UNICOD
 		<div class=pagination_container>
 			<ul data-pagination></ul>
 			<div>
-				<small><?=readLanguage(crud,page_jump)?></small>&nbsp;
+				<small><?=readLanguage('crud','page_jump')?></small>&nbsp;
 				<select data-page-select onchange="<?=$crud_id?>.crudLoadPage(this.value)"></select>
 			</div>
 		</div>
@@ -313,9 +313,9 @@ class Crud {
 						rows_to = page * this.crud_records_per_page;
 					}
 
-					this.container.find('.crud_footer').html('<?=readLanguage(crud,records_showing)?> ' + (limit_min + 1) + ' <?=readLanguage(crud,records_to)?> ' + rows_to + ' <?=readLanguage(crud,records_of)?> ' + this.num_rows);
+					this.container.find('.crud_footer').html('<?=readLanguage('crud','records_showing')?> ' + (limit_min + 1) + ' <?=readLanguage('crud','records_to')?> ' + rows_to + ' <?=readLanguage('crud','records_of')?> ' + this.num_rows);
 				} else {
-					this.container.find('.crud_footer').html('<?=readLanguage(crud,records_empty)?>');
+					this.container.find('.crud_footer').html('<?=readLanguage('crud','records_empty')?>');
 				}
 
 				$.ajax({
@@ -460,7 +460,7 @@ class Crud {
 		let parent = this;
 		let return_array = [];
 		$.confirm({
-			title: '<?=readLanguage(crud,filter)?>',
+			title: '<?=readLanguage('crud','filter')?>',
 			content: function(){
 
 				return $.ajax({
@@ -480,17 +480,17 @@ class Crud {
 							if (return_array[i][1] && return_array[i][1].replace(/<[^>]*>/g,"")){
 								filter_options += '<option value="' + return_array[i][0] + '">' + return_array[i][1] + '</option>';
 							} else {
-								filter_options += '<option value="' + return_array[i][0] + '"><?=readLanguage(general,na)?></option>';
+								filter_options += '<option value="' + return_array[i][0] + '"><?=readLanguage('general','na')?></option>';
 							}
 						}
-						this.setContent('<span class=crud_input><select data-filter-select multiple>' + filter_options + '</select><small><?=readLanguage(crud,filter_tip)?></small></span>');
+						this.setContent('<span class=crud_input><select data-filter-select multiple>' + filter_options + '</select><small><?=readLanguage('crud','filter_tip')?></small></span>');
 					}
 				})
 			},
 			icon: 'fas fa-filter',
 			buttons: {
 				formSubmit: {
-					text: '<?=readLanguage(crud,filter)?>',
+					text: '<?=readLanguage('crud','filter')?>',
 					btnClass: 'btn-blue',
 					action: function (){
 						let selected = this.$content.find("[data-filter-select] option:selected").length;
@@ -504,7 +504,7 @@ class Crud {
 						} else return false;
 					}
 				},
-				cancel: { text: '<?=readLanguage(crud,cancel)?>' }
+				cancel: { text: '<?=readLanguage('crud','cancel')?>' }
 			}
 		});
 	}
@@ -515,8 +515,8 @@ class Crud {
 	crudTriggerCalendar(field){
 		let parent = this;
 		$.confirm({
-			title: '<?=readLanguage(crud,calendar)?>',
-			content: "<table class=data_table><tr><td class=title style='width:20%'><?=readLanguage(crud,calendar_start)?></td><td><input type=text id=date_from class=date_field readonly></td></tr><tr><td class=title style='width:20%'><?=readLanguage(crud,calendar_end)?></td><td><input type=text id=date_to class=date_field readonly></td></tr></table>",
+			title: '<?=readLanguage('crud','calendar')?>',
+			content: "<table class=data_table><tr><td class=title style='width:20%'><?=readLanguage('crud','calendar_start')?></td><td><input type=text id=date_from class=date_field readonly></td></tr><tr><td class=title style='width:20%'><?=readLanguage('crud','calendar_end')?></td><td><input type=text id=date_to class=date_field readonly></td></tr></table>",
 			icon: 'fas fa-calendar',
 			theme: 'light-noborder',
 			onOpenBefore: function (){
@@ -529,7 +529,7 @@ class Crud {
 			},
 			buttons: {
 				submit: {
-					text: '<?=readLanguage(crud,calendar_filter)?>',
+					text: '<?=readLanguage('crud','calendar_filter')?>',
 					btnClass: 'btn-blue',
 					action: function (){
 						let value_from = this.$content.find("#date_from").val().split("/");
@@ -542,7 +542,7 @@ class Crud {
 						} else return false;
 					}
 				},
-				cancel: { text: '<?=readLanguage(crud,cancel)?>' }
+				cancel: { text: '<?=readLanguage('crud','cancel')?>' }
 			}
 		});
 	}
@@ -554,13 +554,13 @@ class Crud {
 	crudTriggerSearch(){
 		let parent = this;
 		$.confirm({
-			title: '<?=readLanguage(crud,search)?>',
-			content: "<table class=data_table><tr><td class=title style=\"width:20%\"><?=readLanguage(crud,search_in)?></td><td><select data-search-column>" + parent.search_options + "</select></td></tr><tr><td class=title style=\"width:20%\"><?=readLanguage(crud,search_for)?></td><td><input data-search-value type=text></td></tr></table>",
+			title: '<?=readLanguage('crud','search')?>',
+			content: "<table class=data_table><tr><td class=title style=\"width:20%\"><?=readLanguage('crud','search_in')?></td><td><select data-search-column>" + parent.search_options + "</select></td></tr><tr><td class=title style=\"width:20%\"><?=readLanguage('crud','search_for')?></td><td><input data-search-value type=text></td></tr></table>",
 			icon: 'fas fa-search',
 			theme: 'light-noborder',
 			buttons: {
 				submit: {
-					text: '<?=readLanguage(crud,search)?>',
+					text: '<?=readLanguage('crud','search')?>',
 					btnClass: 'btn-blue',
 					action: function (){
 						let index = this.$content.find('[data-search-column]').val();
@@ -571,7 +571,7 @@ class Crud {
 						} else return false;
 					}
 				},
-				cancel: { text: '<?=readLanguage(crud,cancel)?>' }
+				cancel: { text: '<?=readLanguage('crud','cancel')?>' }
 			}
 		});
 	}
@@ -581,16 +581,16 @@ class Crud {
 	//Delete crud
 	crudTriggerDelete(id, title){
 		$.confirm({
-			title: '<?=readLanguage(crud,delete_title)?>',
-			content: '<span class=crud_input><?=readLanguage(crud,delete_message)?>' + (title ? '<b class=subtitle>' + title + '</b>' : ''),
+			title: '<?=readLanguage('crud','delete_title')?>',
+			content: '<span class=crud_input><?=readLanguage('crud','delete_message')?>' + (title ? '<b class=subtitle>' + title + '</b>' : ''),
 			icon: 'fas fa-trash',
 			buttons: {
 				confirm: {
-					text: '<?=readLanguage(crud,yes)?>',
+					text: '<?=readLanguage('crud','yes')?>',
 					btnClass: 'btn-red',
 					action: () => this.crudSetOperation(id, 'delete', '<?=$token?>')
 				},
-				cancel: { text: '<?=readLanguage(crud,cancel)?>' }
+				cancel: { text: '<?=readLanguage('crud','cancel')?>' }
 			}
 		});
 	}
@@ -622,7 +622,7 @@ class Crud {
 				},
 				success: (response) => {
 					this.crudLoadPage(this.current_page);
-					quickNotify('<?=readLanguage(crud,arrange_success)?>', '<?=readLanguage(crud,save_arrangment)?>');
+					quickNotify('<?=readLanguage('crud','arrange_success')?>', '<?=readLanguage('crud','save_arrangment')?>');
 				}
 			});
 		});
@@ -646,7 +646,7 @@ class Crud {
 
 		let column_text = [];
 		cells.each(function(){
-			if ($(this).text() && $(this).text() != '<?=readLanguage(general,na)?>'){
+			if ($(this).text() && $(this).text() != '<?=readLanguage('general','na')?>'){
 				column_text.push($.trim($(this).text()));
 			}
 		});
@@ -660,7 +660,7 @@ class Crud {
 		document.execCommand('copy');
 		document.body.removeChild(dummy);
 
-		quickNotify('<?=readLanguage(crud,copy_success)?>', $(column).parent().text());
+		quickNotify('<?=readLanguage('crud','copy_success')?>', $(column).parent().text());
 	}
 
 
@@ -696,7 +696,7 @@ class Crud {
 		});
 		
 		if (!checked.length){
-			quickNotify('<?=readLanguage(crud,operations_selection)?>', title, 'danger', 'fas fa-times fa-3x');
+			quickNotify('<?=readLanguage('crud','operations_selection')?>', title, 'danger', 'fas fa-times fa-3x');
 		} else {
 			window[operation](checked.join(","));
 		}
@@ -715,12 +715,12 @@ class Crud {
 		let parent = this;
 		$.confirm({
 			icon: 'fas fa-file-download',
-			title: '<?=readLanguage(crud,export_records)?>',
+			title: '<?=readLanguage('crud','export_records')?>',
 			theme: 'light-noborder',
-			content: "<div class='d-flex align-items-center'><span class='flex-grow-1'><?=readLanguage(crud,export_select)?></span><label class='flex-center'><input type=checkbox class=clear-margin onchange=\"$('.crud_export_checkboxes').find('input').prop('checked', $(this).prop('checked'))\">&nbsp;<?=readLanguage(crud,select_all)?></label></div><div class=crud_export_checkboxes>" + checkboxes + "</div>",
+			content: "<div class='d-flex align-items-center'><span class='flex-grow-1'><?=readLanguage('crud','export_select')?></span><label class='flex-center'><input type=checkbox class=clear-margin onchange=\"$('.crud_export_checkboxes').find('input').prop('checked', $(this).prop('checked'))\">&nbsp;<?=readLanguage('crud','select_all')?></label></div><div class=crud_export_checkboxes>" + checkboxes + "</div>",
 			buttons: {
 				submit: {
-					text: '<?=readLanguage(crud,export)?>',
+					text: '<?=readLanguage('crud','export')?>',
 					btnClass: 'btn-green',
 					action: function(){
 						let checked = [];
@@ -752,7 +752,7 @@ class Crud {
 						return false;
 					}
 				},
-				cancel: { text: '<?=readLanguage(crud,cancel)?>' }
+				cancel: { text: '<?=readLanguage('crud','cancel')?>' }
 			}
 		});
 	}

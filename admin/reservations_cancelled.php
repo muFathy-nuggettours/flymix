@@ -9,37 +9,37 @@ checkPermissions($base_name);
 if ($post["token"] && $post["action"]=="pay"){
 	mysqlQuery("UPDATE payment_records SET transaction='" . $post["receipt"] . "' WHERE reservation_id=" . $post["reservation"]);
 	mysqlQuery("UPDATE $mysqltable SET status=1 WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //PNR
 if ($post["token"] && $post["action"]=="pnr"){
 	mysqlQuery("UPDATE $mysqltable SET status=2, pnr='" . $post["pnr"] . "' WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //تنفيذ
 if ($post["token"] && $post["action"]=="confirm"){
 	mysqlQuery("UPDATE $mysqltable SET status=3, personnel='" . $post["personnel"] . "' WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //جاري التعديل
 if ($post["token"] && $post["action"]=="pending_update"){
 	mysqlQuery("UPDATE $mysqltable SET status=4, update_reason='" . $post["reason"] . "', update_date='" . time() . "' WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //جاري الإلغاء
 if ($post["token"] && $post["action"]=="pending_cancellation"){
 	mysqlQuery("UPDATE $mysqltable SET status=5, cancellation_reason='" . $post["reason"] . "', cancellation_date='" . time() . "' WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //إلغاء
 if ($post["token"] && $post["action"]=="cancel"){
 	mysqlQuery("UPDATE $mysqltable SET status=6 WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //إعادة فتح
@@ -47,7 +47,7 @@ if ($post["token"] && $post["action"]=="reopen"){
 	$record_data = getID($post["reservation"], $mysqltable);
 	$status = ($record_data["pnr"] ? 2 : (getData("payment_records", "reservation_id", $record_data["id"], "transaction") ? 1 : 0));
 	mysqlQuery("UPDATE $mysqltable SET status=$status, cancellation_reason='', cancellation_date=0 WHERE id=" . $post["reservation"]);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 switch ($base_name){
@@ -93,7 +93,7 @@ $crud_data["where_statement"] = $condition;
 $crud_data["buttons"] = array(false,true,false,false,false); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
 	array("id","إدارة","120px","center","reservationManage(%d)",false,false),
-	array("id","تفاصيل الحجز","120px","center","viewButton('_view_reservation.php?id=%s','" . readLanguage(operations,view) . "','btn-primary','fas fa-search')",false,false),
+	array("id","تفاصيل الحجز","120px","center","viewButton('_view_reservation.php?id=%s','" . readLanguage('operations','view') . "','btn-primary','fas fa-search')",false,false),
 	array("status","حالة الحجز","120px","center","returnStatusLabel('data_reservation_status', %s)",true,false),
 	array("so_platform","منصة الحجز","120px","center","getVariable('data_platforms')[%s]",true,false),
 	array("user_id","حساب المستخدم","250px","center","getCustomData('name','users_database','id','%s','_view_user')",false,true),

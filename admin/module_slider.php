@@ -7,7 +7,7 @@ checkPermissions($base_name);
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
@@ -19,11 +19,11 @@ if ($delete){
 	) VALUES (
 		'" . $post["title"] . "',
 		'" . $post["subtitle"] . "',
-		'" . imgUpload($_FILES[image], "../uploads/slider/") . "',
+		'" . imgUpload($_FILES['image'], "../uploads/slider/") . "',
 		'" . newRecordID($mysqltable) . "'
 	)";
 	mysqlQuery($query);
-	$success = readLanguage(records,added);
+	$success = readLanguage('records','added');
 
 //==== EDIT Record ====
 } else if ($post["token"] && $edit){//EDIT
@@ -31,22 +31,22 @@ if ($delete){
 	$query = "UPDATE $mysqltable SET
 		title='" . $post["title"] . "',
 		subtitle='" . $post["subtitle"] . "',
-		image='" . imgUpload($_FILES[image], "../uploads/slider/", $record_data["image"]) . "'
+		image='" . imgUpload($_FILES['image'], "../uploads/slider/", $record_data["image"]) . "'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = $base_name . ".php?edit=" . $edit;
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = $base_name . ".php";
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }

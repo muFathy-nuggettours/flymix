@@ -20,7 +20,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -35,7 +35,7 @@ if (!$canonical){
 	$section_cover_image = ($page_data["cover_image"] ? "uploads/database/" . $page_data["cover_image"] : $section_cover_image);
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }

@@ -96,21 +96,21 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(pages,sitemap_autofill)?>:</td>
+	<td class=title><?=readLanguage('pages','sitemap_autofill')?>:</td>
 	<td>
-		<input type=button class="btn btn-primary btn-sm" value="<?=readLanguage(pages,sitemap_autofill)?>" onclick="generateSitemap()">
-		<div class=input_description><?=readLanguage(pages,sitemap_autofill_description)?></div>
+		<input type=button class="btn btn-primary btn-sm" value="<?=readLanguage('pages','sitemap_autofill')?>" onclick="generateSitemap()">
+		<div class=input_description><?=readLanguage('pages','sitemap_autofill_description')?></div>
 	</td>
 </tr><tr>
-	<td class=title><?=readLanguage(pages,sitemap_urls)?>:</td>
+	<td class=title><?=readLanguage('pages','sitemap_urls')?>:</td>
 	<td>
 		<textarea name=sitemap id=sitemap class=force-ltr style="height:300px"><?=$sitemap?></textarea>
-		<div class=input_description><?=readLanguage(inputs,instructions_newline)?></div>
+		<div class=input_description><?=readLanguage('inputs','instructions_newline')?></div>
 	</td>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 
 <script>

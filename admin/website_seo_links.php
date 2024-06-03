@@ -120,16 +120,16 @@ include "_header.php" ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,content)?>:</td>
+	<td class=title><?=readLanguage('inputs','content')?>:</td>
 	<td colspan=3><textarea class=contentEditor style="height:400px" name=content id=content><?=$entry["content"]?></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,gallery)?>:</td>
+	<td class=title><?=readLanguage('inputs','gallery')?>:</td>
 	<td colspan=3 data-token="<?=$token?>" data-attachments=gallery data-upload-path="../uploads/destinations/">
 		<div class=attachment-button>
 			<input type=hidden name=gallery value="<?=$entry["gallery"]?>">
-			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage(inputs,gallery_insert)?><input type=file id=gallery accept="image/*" multiple></label>
-			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage(inputs,uploading)?></div>
+			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage('inputs','gallery_insert')?><input type=file id=gallery accept="image/*" multiple></label>
+			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage('inputs','uploading')?></div>
 		</div>
 		<ul sortable class=attachments-list></ul><div style="clear:both"></div>
 		<? if ($entry["gallery"]){ ?>

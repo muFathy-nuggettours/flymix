@@ -83,7 +83,7 @@ if ($valid){
 	) VALUES (
 		'" . $payment_record_id . "',
 		'" . $balance_session["user_id"] . "',
-		'" . readLanguage(payment,recharging) . "',
+		'" . readLanguage('payment','recharging') . "',
 		'" . $balance_session["amount"] . "',
 		'" . $user_currencyCode . "',
 		'" . time() . "'
@@ -107,30 +107,30 @@ $section_layout = $section_information["layout"];
 
 //Breadcrumbs
 $breadcrumbs = array();
-array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 array_push($breadcrumbs,"<li>" . $section_information["title"] . "</li>");
 
 include "system/header.php";
 include "website/section_header.php"; ?>
 
 <? if (!$valid){ ?>
-<div class="alert alert-danger"><?=readLanguage(payment,payment_failed)?></div>
+<div class="alert alert-danger"><?=readLanguage('payment','payment_failed')?></div>
 <div class=page_container>
 	<div class=message>
 		<i class="fas fa-times-circle"></i>
-		<b><?=readLanguage(payment,recharge_payment_failed)?></b>
+		<b><?=readLanguage('payment','recharge_payment_failed')?></b>
 		<? if ($payment_error){ ?><small><?=$payment_error?></small><? } ?>
-		<a class="btn btn-primary btn-upload margin-top-20" href="user/balance-charge/?session=<?=$balance_session["session"]?>"><?=readLanguage(mobile,retry)?></a>
+		<a class="btn btn-primary btn-upload margin-top-20" href="user/balance-charge/?session=<?=$balance_session["session"]?>"><?=readLanguage('mobile','retry')?></a>
 	</div>
 </div>
 
 <? } else { ?>
-<div class="alert alert-success"><?=readLanguage(payment,payment_success)?></div>
+<div class="alert alert-success"><?=readLanguage('payment','payment_success')?></div>
 <div class=page_container>
 	<div class=message>
 		<i class="fas fa-check-circle"></i>
-		<b><?=readLanguage(payment,add_balance_success)?></b>
-		<small><?=readLanguage(payment,payment_success)?></small>
+		<b><?=readLanguage('payment','add_balance_success')?></b>
+		<small><?=readLanguage('payment','payment_success')?></small>
 	</div>
 </div>
 

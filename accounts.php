@@ -15,22 +15,22 @@ $valid_platforms = array("facebook", "google");
 switch ($get["action"]){
 	case "login":
 		requireLogin(false);
-		$section_title = readLanguage(accounts,login);
+		$section_title = readLanguage('accounts','login');
 	break;
 	
 	case "reset-password":
 		requireLogin(false);
-		$section_title = readLanguage(accounts,reset_password);
+		$section_title = readLanguage('accounts','reset_password');
 	break;
 
 	case "signup":
 		requireLogin(false);
-		$section_title = readLanguage(accounts,signup);
+		$section_title = readLanguage('accounts','signup');
 	break;	
 	
 	case "logout":
 		requireLogin(true);
-		$section_title = readLanguage(accounts,logout);
+		$section_title = readLanguage('accounts','logout');
 		$_SESSION[$user_session] = null;
 		writeCookie($user_cookie, null, time() - (86400 * 30), "/");
 		$user_hash = null;
@@ -80,12 +80,12 @@ if ($post["action"]=="signup"){
 		$mobile = $mobile_prefix . cltrim($post["mobile"], "0");
 		$mobile_conventional = "0" . cltrim($post["mobile"], "0");
 		if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE mobile='$mobile' OR mobile_conventional='$mobile_conventional'"))){
-			array_push($errors, readLanguage(accounts,mobile_registered) . " <a class=alert-link href='reset-password/'>" . readLanguage(accounts,reset_password) . "</a>");
+			array_push($errors, readLanguage('accounts','mobile_registered') . " <a class=alert-link href='reset-password/'>" . readLanguage('accounts','reset_password') . "</a>");
 		}
 	}
 	
 	if (mysqlNum(mysqlQuery("SELECT id FROM $mysqltable WHERE email='$email'"))){
-		array_push($errors, readLanguage(accounts,email_registered) . " <a class=alert-link href='reset-password/'>" . readLanguage(accounts,reset_password) . "</a>");
+		array_push($errors, readLanguage('accounts','email_registered') . " <a class=alert-link href='reset-password/'>" . readLanguage('accounts','reset_password') . "</a>");
 	}
 	$rules["name"] = array("required", "max_length(100)");
 	$rules["email"] = array("required", "max_length(100)", "email");
@@ -94,9 +94,9 @@ if ($post["action"]=="signup"){
 
 	//Validate user data
 	if ($validation_result->isSuccess()==false){
-		$error = readLanguage(general,error);
+		$error = readLanguage('general','error');
 	} else if (!$valid_attempt){
-		$error = readLanguage(general,recaptcha_error);
+		$error = readLanguage('general','recaptcha_error');
 	} else if ($errors){
 		$error = "<ul><li>" . implode("</li><li>", $errors) . "</li></ul>";
 	} else {
@@ -197,9 +197,9 @@ if ($post["action"]=="login"){
 	
 	//Validate user data
 	if ($validation_result->isSuccess()==false){
-		$error = readLanguage(accounts,invalid);
+		$error = readLanguage('accounts','invalid');
 	} else if (!$valid_attempt){
-		$error = readLanguage(general,recaptcha_error);	
+		$error = readLanguage('general','recaptcha_error');	
 	} else {
 		$user_hashed_password = mysqlFetch(mysqlQuery("SELECT password FROM $mysqltable WHERE email='$email'"))["password"];
 		if ($user_hashed_password && password_verify($post["password"], $user_hashed_password)){
@@ -207,7 +207,7 @@ if ($post["action"]=="login"){
 			userLogin($logged_user["hash"], $post["remember"]);
 			$_SESSION[$recaptcha_session] = 0;
 		} else {
-			$error = readLanguage(accounts,invalid);
+			$error = readLanguage('accounts','invalid');
 			$_SESSION[$recaptcha_session]++;
 		}
 	}
@@ -232,11 +232,11 @@ if ($post["action"]=="reset-password"){
 	
 	//Validate user data
 	if ($validation_result->isSuccess()==false){
-		$error = readLanguage(accounts,email_not_registered);
+		$error = readLanguage('accounts','email_not_registered');
 	} else if (!$valid_attempt){
-		$error = readLanguage(general,recaptcha_error);		
+		$error = readLanguage('general','recaptcha_error');		
 	} else if (!mysqlNum(mysqlQuery("SELECT id FROM $mysqltable WHERE email='" . strtolower($post["email"]) . "'"))){
-		$error = readLanguage(accounts,email_not_registered);
+		$error = readLanguage('accounts','email_not_registered');
 	} else {
 		$user_data = mysqlFetch(mysqlQuery("SELECT * FROM $mysqltable WHERE email='" . strtolower($post["email"]) . "'"));
 		$existing_hash = mysqlFetch(mysqlQuery("SELECT * FROM users_reset_password WHERE user_hash='" . $user_data["hash"] . "'"));
@@ -248,8 +248,8 @@ if ($post["action"]=="reset-password"){
 			mysqlQuery("INSERT INTO users_reset_password (user_hash,reset_hash,date) VALUES ('" . $user_data["hash"] . "','" . $reset_hash . "','" . time() . "')");
 		}
 		$reset_url = $base_url . "reset-password/" . $reset_hash . "/";
-		$message = readLanguage(mails,body_reset_password, array("<a href='" . $reset_url . "'>" . readLanguage(accounts,reset_password) . "</a>", "<span style='color:#404040'>$reset_url</span>"));
-		sendMail(array($user_data["email"]), readLanguage(mails,subject_reset_password), nl2br($message), $website_language);
+		$message = readLanguage('mails','body_reset_password', array("<a href='" . $reset_url . "'>" . readLanguage('accounts','reset_password') . "</a>", "<span style='color:#404040'>$reset_url</span>"));
+		sendMail(array($user_data["email"]), readLanguage('mails','subject_reset_password'), nl2br($message), $website_language);
 		$reset_message = true;
 	}
 }
@@ -264,8 +264,8 @@ if ($get["hash"]){
 		$new_password = generateHash(10);
 		mysqlQuery("UPDATE $mysqltable SET password='" . password_hash($new_password, PASSWORD_DEFAULT) . "' WHERE hash='" . $reset_data["user_hash"] . "'");
 		mysqlQuery("DELETE FROM users_reset_password WHERE user_hash='" . $user_data["hash"] . "'");
-		$message = readLanguage(mails,body_new_password,array($user_data["email"], $new_password));
-		sendMail(array($user_data["email"]), readLanguage(mails,subject_new_password), nl2br($message), $website_language);
+		$message = readLanguage('mails','body_new_password',array($user_data["email"], $new_password));
+		sendMail(array($user_data["email"]), readLanguage('mails','subject_new_password'), nl2br($message), $website_language);
 		$reset_success = true;
 	}
 }
@@ -320,16 +320,16 @@ include "website/section_header.php"; ?>
 				<? if (!$post["name"]){ ?>
 				<tr>
 					<td colspan=2>
-						<div class=title><?=readLanguage(accounts,name)?> <i class=requ></i></div>
-						<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage(accounts,name_placeholder)?>" data-validation=required></div>
+						<div class=title><?=readLanguage('accounts','name')?> <i class=requ></i></div>
+						<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage('accounts','name_placeholder')?>" data-validation=required></div>
 					</td>
 				</tr>				
 				<? } ?>
 				<? if (!$post["email"]){ ?>
 				<tr>
 					<td colspan=2>
-						<div class=title><?=readLanguage(accounts,email)?> <i class=requ></i></div>
-						<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage(accounts,email_placeholder)?>" data-validation=email autocomplete=email></div>
+						<div class=title><?=readLanguage('accounts','email')?> <i class=requ></i></div>
+						<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage('accounts','email_placeholder')?>" data-validation=email autocomplete=email></div>
 					</td>
 				</tr>				
 				<? } ?>
@@ -338,12 +338,12 @@ include "website/section_header.php"; ?>
 			<? } else { ?>
 			<tr>
 				<td>
-					<div class=title><?=readLanguage(accounts,name)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage(accounts,name_placeholder)?>" data-validation=required></div>
+					<div class=title><?=readLanguage('accounts','name')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage('accounts','name_placeholder')?>" data-validation=required></div>
 				</td>
 				<td>
-					<div class=title><?=readLanguage(accounts,email)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage(accounts,email_placeholder)?>" data-validation=email autocomplete=email></div>
+					<div class=title><?=readLanguage('accounts','email')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage('accounts','email_placeholder')?>" data-validation=email autocomplete=email></div>
 				</td>
 			</tr>
 			<? } ?>
@@ -351,7 +351,7 @@ include "website/section_header.php"; ?>
 			<!-- Mobile -->
 			<tr>
 				<td colspan=2>
-					<div class=title><?=readLanguage(accounts,mobile)?> <i class=requ></i></div>
+					<div class=title><?=readLanguage('accounts','mobile')?> <i class=requ></i></div>
 					<div class="input force-ltr" data-icon="&#xf3cd;">
 						<select name=country id=country>
 						<? $country_result = mysqlQuery("SELECT code, phone_code, en_name, ar_name FROM system_database_countries ORDER BY phone_code ASC");
@@ -359,7 +359,7 @@ include "website/section_header.php"; ?>
 							print "<option value='" . $country_entry["code"] . "' data-name='" . $country_entry[$website_language . "_name"] . "' data-phone-code='+" . $country_entry["phone_code"] . "'>+" . $country_entry["phone_code"] . " " . $country_entry[$website_language . "_name"] . "</option>";
 						} ?>
 						</select>
-						&nbsp;&nbsp;<input type=number name=mobile value="<?=$post["mobile"]?>" maxlength=11 placeholder="<?=readLanguage(accounts,mobile_placeholder)?>" data-validation=validateMobile>
+						&nbsp;&nbsp;<input type=number name=mobile value="<?=$post["mobile"]?>" maxlength=11 placeholder="<?=readLanguage('accounts','mobile_placeholder')?>" data-validation=validateMobile>
 					</div>
 					<script>
 						//Set Default Value
@@ -399,7 +399,7 @@ include "website/section_header.php"; ?>
 								}
 								return (value ? true : false) && valid_mobile;
 							},
-							errorMessage: "<?=readLanguage(accounts,mobile_placeholder)?>"
+							errorMessage: "<?=readLanguage('accounts','mobile_placeholder')?>"
 						});
 					</script>
 				</td>
@@ -410,38 +410,38 @@ include "website/section_header.php"; ?>
 			<tr>
 				<td>
 					<script src="plugins/password-requirements.js?v=<?=$system_settings["system_version"]?>"></script>
-					<div class=title><?=readLanguage(accounts,password)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf023;"><input match=password_retype type=password id=password name=password placeholder="<?=readLanguage(accounts,password_placeholder)?>" data-validation=passwordStrength autocomplete=new-password></div>
+					<div class=title><?=readLanguage('accounts','password')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf023;"><input match=password_retype type=password id=password name=password placeholder="<?=readLanguage('accounts','password_placeholder')?>" data-validation=passwordStrength autocomplete=new-password></div>
 				</td>
 				<td>
-					<div class=title><?=readLanguage(accounts,password_retype)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf023;"><input type=password name=password_retype placeholder="<?=readLanguage(accounts,password_placeholder)?>" data-validation=validatePasswordRetype data-validation-error-msg="Passowrds don't match" autocomplete=new-password></div>
+					<div class=title><?=readLanguage('accounts','password_retype')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf023;"><input type=password name=password_retype placeholder="<?=readLanguage('accounts','password_placeholder')?>" data-validation=validatePasswordRetype data-validation-error-msg="Passowrds don't match" autocomplete=new-password></div>
 					<script>
 					//Initialize Password Requirements
 					$("#password").PassRequirements({
 						defaults: false,
 						rules: {
 							minlength: {
-								text: "<?=readLanguage(accounts,password_long,array("minLength"))?>",
+								text: "<?=readLanguage('accounts','password_long',array("minLength"))?>",
 								minLength: 8,
 							},
 							containSpecialChars: {
-								text: "<?=readLanguage(accounts,password_special,array("minLength"))?>",
+								text: "<?=readLanguage('accounts','password_special',array("minLength"))?>",
 								minLength: 1,
 								regex: new RegExp("([^!,%,&,@,#,$,^,*,?,_,~])", "g")
 							},
 							containLowercase: {
-								text: "<?=readLanguage(accounts,password_lower,array("minLength"))?>",
+								text: "<?=readLanguage('accounts','password_lower',array("minLength"))?>",
 								minLength: 1,
 								regex: new RegExp("[^a-z]", "g")
 							},
 							containUppercase: {
-								text: "<?=readLanguage(accounts,password_upper,array("minLength"))?>",
+								text: "<?=readLanguage('accounts','password_upper',array("minLength"))?>",
 								minLength: 1,
 								regex: new RegExp("[^A-Z]", "g")
 							},
 							containNumbers: {
-								text: "<?=readLanguage(accounts,password_number,array("minLength"))?>",
+								text: "<?=readLanguage('accounts','password_number',array("minLength"))?>",
 								minLength: 1,
 								regex: new RegExp("[^0-9]", "g")
 							}
@@ -454,7 +454,7 @@ include "website/section_header.php"; ?>
 						validatorFunction : function(value, $el, config, language, $form){
 							return $el.data("valid-password")==true;
 						},
-						errorMessage: "<?=readLanguage(accounts,password_weak)?>",
+						errorMessage: "<?=readLanguage('accounts','password_weak')?>",
 					});
 				
 					//Validate Password Re-Type
@@ -473,21 +473,21 @@ include "website/section_header.php"; ?>
 			
 			<!-- Newsletter -->
 			<div class="check_container margin-top">
-				<label><input type=checkbox class=filled-in name=newsletter value=newsletter checked><span><?=readLanguage(accounts,newsletter)?></span></label>
+				<label><input type=checkbox class=filled-in name=newsletter value=newsletter checked><span><?=readLanguage('accounts','newsletter')?></span></label>
 			</div>
 			
 			<!-- ReCAPTCHA -->
 			<? if ($system_settings["recaptcha_secret_key"]){ ?>
 			<div class=recaptcha_box>
-				<small><?=readLanguage(general,recaptcha_required)?></small>
+				<small><?=readLanguage('general','recaptcha_required')?></small>
 				<center><div class=g-recaptcha data-sitekey="<?=$system_settings["recaptcha_site_key"]?>"></div></center>
 			</div>
 			<? } ?>
 			
 			<!-- Submit -->
 			<div class=submit_container_blank>
-				<button type=button class="submit margin-bottom"><?=readLanguage(accounts,signup)?></button>
-				<?=readLanguage(accounts,has_account)?> <a href="login/"><?=readLanguage(accounts,login)?></a>
+				<button type=button class="submit margin-bottom"><?=readLanguage('accounts','signup')?></button>
+				<?=readLanguage('accounts','has_account')?> <a href="login/"><?=readLanguage('accounts','login')?></a>
 			</div>
 		</form>
 		
@@ -496,11 +496,11 @@ include "website/section_header.php"; ?>
 		
 	<? } else { ?>
 		<center>
-			<div class="alert alert-success"><?=readLanguage(accounts,register_success)?></div>
+			<div class="alert alert-success"><?=readLanguage('accounts','register_success')?></div>
 			<div class=login_message>
 				<img src="<?=($logged_user["image"] ? "uploads/users/" . $logged_user["image"] : "images/user.png")?>">
-				<span><?=readLanguage(accounts,welcome)?> <b><?=$logged_user["name"]?></b></span>
-				<?=readLanguage(accounts,redirect)?>
+				<span><?=readLanguage('accounts','welcome')?> <b><?=$logged_user["name"]?></b></span>
+				<?=readLanguage('accounts','redirect')?>
 			</div>
 			<script>
 				$(document).ready(function(){
@@ -528,37 +528,37 @@ include "website/section_header.php"; ?>
 			<table class=form_table>
 			<tr>
 				<td>
-					<div class=title><?=readLanguage(accounts,email)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage(accounts,email_placeholder)?>" data-validation=email autocomplete=email></div>
+					<div class=title><?=readLanguage('accounts','email')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage('accounts','email_placeholder')?>" data-validation=email autocomplete=email></div>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<script src="plugins/password-requirements.js?v=<?=$system_settings["system_version"]?>"></script>
-					<div class=title><?=readLanguage(accounts,password)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf023;"><input match=password_retype type=password id=password name=password placeholder="<?=readLanguage(accounts,password_placeholder)?>" data-validation=required autocomplete=new-password></div>
+					<div class=title><?=readLanguage('accounts','password')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf023;"><input match=password_retype type=password id=password name=password placeholder="<?=readLanguage('accounts','password_placeholder')?>" data-validation=required autocomplete=new-password></div>
 				</td>			
 			</tr>
 			</table>
 			
 			<!-- Remember Credential & Reset Password -->
 			<div class=login_check>
-				<div class=check_container><label><input type=checkbox class=filled-in name=remember value=remember checked><span><?=readLanguage(accounts,remember)?></span></label></div>
-				<small><?=readLanguage(accounts,forgot_password)?> <a href="reset-password/"><?=readLanguage(accounts,reset_password)?></a></small>
+				<div class=check_container><label><input type=checkbox class=filled-in name=remember value=remember checked><span><?=readLanguage('accounts','remember')?></span></label></div>
+				<small><?=readLanguage('accounts','forgot_password')?> <a href="reset-password/"><?=readLanguage('accounts','reset_password')?></a></small>
 			</div>
 			
 			<!-- ReCAPTCHA -->
 			<? if ($system_settings["recaptcha_secret_key"] && $_SESSION[$recaptcha_session] >= $rate_limit){ ?>
 			<div class=recaptcha_box>
-				<small><?=readLanguage(general,recaptcha_required)?></small>
+				<small><?=readLanguage('general','recaptcha_required')?></small>
 				<center><div class=g-recaptcha data-sitekey="<?=$system_settings["recaptcha_site_key"]?>"></div></center>
 			</div>
 			<? } ?>
 			
 			<!-- Submit -->
 			<div class=submit_container_blank>
-				<button type=button class="submit margin-bottom"><?=readLanguage(accounts,login)?></button>
-				<?=readLanguage(accounts,no_account)?> <a href="signup/"><?=readLanguage(accounts,signup)?></a>
+				<button type=button class="submit margin-bottom"><?=readLanguage('accounts','login')?></button>
+				<?=readLanguage('accounts','no_account')?> <a href="signup/"><?=readLanguage('accounts','signup')?></a>
 			</div>
 		</form>
 		
@@ -567,11 +567,11 @@ include "website/section_header.php"; ?>
 		
 	<? } else { ?>
 		<center>
-			<div class="alert alert-success"><?=readLanguage(accounts,login_success)?></div>
+			<div class="alert alert-success"><?=readLanguage('accounts','login_success')?></div>
 			<div class=login_message>
 				<img src="<?=($logged_user["image"] ? "uploads/users/" . $logged_user["image"] : "images/user.png")?>">
-				<span><?=readLanguage(accounts,welcome)?> <b><?=$logged_user["name"]?></b></span>
-				<?=readLanguage(accounts,redirect)?>
+				<span><?=readLanguage('accounts','welcome')?> <b><?=$logged_user["name"]?></b></span>
+				<?=readLanguage('accounts','redirect')?>
 			</div>
 			<script>
 				$(document).ready(function(){
@@ -591,15 +591,15 @@ include "website/section_header.php"; ?>
 	<!-- Password reset success -->
 	<? if ($reset_success){ ?>
 		<center>
-			<div class="alert alert-success"><?=readLanguage(accounts,reset_success_title)?></div>
-			<div class=login_message><?=readLanguage(accounts,reset_success_description)?></div>
+			<div class="alert alert-success"><?=readLanguage('accounts','reset_success_title')?></div>
+			<div class=login_message><?=readLanguage('accounts','reset_success_description')?></div>
 		</center>
 	
 	<!-- Password reset sent -->
 	<? } else if ($reset_message){ ?>
 		<center>
-			<div class="alert alert-success"><?=readLanguage(accounts,reset_instructions_title)?></div>
-			<div class=login_message><?=readLanguage(accounts,reset_instructions_description)?></div>
+			<div class="alert alert-success"><?=readLanguage('accounts','reset_instructions_title')?></div>
+			<div class=login_message><?=readLanguage('accounts','reset_instructions_description')?></div>
 		</center>
 		
 	<!-- Password reset request -->
@@ -614,21 +614,21 @@ include "website/section_header.php"; ?>
 			<table class=form_table>
 			<tr>
 				<td>
-					<div class=title><?=readLanguage(accounts,email)?> <i class=requ></i></div>
-					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage(accounts,email_placeholder)?>" data-validation=email autocomplete=email></div>
+					<div class=title><?=readLanguage('accounts','email')?> <i class=requ></i></div>
+					<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage('accounts','email_placeholder')?>" data-validation=email autocomplete=email></div>
 				</td>
 			</tr>
 			</table>
 			
 			<? if ($system_settings["recaptcha_secret_key"]){ ?>
 			<div class=recaptcha_box>
-				<small><?=readLanguage(general,recaptcha_required)?></small>
+				<small><?=readLanguage('general','recaptcha_required')?></small>
 				<center><div class=g-recaptcha data-sitekey="<?=$system_settings["recaptcha_site_key"]?>"></div></center>
 			</div>
 			<? } ?>
 			
 			<div class=submit_container_blank>
-				<button type=button class=submit><?=readLanguage(accounts,reset_password)?></button>
+				<button type=button class=submit><?=readLanguage('accounts','reset_password')?></button>
 			</div>
 		</form>
 	<? } ?>	
@@ -636,8 +636,8 @@ include "website/section_header.php"; ?>
 <!-- Logout -->
 <? } else if ($get["action"]=="logout"){ ?>
 	<center>
-		<div class="alert alert-success"><?=readLanguage(accounts,logout_success)?></div>
-		<div class=login_message><?=readLanguage(accounts,redirect)?></div>
+		<div class="alert alert-success"><?=readLanguage('accounts','logout_success')?></div>
+		<div class=login_message><?=readLanguage('accounts','redirect')?></div>
 	</center>
 	<script>
 		$(document).ready(function(){

@@ -34,21 +34,21 @@
 				<!-- Registration -->
 				<? if (!$logged_user){ ?>
 				<div class=margin-bottom>
-					<a class="btn btn-primary btn-sm btn-block" href="#" data-toggle=modal data-target="#loginModal"><?=readLanguage(accounts,login)?></a>
-					<a class="btn btn-default btn-sm btn-block" href="signup/"><?=readLanguage(accounts,signup)?></a>
+					<a class="btn btn-primary btn-sm btn-block" href="#" data-toggle=modal data-target="#loginModal"><?=readLanguage('accounts','login')?></a>
+					<a class="btn btn-default btn-sm btn-block" href="signup/"><?=readLanguage('accounts','signup')?></a>
 				</div>
 				<? } ?>
 				
 				<!-- Booking -->
-				<div><a class="btn btn-primary btn-block" style="padding:10px" href="user/reservations/"><?=readLanguage(user,reservations)?></a></div>
+				<div><a class="btn btn-primary btn-block" style="padding:10px" href="user/reservations/"><?=readLanguage('user','reservations')?></a></div>
 				
 				<!-- Currencies -->
 				<div>
-				<?=readLanguage(currencies,currency)?>&nbsp;&nbsp;<img src="images/currencies/<?=$user_paymentCurrency["code"]?>.gif">&nbsp;&nbsp;<?=$user_paymentCurrency[$suffix . "name"]?>
+				<?=readLanguage('currencies','currency')?>&nbsp;&nbsp;<img src="images/currencies/<?=$user_paymentCurrency["code"]?>.gif">&nbsp;&nbsp;<?=$user_paymentCurrency[$suffix . "name"]?>
 				</div>
 				
 				<!-- Logout -->
-				<? if ($logged_user){ ?><a class="btn btn-danger btn-sm btn-block" href="logout/"><?=readLanguage(accounts,logout)?></a><? } ?>
+				<? if ($logged_user){ ?><a class="btn btn-danger btn-sm btn-block" href="logout/"><?=readLanguage('accounts','logout')?></a><? } ?>
 				
 				<!-- Contact -->
 				<? if ($website_information["primary_number"]){ ?>
@@ -70,7 +70,7 @@
 				
 				<!-- Copyrights -->
 				<? if (!$white_label){ ?>
-					<div class=copyrights><small><?=readLanguage(footer,developer)?></small><a href="https://www.prismatecs.com/">Prismatecs Smart Solutions</a></div>
+					<div class=copyrights><small><?=readLanguage('footer','developer')?></small><a href="https://www.prismatecs.com/">Prismatecs Smart Solutions</a></div>
 				<? } ?>
 			</div>
 		</ul>
@@ -80,7 +80,7 @@
 <!-- Large screen menu prefix -->
 <div class=buttons>
 	<!-- Booking -->
-	<div><a class=negative href="user/reservations/"><?=readLanguage(user,reservations)?></a></div>
+	<div><a class=negative href="user/reservations/"><?=readLanguage('user','reservations')?></a></div>
 
 	<!-- Currencies -->
 	<div class=currencies>
@@ -89,14 +89,14 @@
 	
 	<!-- Registration -->
 	<div>
-		<a data-toggle=dropdown><i class="fal fa-user"></i>&nbsp;&nbsp;<?=readLanguage(mobile,footer_account)?>&nbsp;&nbsp;<i class="fal fa-angle-down"></i></a>
+		<a data-toggle=dropdown><i class="fal fa-user"></i>&nbsp;&nbsp;<?=readLanguage('mobile','footer_account')?>&nbsp;&nbsp;<i class="fal fa-angle-down"></i></a>
 		<ul class="dropdown-menu reverse animate">
 			<? if (!$logged_user){ ?>
-			<li><a href="#" data-toggle=modal data-target="#loginModal"><?=readLanguage(accounts,login)?></a></li>
-			<li><a href="signup/"><?=readLanguage(accounts,signup)?></a></li>
+			<li><a href="#" data-toggle=modal data-target="#loginModal"><?=readLanguage('accounts','login')?></a></li>
+			<li><a href="signup/"><?=readLanguage('accounts','signup')?></a></li>
 			<? } else { ?>
-			<li><a href="user/"><?=readLanguage(user,dashboard)?></a></li>
-			<li><a href="logout/"><?=readLanguage(accounts,logout)?></a></li>
+			<li><a href="user/"><?=readLanguage('user','dashboard')?></a></li>
+			<li><a href="logout/"><?=readLanguage('accounts','logout')?></a></li>
 			<? } ?>
 		</ul>
 	</div>

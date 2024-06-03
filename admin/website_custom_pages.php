@@ -25,14 +25,14 @@ if ($post["token"] && $post["action"]=="parent"){
 if ($delete){
 	$children = customPageChildren($delete);
 	mysqlQuery("DELETE FROM $mysqltable WHERE id IN (" . implode(",", $children) . ")");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE canonical='" . $post["canonical"] . "'"))){
-		$error = readLanguage(records,exists);
+		$error = readLanguage('records','exists');
 	} else if (!validateCanonical($post["canonical"])){
-		$error = readLanguage(records,invalid_canonical);
+		$error = readLanguage('records','invalid_canonical');
 	} else {
 		$query = "INSERT INTO $mysqltable (
 			parent,
@@ -102,15 +102,15 @@ if ($delete){
 			'" . newRecordID($mysqltable) . "'
 		)";
 		mysqlQuery($query);
-		$success = readLanguage(records,added);
+		$success = readLanguage('records','added');
 	}
 
 //==== EDIT Record ====	
 } else if ($post["token"] && $edit){
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE canonical='" . $post["canonical"] . "' AND id!=$edit"))){
-		$error = readLanguage(records,exists);
+		$error = readLanguage('records','exists');
 	} else if (!validateCanonical($post["canonical"])){
-		$error = readLanguage(records,invalid_canonical);
+		$error = readLanguage('records','invalid_canonical');
 	} else {
 		$record_data = getID($edit,$mysqltable);
 		$query = "UPDATE $mysqltable SET
@@ -148,20 +148,20 @@ if ($delete){
 			hidden='" . $post["hidden"] . "'
 		WHERE id=$edit";
 		mysqlQuery($query);
-		$success = readLanguage(records,updated);
+		$success = readLanguage('records','updated');
 	}
 }
 
 //Read and Set Operation [Custom]
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","create"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit","create"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -237,8 +237,8 @@ include "_header.php"; ?>
 
 <!-- Tabs -->
 <ul class="nav nav-tabs tab-inline-header margin-top">
-	<li role=presentation><a href="#tree" data-toggle=tab role=tab><i class="fas fa-laptop"></i><span>&nbsp;&nbsp;<?=readLanguage(builder,page_tree)?></span></a></li>
-	<li role=presentation><a href="#manager" data-toggle=tab role=tab><i class="fas fa-cogs"></i><span>&nbsp;&nbsp;<?=readLanguage(builder,page_manager)?></span></a></li>
+	<li role=presentation><a href="#tree" data-toggle=tab role=tab><i class="fas fa-laptop"></i><span>&nbsp;&nbsp;<?=readLanguage('builder','page_tree')?></span></a></li>
+	<li role=presentation><a href="#manager" data-toggle=tab role=tab><i class="fas fa-cogs"></i><span>&nbsp;&nbsp;<?=readLanguage('builder','page_manager')?></span></a></li>
 </ul>
 
 <div class=tab-content><!-- Start Tab Content -->
@@ -248,11 +248,11 @@ include "_header.php"; ?>
 
 <div class="toolbar margin-bottom align-items-end flex-wrap">
 	<div class="subtitle flex-grow-1">
-		<span><?=readLanguage(builder,page_operations)?><small><?=readLanguage(builder,page_operations_note)?></small></span>
+		<span><?=readLanguage('builder','page_operations')?><small><?=readLanguage('builder','page_operations_note')?></small></span>
 	</div>
 	<div class="d-flex margin-top-small">
-		<div><input type=text class=tree_search placeholder="<?=readLanguage(general,search)?>"></div>
-		<div><button class="btn btn-success btn-sm" onclick="pageCreate()"><i class="fas fa-plus"></i>&nbsp;&nbsp;<?=readLanguage(builder,page_create)?></button></div>
+		<div><input type=text class=tree_search placeholder="<?=readLanguage('general','search')?>"></div>
+		<div><button class="btn btn-success btn-sm" onclick="pageCreate()"><i class="fas fa-plus"></i>&nbsp;&nbsp;<?=readLanguage('builder','page_create')?></button></div>
 	</div>
 </div>
 
@@ -309,7 +309,7 @@ $("#pages").jstree({
 				"Create": {
 					eparator_before: false,
 					separator_after: false,
-					label: "<?=readLanguage(builder,page_create)?>",
+					label: "<?=readLanguage('builder','page_create')?>",
 					icon: "fal fa-plus",
 					action: function (obj){
 						pageCreate($node.data.id);
@@ -318,7 +318,7 @@ $("#pages").jstree({
 				"Edit": {
 					separator_before: false,
 					separator_after: false,
-					label: "<?=readLanguage(builder,page_edit)?>",
+					label: "<?=readLanguage('builder','page_edit')?>",
 					icon: "fal fa-edit",
 					action: function (obj){ 
 						setWindowLocation("<?=$base_name?>.php?edit=" + $node.data.id);
@@ -327,22 +327,22 @@ $("#pages").jstree({
 				"Delete": {
 					separator_before: false,
 					separator_after: true,
-					label: "<?=readLanguage(builder,page_delete)?>",
+					label: "<?=readLanguage('builder','page_delete')?>",
 					icon: "fal fa-trash",
 					action: function (obj){
 						$.confirm({
-							title: "<?=readLanguage(crud,delete_title)?>",
-							content: "<span class=crud_input><?=readLanguage(crud,delete_message)?> <b>" + $node.data.title + "</b>",
+							title: "<?=readLanguage('crud','delete_title')?>",
+							content: "<span class=crud_input><?=readLanguage('crud','delete_message')?> <b>" + $node.data.title + "</b>",
 							icon: "fal fa-trash",
 							buttons: {
 								confirm: {
-									text: "<?=readLanguage(crud,yes)?>",
+									text: "<?=readLanguage('crud','yes')?>",
 									btnClass: "btn-red",
 									action: function(){
 										setWindowLocation("<?=$base_name?>.php?delete=" + $node.data.id + "&token=<?=$token?>");
 									}
 								},
-								cancel: { text: "<?=readLanguage(crud,cancel)?>" }
+								cancel: { text: "<?=readLanguage('crud','cancel')?>" }
 							}
 						});
 					}
@@ -350,7 +350,7 @@ $("#pages").jstree({
 				"Open": {
 					separator_before: false,
 					separator_after: false,
-					label: "<?=readLanguage(builder,page_open)?>",
+					label: "<?=readLanguage('builder','page_open')?>",
 					icon: "fal fa-laptop",
 					action: function (obj){ 
 						window.open($node.data.url);
@@ -359,7 +359,7 @@ $("#pages").jstree({
 				"Copy": {
 					separator_before: false,
 					separator_after: false,
-					label: "<?=readLanguage(builder,page_copy_url)?>",
+					label: "<?=readLanguage('builder','page_copy_url')?>",
 					icon: "fal fa-copy",
 					action: function (obj){
 						var url = $node.data.url;
@@ -419,7 +419,7 @@ $("#pages").on("move_node.jstree", function (e, data){
 			priorities: JSON.stringify(priorites)
 		},
 		success: function(result){
-			quickNotify("<?=readLanguage(builder,page_relocated)?>", result, "success", "fas fa-check fa-2x");
+			quickNotify("<?=readLanguage('builder','page_relocated')?>", result, "success", "fas fa-check fa-2x");
 		}
 	});
 });
@@ -431,16 +431,16 @@ function pageCreate(parent=0){
 </script>
 
 <div class=crud_separator></div>
-<div class=subtitle><?=readLanguage(builder,page_table)?></div>
+<div class=subtitle><?=readLanguage('builder','page_table')?></div>
 <?
 $crud_data["where_statement"] = "type!=0";
 $crud_data["delete_record_message"] = "title";
 $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("parent", readLanguage(builder,page_parent), "50%", "center", "customPagePathRender(customPagePath(%s))", true, false),
-	array("title", readLanguage(inputs,title), "50%", "center", null, false, true),
-	array("canonical", readLanguage(inputs,url), "300px", "center", "pageURL(customPageURL(%d))", false, true),
-	array("date", readLanguage(inputs,date), "200px", "center", "dateLanguage('l, d M Y',%s)", false, false)
+	array("parent", readLanguage('builder','page_parent'), "50%", "center", "customPagePathRender(customPagePath(%s))", true, false),
+	array("title", readLanguage('inputs','title'), "50%", "center", null, false, true),
+	array("canonical", readLanguage('inputs','url'), "300px", "center", "pageURL(customPageURL(%d))", false, true),
+	array("date", readLanguage('inputs','date'), "200px", "center", "dateLanguage('l, d M Y',%s)", false, false)
 );
 require_once("crud/crud.php");
 ?>
@@ -455,15 +455,15 @@ require_once("crud/crud.php");
 <input type=hidden name=page_layout>
 
 <!-- Page Settings -->
-<div class=subtitle><?=readLanguage(builder,page_settings)?></div>
+<div class=subtitle><?=readLanguage('builder','page_settings')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,page_type)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','page_type')?>: <i class=requ></i></td>
 	<td colspan=3>
 		<? if ($edit && mysqlNum(mysqlQuery("SELECT id FROM $mysqltable WHERE parent='" . $entry["id"] . "'"))){ ?>
 			<input type=hidden name=type value="<?=$entry["type"]?>">
 			<div><?=$data_pages_types[$entry["type"]]?></div>
-			<div class=input_description><?=readLanguage(builder,page_type_note)?></div>
+			<div class=input_description><?=readLanguage('builder','page_type_note')?></div>
 		<? } else { ?>
 			<div class=radio_container id=type>
 				<? foreach ($data_pages_types AS $key=>$value){
@@ -485,24 +485,24 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','title')?>: <i class=requ></i></td>
 	<td>
 		<input type=text name=title onkeyup="createCanonical(this.value, 'canonical')" value="<?=$entry["title"]?>" data-validation=required>
 	</td>
-	<td class=title><?=readLanguage(inputs,canonical)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','canonical')?>: <i class=requ></i></td>
 	<td>
 		<div class=d-flex>
-			<input type=text name=canonical id=canonical value="<?=$entry["canonical"]?>" placeholder="<?=readLanguage(inputs,canonical_placeholder)?>" data-validation=required>
+			<input type=text name=canonical id=canonical value="<?=$entry["canonical"]?>" placeholder="<?=readLanguage('inputs','canonical_placeholder')?>" data-validation=required>
 			&nbsp;&nbsp;<a class="btn btn-default btn-sm btn-square flex-center canonical_lock_button" onclick="toggleCanonicalLock('canonical', this)"><i class="fal fa-fw fa-lock"></i></a>
 		</div>
 		<? if ($edit && $entry["canonical"]){ ?><script>toggleCanonicalLock("canonical", $(".canonical_lock_button"))</script><? } ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,page_parent)?>:</td>
+	<td class=title><?=readLanguage('builder','page_parent')?>:</td>
 	<td colspan=3>
 		<select name=parent id=parent>
-			<option value=0><?=readLanguage(builder,none)?></option>
+			<option value=0><?=readLanguage('builder','none')?></option>
 			<? $children = ($edit ? implode(",", customPageChildren($edit)) : 0);
 			$parent_result = mysqlQuery("SELECT * FROM $mysqltable WHERE type=1 AND id NOT IN (" . ($children ? $children : 0) . ") ORDER BY priority DESC");
 			while ($parent = mysqlFetch($parent_result)){ ?>
@@ -516,7 +516,7 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,tags)?>:</td>
+	<td class=title><?=readLanguage('builder','tags')?>:</td>
 	<td colspan=3>
 		<select name=tags[] id=tags multiple>
 		<? $appended_tags = array();
@@ -535,16 +535,16 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,description)?>:</td>
+	<td class=title><?=readLanguage('inputs','description')?>:</td>
 	<td colspan=3><textarea name=description style="min-height:initial; height:55px"><?=$entry["description"]?></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,header_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','header_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=header_image id=header_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["header_image"] ? "../uploads/pages/" . $entry["header_image"] : "images/placeholder.png") ?>
@@ -554,12 +554,12 @@ require_once("crud/crud.php");
 		<!-- Used Only For Upload -->
 		<script>$(document).ready(function(){ bindImage("header_image") })</script>
 	</td>
-	<td class=title><?=readLanguage(inputs,cover_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','cover_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=cover_image id=cover_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["cover_image"] ? "../uploads/pages/" . $entry["cover_image"] : "images/placeholder.png") ?>
@@ -571,7 +571,7 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,date)?>:</td>
+	<td class=title><?=readLanguage('inputs','date')?>:</td>
 	<td>
 		<div class=p-relative>
 			<input type=text name=date id=date readonly class=date_field>
@@ -579,11 +579,11 @@ require_once("crud/crud.php");
 			<script>createCalendar("date", new Date(<?=$date?>), null, null, null, null, true, true)</script>
 		</div>
 	</td>
-	<td class=title><?=readLanguage(inputs,hidden)?>:</td>
+	<td class=title><?=readLanguage('inputs','hidden')?>:</td>
 	<td><div class=switch><label><?=$data_no_yes[0]?><input type=checkbox name=hidden value=1 <?=($entry["hidden"] ? "checked" : "")?>><span class=lever></span><?=$data_no_yes[1]?></label></div></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,foreign_pages)?>:</td>
+	<td class=title><?=readLanguage('builder','foreign_pages')?>:</td>
 	<td colspan=3>
 		<select name=foreign_pages[] id=foreign_pages multiple>
 			<? $children = ($edit ? implode(",", customPageChildren($edit)) : 0);
@@ -601,19 +601,19 @@ require_once("crud/crud.php");
 </table>
 
 <!-- Page Contents -->
-<div class=subtitle><?=readLanguage(builder,page_content)?></div>
+<div class=subtitle><?=readLanguage('builder','page_content')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,content)?>:</td>
+	<td class=title><?=readLanguage('inputs','content')?>:</td>
 	<td><textarea class=contentEditor style="height:400px" name=content id=content><?=$entry["content"]?></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,gallery)?>:</td>
+	<td class=title><?=readLanguage('inputs','gallery')?>:</td>
 	<td data-token="<?=$token?>" data-attachments=gallery data-upload-path="../uploads/pages/">
 		<div class=attachment-button>
 			<input type=hidden name=gallery value="<?=$entry["gallery"]?>">
-			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage(inputs,gallery_insert)?><input type=file id=gallery accept="image/*" multiple></label>
-			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage(inputs,uploading)?></div>
+			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage('inputs','gallery_insert')?><input type=file id=gallery accept="image/*" multiple></label>
+			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage('inputs','uploading')?></div>
 		</div>
 		<ul sortable class=attachments-list></ul><div style="clear:both"></div>
 		<? if ($entry["gallery"]){ ?>
@@ -625,9 +625,9 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,videos)?>:</td>
+	<td class=title><?=readLanguage('inputs','videos')?>:</td>
 	<td data-multiple=videos>
-		<button type=button class="btn btn-primary btn-upload" onclick="multipleDataCreate('videos')"><?=readLanguage(inputs,videos_insert)?></button>
+		<button type=button class="btn btn-primary btn-upload" onclick="multipleDataCreate('videos')"><?=readLanguage('inputs','videos_insert')?></button>
 		<input type=hidden name=videos>
 		<ul multiple-sortable>
 			<li data-template>
@@ -638,10 +638,10 @@ require_once("crud/crud.php");
 				</td>
 				<td>
 					<div class=form-item>
-						<b><?=readLanguage(inputs,title)?></b><div class=input><input type=text data-name=title data-validation=required disabled></div>
+						<b><?=readLanguage('inputs','title')?></b><div class=input><input type=text data-name=title data-validation=required disabled></div>
 					</div>
 					<div class=form-item>
-						<b><?=readLanguage(inputs,url)?></b><div class=input><input type=text data-name=url data-validation=validateYouTube disabled></div>
+						<b><?=readLanguage('inputs','url')?></b><div class=input><input type=text data-name=url data-validation=validateYouTube disabled></div>
 					</div>
 				</td>
 				</tr></table>
@@ -656,12 +656,12 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,attachments)?>:</td>
+	<td class=title><?=readLanguage('inputs','attachments')?>:</td>
 	<td data-token="<?=$token?>" data-attachments=attachments data-upload-path="../uploads/pages/">
 		<div class=attachment-button>
 			<input type=hidden name=attachments value="<?=$entry["attachments"]?>">
-			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage(inputs,attachments_insert)?><input type=file id=attachments accept="pdf/*" multiple></label>
-			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage(inputs,uploading)?></div>
+			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage('inputs','attachments_insert')?><input type=file id=attachments accept="pdf/*" multiple></label>
+			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage('inputs','uploading')?></div>
 		</div>
 		<ul sortable class=attachments-list></ul><div style="clear:both"></div>
 		<? if ($entry["attachments"]){ ?>
@@ -673,7 +673,7 @@ require_once("crud/crud.php");
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,layout_displays)?>:</td>
+	<td class=title><?=readLanguage('builder','layout_displays')?>:</td>
 	<td colspan=3>
 		<input type=hidden name=page_content_displays id=page_content_displays>
 		<ul class=inline_input json-fixed-data=page_content_displays clear-empty>
@@ -681,10 +681,10 @@ require_once("crud/crud.php");
 			$content_displays_list = populateData("SELECT * FROM " . $suffix . "website_custom_displays WHERE source=4", "uniqid", "placeholder");
 			foreach ($content_displays AS $content){ ?>
 				<li style="flex-basis:100px">
-					<p><?=readLanguage(inputs,$content)?></p>
+					<p><?=readLanguage('inputs',$content)?></p>
 					<select data-name="<?=$content?>">
-						<option value=""><?=readLanguage(builder,basic)?></option>
-						<option value="none"><?=readLanguage(builder,none)?></option>
+						<option value=""><?=readLanguage('builder','basic')?></option>
+						<option value="none"><?=readLanguage('builder','none')?></option>
 						<?=$content_displays_list?>
 					</select>
 				</li>
@@ -696,7 +696,7 @@ require_once("crud/crud.php");
 </table>
 
 <!-- Page Sections -->
-<div class=subtitle><?=readLanguage(builder,layout_modules)?></div>
+<div class=subtitle><?=readLanguage('builder','layout_modules')?></div>
 <? $modules_input = "[name=page_layout]";
 $modules_entry = $entry["page_layout"];
 $modules_content = true;
@@ -704,14 +704,14 @@ $modules_type = 1;
 include "includes/_select_modules.php"; ?>
 
 <!-- Page Content Layout -->
-<div class=subtitle><?=readLanguage(builder,layout)?></div>
+<div class=subtitle><?=readLanguage('builder','layout')?></div>
 <div class=data_table_container>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,page_content_layout)?>:</td>
+	<td class=title><?=readLanguage('builder','page_content_layout')?>:</td>
 	<td colspan=3>
 		<select name=page_content_module id=page_content_module>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 			<?=populateData("SELECT * FROM " . $suffix . "website_modules_custom WHERE FIND_IN_SET(0,type)", "uniqid", "placeholder")?>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#page_content_module", "<?=$entry["page_content_module"]?>")</script><? } ?>
@@ -719,19 +719,19 @@ include "includes/_select_modules.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,layout_banner)?>:</td>
+	<td class=title><?=readLanguage('builder','layout_banner')?>:</td>
 	<td>
 		<select name=page_header id=page_header>
-			<option value=""><?=readLanguage(builder,basic)?></option>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value=""><?=readLanguage('builder','basic')?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#page_header", "<?=$entry["page_header"]?>")</script><? } ?>
 	</td>
-	<td class=title><?=readLanguage(builder,layout_footer)?>:</td>
+	<td class=title><?=readLanguage('builder','layout_footer')?>:</td>
 	<td>
 		<select name=page_footer id=page_footer>
-			<option value=""><?=readLanguage(builder,basic)?></option>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value=""><?=readLanguage('builder','basic')?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#page_footer", "<?=$entry["page_footer"]?>")</script><? } ?>
 	</td>
@@ -740,7 +740,7 @@ include "includes/_select_modules.php"; ?>
 <div visibility-control=type visibility-value=2>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,page_children_show)?>:</td>
+	<td class=title><?=readLanguage('builder','page_children_show')?>:</td>
 	<td colspan=3>
 		<div class=switch><label><?=$data_no_yes[0]?><input type=checkbox name=blocks_show id=blocks_show onchange="toggleVisibility(this)" value=1 <?=($entry["blocks_show"] ? "checked" : "")?>><span class=lever></span><?=$data_no_yes[1]?></label></div>
 		<script>
@@ -751,7 +751,7 @@ include "includes/_select_modules.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=blocks_show visibility-value=1>
-	<td class=title><?=readLanguage(builder,blocks_template)?>:</td>
+	<td class=title><?=readLanguage('builder','blocks_template')?>:</td>
 	<td>
 		<select name=blocks_template id=blocks_template>
 		<? $built_in_blocks = retrieveDirectoryFiles("../blocks/", "php");
@@ -763,13 +763,13 @@ include "includes/_select_modules.php"; ?>
 		<? if ($edit){ ?><script>setSelectValue("#blocks_template", "<?=$entry["blocks_template"]?>")</script><? } ?>
 		<script>$("#blocks_template").select2()</script>
 	</td>
-	<td class=title><?=readLanguage(builder,blocks_page)?>:</td>
+	<td class=title><?=readLanguage('builder','blocks_page')?>:</td>
 	<td>
 		<input type=number name=blocks_per_page value="<?=($edit ? $entry["blocks_per_page"] : 12)?>">
 	</td>
 </tr>
 <tr visibility-control=blocks_show visibility-value=1>
-	<td class=title><?=readLanguage(builder,blocks_row)?>:</td>
+	<td class=title><?=readLanguage('builder','blocks_row')?>:</td>
 	<td>
 		<input type=hidden name=blocks_per_row id=blocks_per_row>
 		<ul class=inline_input json-fixed-data=blocks_per_row>
@@ -782,14 +782,14 @@ include "includes/_select_modules.php"; ?>
 		</ul>
 		<? if ($entry["blocks_per_row"]){ ?><script>fixedDataRead("blocks_per_row", <?=$entry["blocks_per_row"]?>)</script><? } ?>
 	</td>
-	<td class=title><?=readLanguage(builder,blocks_spacing)?>:</td>
+	<td class=title><?=readLanguage('builder','blocks_spacing')?>:</td>
 	<td>
 		<div class="d-flex align-items-center">
 			<input type=hidden name=blocks_spacing id=blocks_spacing>
 			<ul class=inline_input json-fixed-data=blocks_spacing>
 			<? foreach ($data_screen_sizes AS $size=>$icon){
 				print "<li><div class=input-addon><span before><i class='$icon'></i></span><select data-name='$size' block-options>";  ?>
-					<option value=0><?=readLanguage(builder,none)?></option>
+					<option value=0><?=readLanguage('builder','none')?></option>
 					<option value=5>5</option><option value=10>10</option>
 					<option value=15>15</option><option value=20>20</option>
 					<option value=25>25</option><option value=30>30</option>
@@ -809,36 +809,36 @@ include "includes/_select_modules.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=blocks_show visibility-value=1>
-	<td class=title><?=readLanguage(builder,grid_blocks_class)?>:</td>
+	<td class=title><?=readLanguage('builder','grid_blocks_class')?>:</td>
 	<td>
 		<div class=class_input class-bind=blocks_class class-properties="<?=$entry["blocks_class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(builder,animation)?>:</td>
+	<td class=title><?=readLanguage('builder','animation')?>:</td>
 	<td>
 		<div class=animation_input animation-bind=blocks_animation animation-properties="<?=base64_encode($entry["blocks_animation"])?>"></div>
 	</td>
 </tr>
 <tr visibility-control=blocks_show visibility-value=1>
-	<td class=title><?=readLanguage(builder,flex_justify)?>:</td>
+	<td class=title><?=readLanguage('builder','flex_justify')?>:</td>
 	<td>
 		<select block-options name=blocks_grid_justify id=blocks_grid_justify>
-			<option value=flex-start><?=readLanguage(builder,flex_justify_start)?></option>
-			<option value=flex-end><?=readLanguage(builder,flex_justify_end)?></option>
-			<option value=center><?=readLanguage(builder,flex_justify_center)?></option>
-			<option value=space-between><?=readLanguage(builder,flex_justify_space_between)?></option>
-			<option value=space-around><?=readLanguage(builder,flex_justify_space_around)?></option>
-			<option value=space-evenly><?=readLanguage(builder,flex_justify_space_evenly)?></option>
+			<option value=flex-start><?=readLanguage('builder','flex_justify_start')?></option>
+			<option value=flex-end><?=readLanguage('builder','flex_justify_end')?></option>
+			<option value=center><?=readLanguage('builder','flex_justify_center')?></option>
+			<option value=space-between><?=readLanguage('builder','flex_justify_space_between')?></option>
+			<option value=space-around><?=readLanguage('builder','flex_justify_space_around')?></option>
+			<option value=space-evenly><?=readLanguage('builder','flex_justify_space_evenly')?></option>
 		</select>
 		<? if ($entry["blocks_grid_justify"]){ ?><script>setSelectValue("#blocks_grid_justify","<?=$entry["blocks_grid_justify"]?>")</script><? } ?>
 	</td>
-	<td class=title><?=readLanguage(builder,flex_align)?>:</td>
+	<td class=title><?=readLanguage('builder','flex_align')?>:</td>
 	<td>
 		<select block-options name=blocks_grid_align id=blocks_grid_align>
-			<option value=stretch><?=readLanguage(builder,flex_align_stretch)?></option>
-			<option value=center><?=readLanguage(builder,flex_align_center)?></option>
-			<option value=flex-start><?=readLanguage(builder,flex_align_start)?></option>
-			<option value=flex-end><?=readLanguage(builder,flex_align_end)?></option>
-			<option value=baseline><?=readLanguage(builder,flex_align_baseline)?></option>
+			<option value=stretch><?=readLanguage('builder','flex_align_stretch')?></option>
+			<option value=center><?=readLanguage('builder','flex_align_center')?></option>
+			<option value=flex-start><?=readLanguage('builder','flex_align_start')?></option>
+			<option value=flex-end><?=readLanguage('builder','flex_align_end')?></option>
+			<option value=baseline><?=readLanguage('builder','flex_align_baseline')?></option>
 		</select>
 		<? if ($entry["blocks_grid_align"]){ ?><script>setSelectValue("#blocks_grid_align","<?=$entry["blocks_grid_align"]?>")</script><? } ?>
 	</td>
@@ -849,13 +849,13 @@ include "includes/_select_modules.php"; ?>
 
 <!-- Child Pages Content Layout -->
 <div visibility-control=type visibility-value=2 class=margin-top>
-<div class=subtitle><?=readLanguage(builder,page_child_content_layout)?></div>
+<div class=subtitle><?=readLanguage('builder','page_child_content_layout')?></div>
 <div class=data_table_container><table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,page_content_layout)?>:</td>
+	<td class=title><?=readLanguage('builder','page_content_layout')?>:</td>
 	<td colspan=3>
 		<select name=child_content_module id=child_content_module>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 			<?=populateData("SELECT * FROM " . $suffix . "website_modules_custom WHERE FIND_IN_SET(0,type)", "uniqid", "placeholder")?>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#child_content_module", "<?=$entry["child_content_module"]?>")</script><? } ?>
@@ -863,19 +863,19 @@ include "includes/_select_modules.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,layout_banner)?>:</td>
+	<td class=title><?=readLanguage('builder','layout_banner')?>:</td>
 	<td>
 		<select name=child_header id=child_header>
-			<option value=""><?=readLanguage(builder,basic)?></option>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value=""><?=readLanguage('builder','basic')?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#child_header", "<?=$entry["child_header"]?>")</script><? } ?>
 	</td>
-	<td class=title><?=readLanguage(builder,layout_footer)?>:</td>
+	<td class=title><?=readLanguage('builder','layout_footer')?>:</td>
 	<td>
 		<select name=child_footer id=child_footer>
-			<option value=""><?=readLanguage(builder,basic)?></option>
-			<option value="none"><?=readLanguage(builder,none)?></option>
+			<option value=""><?=readLanguage('builder','basic')?></option>
+			<option value="none"><?=readLanguage('builder','none')?></option>
 		</select>
 		<? if ($edit){ ?><script>setSelectValue("#child_footer", "<?=$entry["child_footer"]?>")</script><? } ?>
 	</td>

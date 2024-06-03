@@ -1,9 +1,9 @@
 <!-- Footer Copyrights (Only if not in Fancybox frame) -->
 <? if (!$inline_page){ ?>
 <div class=footer_copyrights>
-	<?=readLanguage(general,copyrights_reserved)?> © <?=$website_information["website_name"]?> <?=date("Y",time())?>
+	<?=readLanguage('general','copyrights_reserved')?> © <?=$website_information["website_name"]?> <?=date("Y",time())?>
 	<? if (!$white_label){
-		print "<br><small>" . readLanguage(general,developed_by) . ": <b><a href='http://web.prismatecs.com/' target=_blank>Prismatecs Web Solutions</a></b></small>";
+		print "<br><small>" . readLanguage('general','developed_by') . ": <b><a href='http://web.prismatecs.com/' target=_blank>Prismatecs Web Solutions</a></b></small>";
 	} ?>
 </div>
 <? } ?>
@@ -25,7 +25,7 @@
 <script>
 $("[show-notifications]").on("click", function (){
 	$.alert({
-		title: "<?=readLanguage(general,notifications)?>",
+		title: "<?=readLanguage('general','notifications')?>",
 		icon: "fas fa-exclamation-triangle",
 		type: "orange",
 		content: $(".footer_notifications").html()

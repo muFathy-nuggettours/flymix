@@ -20,7 +20,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -42,7 +42,7 @@ if (!$canonical){
 	}
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }
@@ -84,16 +84,16 @@ if (!mysqlNum($result)){
 			<? $country = getData("system_database_countries", "code", $page_data["country"]); ?>
 			<div class=custom_info_card>
 				<div><img width=100 src="uploads/airlines/<?=$page_data["iata"]?>.png" onerror="$(this).attr('src', 'uploads/airlines/00.png')"></div>
-				<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
-				<div><small><?=readLanguage(pages,code)?></small><br><?=strtoupper($page_data["iata"])?></div>
-				<? if ($page_data["website"]){ ?><div><small><?=readLanguage(accounts,website)?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
+				<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
+				<div><small><?=readLanguage('pages','code')?></small><br><?=strtoupper($page_data["iata"])?></div>
+				<? if ($page_data["website"]){ ?><div><small><?=readLanguage('accounts','website')?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
 			</div>
 		</div>
 	</div>
 </div>
 
 <!-- Booking -->
-<h2 class="page_subtitle large margin-top-30"><?=readLanguage(booking,book_now_on)?><?=$section_title?></h2>
+<h2 class="page_subtitle large margin-top-30"><?=readLanguage('booking','book_now_on')?><?=$section_title?></h2>
 <div class=inline_search>
 <? $search["airline"] = $page_data["iata"];
 include "modules/search.php"; ?>

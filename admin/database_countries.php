@@ -29,16 +29,16 @@ if ($post["token"] && $edit){
 		en_content='" . $post["en_content"] . "'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation [Custom]
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 }
 if ($success){ $message = "<div class='alert alert-success'>" . $success . "</div>"; }
@@ -121,12 +121,12 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=publish visibility-value=1>
-	<td class=title><?=readLanguage(inputs,header_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','header_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=header_image id=header_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["header_image"] ? "../uploads/database/" . $entry["header_image"] : "images/placeholder.png") ?>
@@ -136,12 +136,12 @@ include "_header.php"; ?>
 		<!-- Used Only For Upload -->
 		<script>$(document).ready(function(){ bindImage("header_image") })</script>
 	</td>
-	<td class=title><?=readLanguage(inputs,cover_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','cover_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=cover_image id=cover_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["cover_image"] ? "../uploads/database/" . $entry["cover_image"] : "images/placeholder.png") ?>
@@ -153,11 +153,11 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=publish visibility-value=1>
-	<td class=title><?=readLanguage(inputs,content)?> بالعربية:</td>
+	<td class=title><?=readLanguage('inputs','content')?> بالعربية:</td>
 	<td colspan=3><textarea class=contentEditor style="height:400px" name=ar_content id=ar_content><?=$entry["ar_content"]?></textarea></td>
 </tr>
 <tr visibility-control=publish visibility-value=1>
-	<td class=title><?=readLanguage(inputs,content)?> بالإنجليزية:</td>
+	<td class=title><?=readLanguage('inputs','content')?> بالإنجليزية:</td>
 	<td colspan=3><textarea class=contentEditor style="height:400px" name=en_content id=en_content><?=$entry["en_content"]?></textarea></td>
 </tr>
 </table></div>

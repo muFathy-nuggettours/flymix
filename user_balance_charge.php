@@ -15,10 +15,10 @@ mysqlQuery("UPDATE users_balance_requests SET payment_method=$selected_method WH
 <!-- Insert Amount -->
 <? } else { ?>
 <div class=page_container>
-	<span><?=readLanguage(payment,balance_add_note)?> <b><?=$user_paymentCurrency["ar_name"]?></b></span>
+	<span><?=readLanguage('payment','balance_add_note')?> <b><?=$user_paymentCurrency["ar_name"]?></b></span>
 	<div class="d-flex margin-top">
 		<input type=number name=amount id=amount maxlength=5 style="font-size:18px">&nbsp;&nbsp;&nbsp;&nbsp;
-		<input type=button class="btn btn-primary" value="<?=readLanguage(payment,procced_payment)?>" onclick="balanceRequest()">
+		<input type=button class="btn btn-primary" value="<?=readLanguage('payment','procced_payment')?>" onclick="balanceRequest()">
 	</div>
 </div>
 
@@ -27,7 +27,7 @@ function balanceRequest(){
 	var amount = $("#amount").val();
 	var valid = (amount >= 10);
 	if (!valid){
-		quickNotify("<?=readLanguage(payment,balance_add_note)?> 10 <?=$user_paymentCurrency["ar_name"]?>", "تعثر استكمال العملية", "danger", "fas fa-times fa-2x");
+		quickNotify("<?=readLanguage('payment','balance_add_note')?> 10 <?=$user_paymentCurrency["ar_name"]?>", "تعثر استكمال العملية", "danger", "fas fa-times fa-2x");
 	} else {
 		$.ajax({
 			type: "POST",

@@ -107,29 +107,29 @@ $cms_animation_easings = array(
 <div class="modal fade" id=animationSelectionModal><div class=modal-dialog><div class=modal-content>
 	<div class=modal-header>
 		<button type=button class=close data-dismiss=modal><span>&times;</span></button>
-		<h4 class=modal-title><?=readLanguage(builder,animation_selector)?></h4>
+		<h4 class=modal-title><?=readLanguage('builder','animation_selector')?></h4>
 	</div>
 	<div class=modal-body>
 		<ul class=inline_input json-fixed-data=fixed_data>
 			<li>
-				<p><?=readLanguage(builder,animation)?></p>
+				<p><?=readLanguage('builder','animation')?></p>
 				<select data-animation-option=aos>
-					<option value=""><?=readLanguage(builder,none)?></option>
+					<option value=""><?=readLanguage('builder','none')?></option>
 					<? foreach ($cms_aos_animations AS $animation){
 						print "<option value='$animation'>$animation</option>";
 					} ?>
 				</select>
 			</li>
 			<li>
-				<p><?=readLanguage(builder,animation_delay)?></p>
+				<p><?=readLanguage('builder','animation_delay')?></p>
 				<div class=input-addon><input type=number data-animation-option=aos-delay data-animation-default=0><span after>ms</span></div>
 			</li>
 			<li>
-				<p><?=readLanguage(builder,animation_duration)?></p>
+				<p><?=readLanguage('builder','animation_duration')?></p>
 				<div class=input-addon><input type=number data-animation-option=aos-duration data-animation-default=500><span after>ms</span></div>
 			</li>
 			<li>
-				<p><?=readLanguage(builder,animation_easing)?></p>
+				<p><?=readLanguage('builder','animation_easing')?></p>
 				<select data-animation-option=aos-easing data-animation-default=linear>
 					<? foreach ($cms_animation_easings AS $easing){
 						print "<option value='$easing'>$easing</option>";
@@ -137,25 +137,25 @@ $cms_animation_easings = array(
 				</select>
 			</li>
 			<li>
-				<p><?=readLanguage(builder,animation_mirror)?></p>
+				<p><?=readLanguage('builder','animation_mirror')?></p>
 				<select data-animation-option=aos-mirror data-animation-default=true>
 					<option value="true"><?=$data_no_yes[1]?></option>
 					<option value="false"><?=$data_no_yes[0]?></option>
 				</select>
 			</li>
 			<li>
-				<p><?=readLanguage(builder,animation_once)?></p>
+				<p><?=readLanguage('builder','animation_once')?></p>
 				<select data-animation-option=aos-once data-animation-default=false>
 					<option value="true"><?=$data_no_yes[1]?></option>
 					<option value="false"><?=$data_no_yes[0]?></option>
 				</select>
 			</li>
 		</ul>
-		<div class=animation_preview><a class="btn btn-primary btn-sm" onclick="animationUpdatePreview(animationBuildProperties())"><i class="fas fa-redo"></i></a><h1><?=readLanguage(builder,preview)?></h1></div>
+		<div class=animation_preview><a class="btn btn-primary btn-sm" onclick="animationUpdatePreview(animationBuildProperties())"><i class="fas fa-redo"></i></a><h1><?=readLanguage('builder','preview')?></h1></div>
 	</div>
 	<div class=modal-footer>
-		<button type=button class="btn btn-default btn-sm" data-dismiss=modal><?=readLanguage(plugins,message_cancel)?></button>
-		<button type=button class="btn btn-primary btn-sm" onclick="animationModalSave()"><?=readLanguage(plugins,message_save)?></button>
+		<button type=button class="btn btn-default btn-sm" data-dismiss=modal><?=readLanguage('plugins','message_cancel')?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="animationModalSave()"><?=readLanguage('plugins','message_save')?></button>
 	</div>
 </div></div></div>
 
@@ -251,7 +251,7 @@ function animationModalSave(){
 //Update animation preview in modal
 function animationUpdatePreview(properties=null){
 	//Create preview element
-	var target = $("<h1><?=readLanguage(builder,preview)?></h1>");
+	var target = $("<h1><?=readLanguage('builder','preview')?></h1>");
 	var container = $(".animation_preview");
 	
 	//Remove previous elements and reappend
@@ -296,7 +296,7 @@ function animationSetProperties(target, properties){
 
 //Return text representation from given data
 function animationTextFromProperties(data){
-	return (data ? data.aos + " " + data["aos-easing"] + " " + data["aos-duration"] + "ms" : "<?=readLanguage(builder,none)?>");
+	return (data ? data.aos + " " + data["aos-easing"] + " " + data["aos-duration"] + "ms" : "<?=readLanguage('builder','none')?>");
 }
 
 //Update preview when changin any of the animation properties

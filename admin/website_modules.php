@@ -13,7 +13,7 @@ if ($post["token"]){
 		WHEN title='about_goals' THEN '" . $post["about_goals"] . "'
 		ELSE content
 	END");	
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
@@ -47,7 +47,7 @@ include "_header.php"; ?>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

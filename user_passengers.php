@@ -5,7 +5,7 @@ const YEAR_TIMESTAMP = 31556926;
 //Remove
 if ($post["token"] && $post["remove"]){
 	mysqlQuery("UPDATE users_passengers SET removed=1 WHERE user_id={$logged_user['id']} AND id={$post['remove']}");
-	$success = readLanguage(passengers,delete_msg);
+	$success = readLanguage('passengers','delete_msg');
 
 //Create / Update passenger
 } else if ($post["token"]){
@@ -52,12 +52,12 @@ if ($post["token"] && $post["remove"]){
 		)";
         mysqlQuery($query);
 		
-		$success = readLanguage(passengers,add_msg);
+		$success = readLanguage('passengers','add_msg');
 
 	//Update passenger
 	} else if ($update){
 		if (mysqlNum(mysqlQuery("SELECT * FROM users_passengers WHERE user_id='" . $logged_user["id"] . "' AND ssn='" . $post["ssn"] . "' AND id!=$update"))){
-			$error = readLanguage(passengers,already_added);
+			$error = readLanguage('passengers','already_added');
 		} else {
 			$record_data = getID($update, "users_passengers");
 
@@ -83,7 +83,7 @@ if ($post["token"] && $post["remove"]){
 			WHERE user_id={$logged_user["id"]} AND id=$update";
 			mysqlQuery($query);
 			
-			$success = readLanguage(passengers,update_msg);
+			$success = readLanguage('passengers','update_msg');
 		}
 	}
 }
@@ -108,18 +108,18 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 	<div class=page_container>
 		<div class=message>
 			<i class="fas fa-users"></i>
-			<b><?=readLanguage(passengers,no_passengers_added)?></b>
-			<small><?=readLanguage(passengers,no_passengers_added_small)?></small>
+			<b><?=readLanguage('passengers','no_passengers_added')?></b>
+			<small><?=readLanguage('passengers','no_passengers_added_small')?></small>
 		</div>
 		<div class="align-center margin-bottom">
-			<button class="btn btn-success btn-upload" onclick="insertPassenger()"><i class="fa fa-plus"></i> <?=readLanguage(passengers,add_passenger)?></button>
+			<button class="btn btn-success btn-upload" onclick="insertPassenger()"><i class="fa fa-plus"></i> <?=readLanguage('passengers','add_passenger')?></button>
 		</div>
 	</div>
 	
 	<? } else { ?>
 	<div class="flex-center margin-bottom">
-		<div class="page_subtitle clear-margin flex-grow-1"><?=readLanguage(common,you_have)?> <b><?=mysqlNum($user_passengers)?></b> <?=readLanguage(passengers,passengers_reg)?></div>
-		<button class="btn btn-success btn-sm" onclick="insertPassenger()"><i class="fa fa-plus"></i><?=readLanguage(passengers,add_passenger)?></button>
+		<div class="page_subtitle clear-margin flex-grow-1"><?=readLanguage('common','you_have')?> <b><?=mysqlNum($user_passengers)?></b> <?=readLanguage('passengers','passengers_reg')?></div>
+		<button class="btn btn-success btn-sm" onclick="insertPassenger()"><i class="fa fa-plus"></i><?=readLanguage('passengers','add_passenger')?></button>
 	</div>
     <? while ($user_passenger = mysqlFetch($user_passengers)){ ?>
     <div class="page_container margin-bottom margin-bottom-progressive" data-parent="<?=$user_passenger['id']?>">
@@ -132,8 +132,8 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 					<div class="d-flex align-items-center margin-top-5"><img src="images/countries/<?=$user_passenger["nationality"]?>.gif">&nbsp;&nbsp;<?=$user_passenger["ssn"]?></div>
 				</div>&nbsp;&nbsp;
                 <div class="d-flex margin-top-small">
-                    <button class="btn btn-primary btn-sm" onclick="updatePassenger(this)" data-content='<?=json_encode($user_passenger, true)?>' data-id="<?=$user_passenger['id']?>"><i class="fa fa-edit"></i> <?=readLanguage(plugins,message_update)?></button>&nbsp;&nbsp;
-                    <button class="btn btn-danger btn-sm" onclick="deletePassenger(this)" data-id="<?=$user_passenger['id']?>"><i class="fa fa-trash"></i> <?=readLanguage(plugins,message_delete)?></button>
+                    <button class="btn btn-primary btn-sm" onclick="updatePassenger(this)" data-content='<?=json_encode($user_passenger, true)?>' data-id="<?=$user_passenger['id']?>"><i class="fa fa-edit"></i> <?=readLanguage('plugins','message_update')?></button>&nbsp;&nbsp;
+                    <button class="btn btn-danger btn-sm" onclick="deletePassenger(this)" data-id="<?=$user_passenger['id']?>"><i class="fa fa-trash"></i> <?=readLanguage('plugins','message_delete')?></button>
                 </div>
             </div>
         </div>
@@ -145,13 +145,13 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 <div id=passengerModal class="modal fade"><div class=modal-dialog><div class=modal-content>
 	<div class=modal-header>
 		<button type=button class=close data-dismiss=modal>&times;</button>
-		<h4 class=modal-title><?=readLanguage(passengers,add_passenger)?></h4>
+		<h4 class=modal-title><?=readLanguage('passengers','add_passenger')?></h4>
 	</div>
 	<div class=modal-body>
 		<form method=post>
 		<input type=hidden name=token value="<?=$token?>">
 		<input type=hidden name=passenger_id>
-		<div class="alert alert-warning"><?=readLanguage(passengers,passengers_data_alert)?></div>
+		<div class="alert alert-warning"><?=readLanguage('passengers','passengers_data_alert')?></div>
 		
 		<table class=form_table>
 		<!-- Passenger Picture -->
@@ -184,22 +184,22 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 		<!-- First & Last Name -->
 		<tr>
 			<td>
-				<div class=title><?=readLanguage(common,first_name)?>: <i class=requ></i></div>
+				<div class=title><?=readLanguage('common','first_name')?>: <i class=requ></i></div>
 				<div class=d-flex>
 					<div class=input style="width:40%" data-icon="&#xf007;"><select name=name_prefix id=name_prefix><?=populateOptions($data_passenger_names_prefix)?></select></div>&nbsp;&nbsp;
-					<div class=input style="width:60%" data-icon="&#xf007;"><input type=text name=first_name maxlength=255 placeholder="<?=readLanguage(common,first_name)?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage(common,first_name_validate)?>"></div>
+					<div class=input style="width:60%" data-icon="&#xf007;"><input type=text name=first_name maxlength=255 placeholder="<?=readLanguage('common','first_name')?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage('common','first_name_validate')?>"></div>
 				</div>
 			</td>
 			<td>
-				<div class=title><?=readLanguage(common,last_name)?>: <i class=requ></i></div>
-				<div class=input data-icon="&#xf007;"><input type=text name=last_name maxlength=255 placeholder="<?=readLanguage(common,last_name)?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage(common,last_name_validate)?>"></div>
+				<div class=title><?=readLanguage('common','last_name')?>: <i class=requ></i></div>
+				<div class=input data-icon="&#xf007;"><input type=text name=last_name maxlength=255 placeholder="<?=readLanguage('common','last_name')?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage('common','last_name_validate')?>"></div>
 			</td>
 		</tr>
 
 		<!-- Birth date & Nationality -->
 		<tr>
 			<td>
-				<div class=title><?=readLanguage(passengers,birth_date)?>: <i class=requ></i></div>
+				<div class=title><?=readLanguage('passengers','birth_date')?>: <i class=requ></i></div>
 				<div>
 					<input class=caleran name=birth_date type=text>
 					<script>
@@ -219,7 +219,7 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 				</div>
 			</td>
 			<td>
-				<div class=title><?=readLanguage(common,nationality_country)?>: <i class=requ></i></div>
+				<div class=title><?=readLanguage('common','nationality_country')?>: <i class=requ></i></div>
 				<div>
 					<select name=nationality id=nationality>
 						<? foreach ($country_array as $country) {?>
@@ -248,11 +248,11 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 		<!-- Passport Information -->
 		<tr>
 			<td>
-				<div class=title><?=readLanguage(passengers,passport_number)?>: <i class=requ></i></div>
-				<div class=input data-icon="&#xf2c2;"><input type=text name=ssn placeholder="<?=readLanguage(passengers,passport_number)?>" data-validation=required></div>
+				<div class=title><?=readLanguage('passengers','passport_number')?>: <i class=requ></i></div>
+				<div class=input data-icon="&#xf2c2;"><input type=text name=ssn placeholder="<?=readLanguage('passengers','passport_number')?>" data-validation=required></div>
 			</td>
 			<td>
-				<div class=title><?=readLanguage(common,end_date)?>: <i class=requ></i></div>
+				<div class=title><?=readLanguage('common','end_date')?>: <i class=requ></i></div>
 				<div>
 					<input class=caleran name=ssn_end type=text>
 					<script>
@@ -274,18 +274,18 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 		<tr>
 			<td colspan=4>
 				<div class="panel panel-default">
-				<div class=panel-heading><a data-toggle=collapse href="#collapse"><?=readLanguage(passengers,special_requests)?></a><i class="fa fa-caret-down"></i></div>
+				<div class=panel-heading><a data-toggle=collapse href="#collapse"><?=readLanguage('passengers','special_requests')?></a><i class="fa fa-caret-down"></i></div>
 				<div id="collapse" class="panel-collapse collapse">
 				<div class="panel-body">
 					<table class=form_table>
 						<tr>
 						<td>
-							<div class=title><?=readLanguage(passengers,special_needs)?>:</div>
-							<select name=special_needs id=special_needs><option value="0"><?=readLanguage(common,undefined)?></option><?=populateOptions($data_special_needs)?></select>
+							<div class=title><?=readLanguage('passengers','special_needs')?>:</div>
+							<select name=special_needs id=special_needs><option value="0"><?=readLanguage('common','undefined')?></option><?=populateOptions($data_special_needs)?></select>
 						</td>
 						<td>
-							<div class=title><?=readLanguage(passengers,special_meals)?>:</div>
-							<select name=special_meals id=special_meals><option value="0"><?=readLanguage(common,undefined)?></option><?=populateOptions($data_special_meals)?></select>
+							<div class=title><?=readLanguage('passengers','special_meals')?>:</div>
+							<select name=special_meals id=special_meals><option value="0"><?=readLanguage('common','undefined')?></option><?=populateOptions($data_special_meals)?></select>
 						</td>
 						</tr>
 					</table>
@@ -297,7 +297,7 @@ if ($error){ $message = "<div class='alert alert-danger'>$error</div>"; }
 		</table>
 		
 		<div class="submit_container">
-			<button type=button class=submit><?=readLanguage(common,add)?></button>
+			<button type=button class=submit><?=readLanguage('common','add')?></button>
 		</div>
 		</form>
 	</div>

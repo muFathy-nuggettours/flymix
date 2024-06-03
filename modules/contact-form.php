@@ -22,9 +22,9 @@ if ($post["token"] && $post["action"]=="contact-form"){
 	
 	//Validate user data
 	if ($validation_result->isSuccess()==false){
-		$error = readLanguage(contact,error_description);
+		$error = readLanguage('contact','error_description');
 	} else if (!$valid_attempt){
-		$error = readLanguage(general,recaptcha_error);
+		$error = readLanguage('general','recaptcha_error');
 	} else {
 		$query = "INSERT INTO channel_requests (
 			name,
@@ -42,7 +42,7 @@ if ($post["token"] && $post["action"]=="contact-form"){
 			'" . time() . "'
 		)";
 		mysqlQuery($query);
-		$success = readLanguage(contact,success);	
+		$success = readLanguage('contact','success');	
 	}
 	
 	if ($success){ $message_contact_form = "<div class='alert alert-success'>" . $success . "</div>"; }
@@ -57,23 +57,23 @@ if ($post["token"] && $post["action"]=="contact-form"){
 	<form method=post>
 		<input type=hidden name=token value="<?=$token?>">
 		<input type=hidden name=action value="contact-form">
-		<div class=form-item><b><?=readLanguage(contact,name)?></b><div class=input><input type=text maxlength=100 name=name data-validation=required></div></div>
-		<div class=form-item><b><?=readLanguage(contact,mobile)?></b><div class=input><input type=text maxlength=100 name=mobile data-validation=required></div></div>
-		<div class=form-item><b><?=readLanguage(contact,email)?></b><div class=input><input type=email maxlength=100 name=email data-validation=email></div></div>
-		<div class=form-item><b><?=readLanguage(contact,subject)?></b><div class=input><input type=text maxlength=100 name=subject data-validation=required></div></div>
-		<div class=form-item><b><?=readLanguage(contact,message)?></b><div class=input><textarea name=message maxlength=1000 verbose style="height:150px" data-validation=required></textarea></div></div>
+		<div class=form-item><b><?=readLanguage('contact','name')?></b><div class=input><input type=text maxlength=100 name=name data-validation=required></div></div>
+		<div class=form-item><b><?=readLanguage('contact','mobile')?></b><div class=input><input type=text maxlength=100 name=mobile data-validation=required></div></div>
+		<div class=form-item><b><?=readLanguage('contact','email')?></b><div class=input><input type=email maxlength=100 name=email data-validation=email></div></div>
+		<div class=form-item><b><?=readLanguage('contact','subject')?></b><div class=input><input type=text maxlength=100 name=subject data-validation=required></div></div>
+		<div class=form-item><b><?=readLanguage('contact','message')?></b><div class=input><textarea name=message maxlength=1000 verbose style="height:150px" data-validation=required></textarea></div></div>
 		<? if ($system_settings["recaptcha_secret_key"]){ ?>
 		<div class=recaptcha_box>
-			<small><?=readLanguage(general,recaptcha_required)?></small>
+			<small><?=readLanguage('general','recaptcha_required')?></small>
 			<center><div class=g-recaptcha data-sitekey="<?=$system_settings["recaptcha_site_key"]?>"></div></center>
 		</div>
 		<? } ?>
-		<div class=submit_container><button type=button class=submit><?=readLanguage(contact,send)?></button></div>
+		<div class=submit_container><button type=button class=submit><?=readLanguage('contact','send')?></button></div>
 	</form>
 <? } else { ?>
 	<div class=message>
 		<div class=success_icon></div>
-		<b><?=readLanguage(contact,success_description)?></b>
+		<b><?=readLanguage('contact','success_description')?></b>
 	</div>
 <? } ?>
 </div>

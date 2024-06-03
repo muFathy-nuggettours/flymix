@@ -7,7 +7,7 @@ checkPermissions($base_name);
 //==== DELETE Record ====
 if ($delete) {
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit) {
@@ -27,7 +27,7 @@ if ($delete) {
         '{$post['country']}'
 	)";
 	mysqlQuery($query);
-	$success = readLanguage(records, added);
+	$success = readLanguage('records', 'added');
 
 //==== EDIT Record ====
 } else if ($post["token"] && $edit) {
@@ -40,19 +40,19 @@ if ($delete) {
         country='{$post['country']}'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records, updated);
+	$success = readLanguage('records', 'updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -105,27 +105,27 @@ include "_header.php" ?>
             });
         </script>
     </td>
-    <td class=title><?=readLanguage(pages,info_contact_email)?>:</td>
+    <td class=title><?=readLanguage('pages','info_contact_email')?>:</td>
     <td>
         <input type=text name=email value="<?=$entry["email"]?>" data-validation=email data-validation-optional=true>
     </td>
 </tr>
 <tr>
-    <td class=title><?=readLanguage(pages,info_contact_landline)?>:</td>
+    <td class=title><?=readLanguage('pages','info_contact_landline')?>:</td>
     <td>
-        <textarea class=tagarea data-tags=landline data-separator="{NewLine}" data-class=tag-box-block name=landline placeholder="<?=readLanguage(plugins,tags_enter)?>"><?=$entry["landline"]?></textarea>
+        <textarea class=tagarea data-tags=landline data-separator="{NewLine}" data-class=tag-box-block name=landline placeholder="<?=readLanguage('plugins','tags_enter')?>"><?=$entry["landline"]?></textarea>
     </td>
-    <td class=title><?=readLanguage(pages,info_contact_mobile)?>:</td>
+    <td class=title><?=readLanguage('pages','info_contact_mobile')?>:</td>
     <td>
-        <textarea class=tagarea data-tags=mobile data-separator="{NewLine}" data-class=tag-box-block name=mobile placeholder="<?=readLanguage(plugins,tags_enter)?>"><?=$entry["mobile"]?></textarea>
+        <textarea class=tagarea data-tags=mobile data-separator="{NewLine}" data-class=tag-box-block name=mobile placeholder="<?=readLanguage('plugins','tags_enter')?>"><?=$entry["mobile"]?></textarea>
     </td>
 </tr>
 <tr>
-    <td class=title><?=readLanguage(pages,info_contact_primary)?>:</td>
+    <td class=title><?=readLanguage('pages','info_contact_primary')?>:</td>
     <td>
         <input type=text name=primary_number value="<?=$entry["primary_number"]?>">
     </td>
-    <td class=title><?=readLanguage(pages,info_contact_whatsapp)?>:</td>
+    <td class=title><?=readLanguage('pages','info_contact_whatsapp')?>:</td>
     <td>
         <input type=text name=whatsapp value="<?=$entry["whatsapp"]?>">
     </td>
@@ -140,9 +140,9 @@ include "_header.php" ?>
 $crud_data["buttons"] = array(true, true, false, true, true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
     array("country", "الدولة", "100%", "center", "getData('system_database_countries','code','%s','" . $panel_language . "_name')", true, true),
-    array("primary_number", readLanguage(pages,info_contact_primary), "200px", "center", null, false, true),
-    array("email", readLanguage(pages,info_contact_email), "300px", "center", null, false, true),
-    array("whatsapp", readLanguage(pages,info_contact_whatsapp), "200px", "center", null, false, true),
+    array("primary_number", readLanguage('pages','info_contact_primary'), "200px", "center", null, false, true),
+    array("email", readLanguage('pages','info_contact_email'), "300px", "center", null, false, true),
+    array("whatsapp", readLanguage('pages','info_contact_whatsapp'), "200px", "center", null, false, true),
 );
 require_once("crud/crud.php");
 ?>

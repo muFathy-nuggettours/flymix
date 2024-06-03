@@ -75,12 +75,12 @@
 <div class="modal fade" id=classSelectionModal><div class=modal-dialog><div class=modal-content>
 	<div class=modal-header>
 		<button type=button class=close data-dismiss=modal><span>&times;</span></button>
-		<h4 class=modal-title><?=readLanguage(builder,css_class_selection)?></h4>
+		<h4 class=modal-title><?=readLanguage('builder','css_class_selection')?></h4>
 	</div>
 	<div class=modal-body>
 		<? $classes_result = mysqlQuery("SELECT * FROM website_classes ORDER BY priority DESC"); ?>
 		<? if (!mysqlNum($classes_result)){
-			print noContent(true, readLanguage(builder,empty_classes));
+			print noContent(true, readLanguage('builder','empty_classes'));
 		} else { ?>
 		<!-- Classes list -->
 		<div class=d-flex>
@@ -89,31 +89,31 @@
 					print "<option existing=true value='" . $classes_entry["class"] . "'>" . $classes_entry["placeholder"] . "</option>";
 				} ?>
 			</select>
-			&nbsp;&nbsp;<input type=button class="btn btn-primary btn-sm" value="<?=readLanguage(operations,insert)?>" onclick="classInsert()">
+			&nbsp;&nbsp;<input type=button class="btn btn-primary btn-sm" value="<?=readLanguage('operations','insert')?>" onclick="classInsert()">
 		</div>
 		
 		<!-- Assigned classes -->
 		<ul class=classes_assigned></ul>
 		
 		<!-- Preview division -->
-		<div class="class_preview_container division"><div class=class_preview><?=readLanguage(builder,preview)?></div></div>
+		<div class="class_preview_container division"><div class=class_preview><?=readLanguage('builder','preview')?></div></div>
 		
 		<!-- Preview options -->
 		<div class=preview_options>
 			<div class=radio_container>
-				<label><input name=radios type=radio onchange="$('.class_preview_container').addClass('division')" checked><span><?=readLanguage(builder,preview_block)?></span></label>
-				<label><input name=radios type=radio onchange="$('.class_preview_container').removeClass('division')"><span><?=readLanguage(builder,preview_inline)?></span></label>
+				<label><input name=radios type=radio onchange="$('.class_preview_container').addClass('division')" checked><span><?=readLanguage('builder','preview_block')?></span></label>
+				<label><input name=radios type=radio onchange="$('.class_preview_container').removeClass('division')"><span><?=readLanguage('builder','preview_inline')?></span></label>
 			</div>
 			<div class=check_container>
-				<label><input type=checkbox class=filled-in onchange="$('.class_preview_container > div').toggleClass('active')"><span><?=readLanguage(builder,preview_active)?></span></label>
+				<label><input type=checkbox class=filled-in onchange="$('.class_preview_container > div').toggleClass('active')"><span><?=readLanguage('builder','preview_active')?></span></label>
 			</div>
 		</div>
 		<? } ?>
 	</div>
 	<div class=modal-footer>
-		<button type=button class="btn btn-default btn-sm" data-dismiss=modal><?=readLanguage(plugins,message_cancel)?></button>
+		<button type=button class="btn btn-default btn-sm" data-dismiss=modal><?=readLanguage('plugins','message_cancel')?></button>
 		<? if (mysqlNum($classes_result)){ ?>
-		<button type=button class="btn btn-primary btn-sm" onclick="classModalSave()"><?=readLanguage(plugins,message_save)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="classModalSave()"><?=readLanguage('plugins','message_save')?></button>
 		<? } ?>
 	</div>
 </div></div></div>
@@ -249,7 +249,7 @@ function classBuildPlaceholders(classes){
 			placeholders.push(classEntry);
 		});
 	}
-	return (classes ? placeholders.join(", ") : "<?=readLanguage(builder,basic)?>");
+	return (classes ? placeholders.join(", ") : "<?=readLanguage('builder','basic')?>");
 }
 
 //Initialize sortable on assigned classes

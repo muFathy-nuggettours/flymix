@@ -11,7 +11,7 @@
 				<? if ($section_rating){ ?>
 				<div class=ratings>
 					<div class=stars><?=ratingStars($section_rating["value"])?></div>&nbsp;&nbsp;&nbsp;&nbsp;
-					<div>(<?=$section_rating["value"]?>/5) <?=readLanguage(common,based_on)?> <i><?=$section_rating["total"]?></i> <?=readLanguage(reservation,rate)?></div>
+					<div>(<?=$section_rating["value"]?>/5) <?=readLanguage('common','based_on')?> <i><?=$section_rating["total"]?></i> <?=readLanguage('reservation','rate')?></div>
 				</div>
 				<? } ?>
 			</div>

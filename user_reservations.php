@@ -45,7 +45,7 @@
 			WHERE id=$exists";
 			mysqlQuery($query);
 		}
-		$message = "<div class='alert alert-success'>".readLanguage(reservation,save_rate_success)."</div>";
+		$message = "<div class='alert alert-success'>".readLanguage('reservation','save_rate_success')."</div>";
 	}
 } ?>
 
@@ -56,8 +56,8 @@ if (!mysqlNum($result)){ ?>
 <div class=page_container>
 	<div class=message>
 		<i class="fas fa-plane"></i>
-		<b><?=readLanguage(reservation,no_reserves_added)?></b>
-		<small><?=readLanguage(reservation,no_reserves_small)?>!</small>
+		<b><?=readLanguage('reservation','no_reserves_added')?></b>
+		<small><?=readLanguage('reservation','no_reserves_small')?>!</small>
 	</div>
 </div>
 
@@ -65,13 +65,13 @@ if (!mysqlNum($result)){ ?>
 	<table class="fancy square">
 		<thead>
 			<th>#</th>
-			<th><?=readLanguage(pages,code)?></th>
-			<th><?=readLanguage(common,passengers)?></th>
-			<th><?=readLanguage(reservation,reserve_date)?></th>
-			<th><?=readLanguage(reservation,trip_date)?></th>
-			<th width=100><?=readLanguage(common,status)?></th>
-			<th width=100><?=readLanguage(common,details)?></th>
-			<th width=100><?=readLanguage(common,manage)?></th>
+			<th><?=readLanguage('pages','code')?></th>
+			<th><?=readLanguage('common','passengers')?></th>
+			<th><?=readLanguage('reservation','reserve_date')?></th>
+			<th><?=readLanguage('reservation','trip_date')?></th>
+			<th width=100><?=readLanguage('common','status')?></th>
+			<th width=100><?=readLanguage('common','details')?></th>
+			<th width=100><?=readLanguage('common','manage')?></th>
 
 		</thead>
 		<? while ($entry = mysqlFetch($result)){ $serial++;
@@ -84,14 +84,14 @@ if (!mysqlNum($result)){ ?>
 			<td class=center-large><?=dateLanguage("l, d M Y", $entry["date"])?></td>
 			<td class=center-large><?=dateLanguage("l, d M Y", $entry["so_start"])?></td>
 			<td class=center-large><?=returnStatusLabel("data_reservation_status", $entry["status"])?></td>
-			<td class=center-large><a class="btn btn-primary btn-sm btn-block" href="reservation/<?=$entry["code"]?>/" data-fancybox data-type=iframe data-frame-width=1000><?=readLanguage(common,details)?></a></td>
+			<td class=center-large><a class="btn btn-primary btn-sm btn-block" href="reservation/<?=$entry["code"]?>/" data-fancybox data-type=iframe data-frame-width=1000><?=readLanguage('common','details')?></a></td>
 			<td class=center-large>
 				<? if ($entry["so_end"] < time()){ ?>
-				<a class="btn btn-default btn-sm btn-block" onclick="showRatingModal(<?=$entry["id"]?>)"><?=readLanguage(reservation,flight_rating)?></a>
+				<a class="btn btn-default btn-sm btn-block" onclick="showRatingModal(<?=$entry["id"]?>)"><?=readLanguage('reservation','flight_rating')?></a>
 				<? } else if ($entry["status"]!=0){ ?>
-				<a class="btn btn-danger btn-sm btn-block" href="contact/"><?=readLanguage(reservation,cancel_request)?></a>
+				<a class="btn btn-danger btn-sm btn-block" href="contact/"><?=readLanguage('reservation','cancel_request')?></a>
 				<? } else { ?>
-				<a class="btn btn-success btn-sm btn-block" href="contact/"><?=readLanguage(reservation,inquiry)?></a>
+				<a class="btn btn-success btn-sm btn-block" href="contact/"><?=readLanguage('reservation','inquiry')?></a>
 				<? } ?>
 			</td>
 		</tr>
@@ -104,7 +104,7 @@ if (!mysqlNum($result)){ ?>
 			<form method=post>
 				<input type=hidden name=token value="<?=$token?>">
 				<input type=hidden name=rating_reservation>
-				<div class=subtitle><?=readLanguage(reservation,rating_airline)?> &nbsp; <b rating_airline></b></div>
+				<div class=subtitle><?=readLanguage('reservation','rating_airline')?> &nbsp; <b rating_airline></b></div>
 				<div class="d-flex rating_container" id=rating_airline>
 					<label><input type=radio name=rating_airline class=d-none value=1><i class="fa fa-angry fa-2x"></i></label>
 					<label><input type=radio name=rating_airline class=d-none value=2><i class="fa fa-frown fa-2x"></i></label>
@@ -113,9 +113,9 @@ if (!mysqlNum($result)){ ?>
 					<label><input type=radio name=rating_airline class=d-none value=5 checked><i class="fa fa-grin-stars fa-2x"></i></label>
 				</div>
 				<script>$("#rating_airline").find("[value='<?=$entry["rating_airline"][0]?>']").prop("checked",true);</script>
-				<input type=text name=comment_airline placeholder="<?=readLanguage(common,add_comment)?>">
+				<input type=text name=comment_airline placeholder="<?=readLanguage('common','add_comment')?>">
 
-				<div class=subtitle><?=readLanguage(reservation,flight_rating)?> &nbsp; <b rating-flight></b></div>
+				<div class=subtitle><?=readLanguage('reservation','flight_rating')?> &nbsp; <b rating-flight></b></div>
 				<div class="d-flex rating_container" id=rating_flight>
 					<label><input type=radio name=rating_flight class=d-none value=1><i class="fa fa-angry fa-2x"></i></label>
 					<label><input type=radio name=rating_flight class=d-none value=2><i class="fa fa-frown fa-2x"></i></label>
@@ -124,9 +124,9 @@ if (!mysqlNum($result)){ ?>
 					<label><input type=radio name=rating_flight class=d-none value=5 checked><i class="fa fa-grin-stars fa-2x"></i></label>
 				</div>
 				<script>$("#rating_flight").find("[value='<?=$entry["rating_flight"][0]?>']").prop("checked",true);</script>
-				<input type=text name=comment_flight placeholder="<?=readLanguage(common,add_comment)?>">
+				<input type=text name=comment_flight placeholder="<?=readLanguage('common','add_comment')?>">
 
-				<div class=subtitle><?=readLanguage(reservation,rating_take_off_airport)?>&nbsp; <b rating-airport></b></div>
+				<div class=subtitle><?=readLanguage('reservation','rating_take_off_airport')?>&nbsp; <b rating-airport></b></div>
 				<div class="d-flex rating_container" id=rating_airport>
 					<label><input type=radio name=rating_airport class=d-none value=1><i class="fa fa-angry fa-2x"></i></label>
 					<label><input type=radio name=rating_airport class=d-none value=2><i class="fa fa-frown fa-2x"></i></label>
@@ -135,9 +135,9 @@ if (!mysqlNum($result)){ ?>
 					<label><input type=radio name=rating_airport class=d-none value=5 checked><i class="fa fa-grin-stars fa-2x"></i></label>
 				</div>
 				<script>$("#rating_airport").find("[value='<?=$entry["rating_airport"][0]?>']").prop("checked",true);</script>
-				<input type=text name=comment_airport placeholder="<?=readLanguage(common,add_comment)?>">
+				<input type=text name=comment_airport placeholder="<?=readLanguage('common','add_comment')?>">
 				
-				<input type=button class="submit margin-top" value="<?=readLanguage(reservation,save_rate)?>">
+				<input type=button class="submit margin-top" value="<?=readLanguage('reservation','save_rate')?>">
 			</form>
 		</div>
 	</div></div></div>

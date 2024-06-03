@@ -20,7 +20,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -42,7 +42,7 @@ if (!$canonical){
 	}
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }
@@ -85,17 +85,17 @@ if (!mysqlNum($result)){
 			<? $country = getData("system_database_countries", "code", $page_data["country"]);
 			$region = getID($page_data["region"], "system_database_regions"); ?>
 			<div class=custom_info_card>
-				<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
-				<div><small><?=readLanguage(pages,city)?></small><br><a href="regions/<?=$region[$suffix . "slug"]?>/"><?=$region[$suffix . "name"]?></a></div>
-				<div><small><?=readLanguage(pages,code)?></small><br><?=strtoupper($page_data["iata"])?></div>
-				<? if ($page_data["website"]){ ?><div><small><?=readLanguage(accounts,website)?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
+				<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
+				<div><small><?=readLanguage('pages','city')?></small><br><a href="regions/<?=$region[$suffix . "slug"]?>/"><?=$region[$suffix . "name"]?></a></div>
+				<div><small><?=readLanguage('pages','code')?></small><br><?=strtoupper($page_data["iata"])?></div>
+				<? if ($page_data["website"]){ ?><div><small><?=readLanguage('accounts','website')?></small><br><a href="<?=$page_data["website"]?>" target=_blank><?=$page_data["website"]?></a></div><? } ?>
 			</div>
 		</div>
 	</div>
 	
 	<!-- Booking -->
 	<div class="margin-bottom-20 margin-bottom-progressive">
-		<h2 class="page_subtitle large margin-bottom"><?=readLanguage(booking,book_now_to)?> <?=$section_title?></h2>
+		<h2 class="page_subtitle large margin-bottom"><?=readLanguage('booking','book_now_to')?> <?=$section_title?></h2>
 		<div class=inline_search>
 		<? $search["to"] = $page_data["iata"];
 		include "modules/search.php"; ?>
@@ -104,7 +104,7 @@ if (!mysqlNum($result)){
 	
 	<!-- Expressions -->
 	<div class="margin-bottom-20 margin-bottom-progressive">
-		<h2 class=page_subtitle><?=readLanguage(booking,special_trips_from)?><?=$section_title?></h2>
+		<h2 class=page_subtitle><?=readLanguage('booking','special_trips_from')?><?=$section_title?></h2>
 		<? $origin_type = "airport";
 		$destination_type = "country";
 		$origin = $page_data["iata"];

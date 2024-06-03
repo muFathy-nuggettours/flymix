@@ -27,7 +27,7 @@ switch ($base_name){
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
@@ -59,12 +59,12 @@ if ($delete){
 		'" . ($post["sub_menus_type"] && $post["sub_menus_type"]!=1 ? $post["sub_menus_side"] : "") . "',
 		'" . ($post["sub_menus_type"] && $post["sub_menus_type"]!=1 ? $post["sub_menus_children"] : "") . "',
 		'" . $post["icon"] . "',
-		'" . imgUpload($_FILES[image], "../uploads/menu/") . "',
+		'" . imgUpload($_FILES['image'], "../uploads/menu/") . "',
 		'" . $post["class"] . "',
 		'" . newRecordID($mysqltable) . "'
 	)";
 	mysqlQuery($query);
-	$success = readLanguage(records,added);
+	$success = readLanguage('records','added');
 
 //==== EDIT Record ====
 } else if ($post["token"] && $edit){
@@ -84,23 +84,23 @@ if ($delete){
 		sub_menus_side='" . ($post["sub_menus_type"] && $post["sub_menus_type"]!=1 ? $post["sub_menus_side"] : "") . "',
 		sub_menus_children='" . ($post["sub_menus_type"] && $post["sub_menus_type"]!=1 ? $post["sub_menus_children"] : "") . "',
 		icon='" . $post["icon"] . "',
-		image='" . imgUpload($_FILES[image], "../uploads/menu/", $record_data["image"]) . "',
+		image='" . imgUpload($_FILES['image'], "../uploads/menu/", $record_data["image"]) . "',
 		class='" . $post["class"] . "'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -126,11 +126,11 @@ include "_header.php"; ?>
 
 <div class=data_table_container><table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','title')?>: <i class=requ></i></td>
 	<td colspan=3><input type=text name=title value="<?=$entry["title"]?>" data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,url)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','url')?>: <i class=requ></i></td>
 	<td class=ltr-input colspan=3>
 		<div class="input-addon input-addon-ltr">
 			<span before><?=$base_url?></span>
@@ -148,23 +148,23 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(plugins,icon)?>:</td>
+	<td class=title><?=readLanguage('plugins','icon')?>:</td>
 	<td colspan=3>
 		<div class=flex_content>
 			<i data-icon=icon class="<?=$entry["icon"]?>"></i>
 			<input type=text name=icon value="<?=$entry["icon"]?>" onkeyup="$('[data-icon=icon]').attr('class',this.value)" autocomplete=off>
-			<button type=button class="btn btn-default btn-sm btn-square flex-center" onclick="bindIconSearch('icon')"><i class="fas fa-search"></i>&nbsp;<?=readLanguage(operations,select)?></button>
+			<button type=button class="btn btn-default btn-sm btn-square flex-center" onclick="bindIconSearch('icon')"><i class="fas fa-search"></i>&nbsp;<?=readLanguage('operations','select')?></button>
 		</div>
 		<div class=input_description>Powered by <a href="https://fontawesome.com/icons?m=free" target=_blank>Font Awesome</a> and <a href="https://getbootstrap.com/docs/3.3/components/" target=_blank>Bootstrap Glyphicons</a>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,image)?>:</td>
+	<td class=title><?=readLanguage('inputs','image')?>:</td>
 	<td colspan=3>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=image id=image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["image"] ? "../uploads/menu/" . $entry["image"] : "images/placeholder.png") ?>
@@ -176,17 +176,17 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,css_class)?>:</td>
+	<td class=title><?=readLanguage('builder','css_class')?>:</td>
 	<td>
 		<div class=class_input class-bind=class class-properties="<?=$entry["class"]?>"></div>
 	</td>
-	<td class=title><?=readLanguage(pages,menu_sub_menus)?>:</td>
+	<td class=title><?=readLanguage('pages','menu_sub_menus')?>:</td>
 	<td>
 		<select name=sub_menus_type id=sub_menus_type onchange="toggleVisibility(this)">
-			<option value=0><?=readLanguage(builder,none)?></option>
-			<option value=1><?=readLanguage(builder,custom)?></option>
-			<option value=2><?=readLanguage(pages,pages_custom)?></option>
-			<option value=3><?=readLanguage(pages,pages_built_in)?></option>
+			<option value=0><?=readLanguage('builder','none')?></option>
+			<option value=1><?=readLanguage('builder','custom')?></option>
+			<option value=2><?=readLanguage('pages','pages_custom')?></option>
+			<option value=3><?=readLanguage('pages','pages_built_in')?></option>
 		</select>
 		<script>
 		setSelectValue("#sub_menus_type", "<?=$entry["sub_menus_type"]?>");
@@ -197,18 +197,18 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=sub_menus_type visibility-value=1>
-	<td class=title><?=readLanguage(pages,menu_sub_menus)?>:</td>
+	<td class=title><?=readLanguage('pages','menu_sub_menus')?>:</td>
 	<td colspan=3>
 		<input type=hidden name=sub_menus_custom id=sub_menus_custom domenu-input="#domenu">
 		<div class=dd id=domenu>
-			<button type=button class="dd-new-item btn btn-primary btn-sm"><span class="fas fa-plus"></span>&nbsp;&nbsp;<?=readLanguage(operations,insert)?></button>
+			<button type=button class="dd-new-item btn btn-primary btn-sm"><span class="fas fa-plus"></span>&nbsp;&nbsp;<?=readLanguage('operations','insert')?></button>
 			<li class=dd-item-blueprint>
 				<div class="dd-handle dd3-handle"></div>
 				<div class=dd3-content>
 					<div>
-						<span><small><?=readLanguage(inputs,title)?> <i class=requ></i></small><input category-item=title type=text data-validation=requiredVisible></span>
-						<span><small><?=readLanguage(plugins,icon)?></small><div class=d-flex><input category-item=icon type=text>&nbsp;<input type=button select-icon class="btn btn-default btn-sm" value="<?=readLanguage(operations,select)?>"></div></span>
-						<span><small><?=readLanguage(inputs,url)?></small><select category-item=url><?=$data_menu_items?></select></span>
+						<span><small><?=readLanguage('inputs','title')?> <i class=requ></i></small><input category-item=title type=text data-validation=requiredVisible></span>
+						<span><small><?=readLanguage('plugins','icon')?></small><div class=d-flex><input category-item=icon type=text>&nbsp;<input type=button select-icon class="btn btn-default btn-sm" value="<?=readLanguage('operations','select')?>"></div></span>
+						<span><small><?=readLanguage('inputs','url')?></small><select category-item=url><?=$data_menu_items?></select></span>
 					</div>
 					<span class=buttons>
 						<button type=button class="item-remove btn-danger"><span class="fas fa-times"></span></button>
@@ -221,7 +221,7 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=sub_menus_type visibility-value=2,3>
-	<td class=title><?=readLanguage(pages,menu_sub_menus)?>:</td>
+	<td class=title><?=readLanguage('pages','menu_sub_menus')?>:</td>
 	<td visibility-control=sub_menus_type visibility-value=2>
 		<select name=sub_menus_page id=sub_menus_page>
 		<? $result_pages = null; $result = mysqlQuery("SELECT * FROM " . $suffix . "website_pages_custom WHERE type=2 ORDER BY priority DESC");
@@ -237,7 +237,7 @@ include "_header.php"; ?>
 			<? if ($edit && $entry["sub_menus_type"]==2){ ?>setSelectValue("#sub_menus_page", "<?=$entry["sub_menus"]?>");<? } ?>
 			$("#sub_menus_page").select2({
 				templateResult: function(state){
-					var $state = $("<div>" + state.text + "&nbsp;&nbsp;<small style='color:#808080'>(" + $(state.element).data("count") + " <?=readLanguage(builder,pages)?>)</small></div>");
+					var $state = $("<div>" + state.text + "&nbsp;&nbsp;<small style='color:#808080'>(" + $(state.element).data("count") + " <?=readLanguage('builder','pages')?>)</small></div>");
 					return $state;
 				}
 			});
@@ -281,18 +281,18 @@ include "_header.php"; ?>
 			$("#sub_menus_section").select2({
 				templateResult: function(state){
 					var count = $(state.element).data("count");
-					var $state = $("<div>" + state.text + (count ? "&nbsp;&nbsp;<small style='color:#808080'>(" + count + " <?=readLanguage(builder,pages)?>)</small>" : "") + "</div>");
+					var $state = $("<div>" + state.text + (count ? "&nbsp;&nbsp;<small style='color:#808080'>(" + count + " <?=readLanguage('builder','pages')?>)</small>" : "") + "</div>");
 					return $state;
 				}
 			});
 		</script>
 	</td>	
-	<td class=title><?=readLanguage(pages,menu_graphic)?>:</td>
+	<td class=title><?=readLanguage('pages','menu_graphic')?>:</td>
 	<td>
 		<select name=sub_menus_side id=sub_menus_side>
-			<option value=""><?=readLanguage(builder,none)?></option>
-			<option value="icon"><?=readLanguage(plugins,icon)?></option>
-			<option value="cover"><?=readLanguage(inputs,cover_image)?></option>
+			<option value=""><?=readLanguage('builder','none')?></option>
+			<option value="icon"><?=readLanguage('plugins','icon')?></option>
+			<option value="cover"><?=readLanguage('inputs','cover_image')?></option>
 		</select>	
 		<script>
 		var sub_menus_side_selection = "<?=$entry["sub_menus_side"]?>";
@@ -305,7 +305,7 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr visibility-control=sub_menus_type visibility-value=2,3>
-	<td class=title><?=readLanguage(builder,page_children_show)?>:</td>
+	<td class=title><?=readLanguage('builder','page_children_show')?>:</td>
 	<td colspan=3>
 		<div class=switch><label><?=$data_no_yes[0]?><input type=checkbox name=sub_menus_children value=1 <?=($entry["sub_menus_children"] ? "checked" : "")?>><span class=lever></span><?=$data_no_yes[1]?></label></div>
 	</td>
@@ -349,8 +349,8 @@ $crud_data["order_by"] = "priority DESC";
 $crud_data["delete_record_message"] = "title";
 $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("title", readLanguage(inputs,title), "100%", "center", null, false, true),
-	array("icon", readLanguage(plugins,icon), "50px", "center", "'<i class=\"%s\" style=\"font-size:20px\"></i>'", false, false)
+	array("title", readLanguage('inputs','title'), "100%", "center", null, false, true),
+	array("icon", readLanguage('plugins','icon'), "50px", "center", "'<i class=\"%s\" style=\"font-size:20px\"></i>'", false, false)
 );
 require_once("crud/crud.php");
 ?>

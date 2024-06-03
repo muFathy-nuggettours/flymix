@@ -31,13 +31,13 @@ switch ($base_name){
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 }
 
 //Delete Multiple Records
 if ($post["delete"]){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id IN (" . $post["delete"] . ")");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 }
 
 //Read and Set Operation
@@ -51,37 +51,37 @@ include "_header.php"; ?>
 
 <?
 $crud_data["multiple_operations"] = array(
-	array("multipleDelete",readLanguage(crud,operations_delete),"fas fa-times-circle")
+	array("multipleDelete",readLanguage('crud','operations_delete'),"fas fa-times-circle")
 );
 $crud_data["where_statement"] = "type=$type";
 $crud_data["delete_record_message"] = $delete_record_message;
 $crud_data["buttons"] = array(false,true,false,false,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("success",readLanguage(channels,sent),"100px","center","returnStatusLabel('data_no_yes',%s)",true,false),
-	array("response",readLanguage(channels,response),"300px","center",null,false,true),
-	array("date",readLanguage(inputs,date),"240px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
+	array("success",readLanguage('channels','sent'),"100px","center","returnStatusLabel('data_no_yes',%s)",true,false),
+	array("response",readLanguage('channels','response'),"300px","center",null,false,true),
+	array("date",readLanguage('inputs','date'),"240px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
 );
 
 switch ($type){
 	case 1:
 		array_unshift($crud_data["columns"],
-			array("email",readLanguage(users,email),"300px","center","nl2br('%s')",false,true),
-			array("title",readLanguage(channels,subject),"300px","center",null,false,true),
-			array("message",readLanguage(channels,message),"120px","center","readRecordData(%d,$base_name)",false,true)
+			array("email",readLanguage('users','email'),"300px","center","nl2br('%s')",false,true),
+			array("title",readLanguage('channels','subject'),"300px","center",null,false,true),
+			array("message",readLanguage('channels','message'),"120px","center","readRecordData(%d,$base_name)",false,true)
 		);
 	break;
 	
 	case 2:
 		array_unshift($crud_data["columns"],
-			array("mobile",readLanguage(users,mobile),"300px","center","nl2br('%s')",false,true),
-			array("message",readLanguage(channels,message),"300px","center",null,false,true)
+			array("mobile",readLanguage('users','mobile'),"300px","center","nl2br('%s')",false,true),
+			array("message",readLanguage('channels','message'),"300px","center",null,false,true)
 		);
 	break;
 	
 	case 3:
 		array_unshift($crud_data["columns"],
-			array("title",readLanguage(channels,subject),"300px","center",null,false,true),
-			array("message",readLanguage(channels,message),"120px","center","readRecordData(%d,$base_name)",false,true)
+			array("title",readLanguage('channels','subject'),"300px","center",null,false,true),
+			array("message",readLanguage('channels','message'),"120px","center","readRecordData(%d,$base_name)",false,true)
 		);	 
 	break;
 }
@@ -92,7 +92,7 @@ require_once("crud/crud.php");
 <script>
 function multipleDelete(ids){
 	$.confirm({
-		title: "<?=readLanguage(crud,operations_delete)?>",
+		title: "<?=readLanguage('crud','operations_delete')?>",
 		content: readLanguage.crud.operations_delete_message.replace("{{1}}", ids.split(",").length),
 		buttons: {
 			confirm: {

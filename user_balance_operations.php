@@ -3,8 +3,8 @@ if (!mysqlNum($result)){ ?>
 <div class=page_container>
 	<div class=message>
 		<i class="fas fa-money-check-alt"></i>
-		<b><?=readLanguage(operations,no_registered_ops)?></b>
-		<small><?=readLanguage(operations,no_reg_ops_small)?></small>
+		<b><?=readLanguage('operations','no_registered_ops')?></b>
+		<small><?=readLanguage('operations','no_reg_ops_small')?></small>
 	</div>
 </div>
 
@@ -12,9 +12,9 @@ if (!mysqlNum($result)){ ?>
 	<table class="fancy square">
 		<thead>
 			<th>#</th>
-			<th><?=readLanguage(common,record)?></th>
-			<th><?=readLanguage(common,amount)?></th>
-			<th><?=readLanguage(common,date)?></th>
+			<th><?=readLanguage('common','record')?></th>
+			<th><?=readLanguage('common','amount')?></th>
+			<th><?=readLanguage('common','date')?></th>
 		</thead>
 		<? while ($entry = mysqlFetch($result)){ $serial++; ?>
 		<tr>

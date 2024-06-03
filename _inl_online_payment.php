@@ -21,15 +21,15 @@ $selected_method = ($get["method"] && in_array($get["method"], $payment_methods)
 <div class=page_container>
 	<div class=message>
 		<i class="fas fa-money-check-alt"></i>
-		<b><?=readlanguage(payment,methods_unavailable)?></b>
-		<small><?=readlanguage(payment,methods_unavailable_alert)?></small>
+		<b><?=readlanguage('payment','methods_unavailable')?></b>
+		<small><?=readlanguage('payment','methods_unavailable_alert')?></small>
 	</div>
 </div>
 
 <? } else { ?>
 	<!-- Payment method selection -->
 	<? if (count($payment_methods) > 1){ ?>
-	<div><?=readlanguage(payment,choose_method)?></div>
+	<div><?=readlanguage('payment','choose_method')?></div>
 	<div class=payment_methods_selector>
 		<? foreach ($payment_methods AS $method){ ?>
 		<a class="payment_method <?=($method==$selected_method ? "active" : "inactive")?>" href="<?=parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH)?><?=rebuildQueryParameters(array("method"), array("method"=>$method))?>">

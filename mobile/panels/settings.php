@@ -1,8 +1,8 @@
-<div class=overlay_panel id=settings data-title="<?=readLanguage(mobile,settings)?>" data-header-buttons="back"  data-footer-buttons="exit">
+<div class=overlay_panel id=settings data-title="<?=readLanguage('mobile','settings')?>" data-header-buttons="back"  data-footer-buttons="exit">
 	<form id=settings_form>
 	<div class=settings_form>
 		<div class=settings_item>
-			<span><?=readLanguage(mobile,settings_language)?></span>
+			<span><?=readLanguage('mobile','settings_language')?></span>
 			<div>
 				<select name=language id=language>
 				<? foreach ($supported_languages as $value){
@@ -12,13 +12,13 @@
 			</div>
 		</div>
 		<div class=settings_item>
-			<span><?=readLanguage(mobile,settings_notifications)?></span>
+			<span><?=readLanguage('mobile','settings_notifications')?></span>
 			<div>
-				<div class=switch><label><?=readLanguage(mobile,settings_notifications_off)?><input type=checkbox name=notifications id=notifications value=1 <?=($entry["switch"] ? "checked" : "")?>><span class=lever></span><?=readLanguage(mobile,settings_notifications_on)?></label></div>	
+				<div class=switch><label><?=readLanguage('mobile','settings_notifications_off')?><input type=checkbox name=notifications id=notifications value=1 <?=($entry["switch"] ? "checked" : "")?>><span class=lever></span><?=readLanguage('mobile','settings_notifications_on')?></label></div>	
 			</div>
 		</div>
 	</div>
-	<div class=submit_container><button type=button class=submit onclick="saveSettings()"><?=readLanguage(mobile,settings_save)?></button></div>
+	<div class=submit_container><button type=button class=submit onclick="saveSettings()"><?=readLanguage('mobile','settings_save')?></button></div>
 	</form>
 </div>
 

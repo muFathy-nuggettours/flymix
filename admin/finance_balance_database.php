@@ -17,8 +17,8 @@ $crud_data["columns"] = array( //Filter - Search - Copy Enabled
 	array("title","العنوان","250px","center",null,false,true),
 	array("amount","المبلغ","120px","center",null,false,true),
 	array("currency","العملة","120px","center",null,true,false),
-	array("reservation_id","الحجز","120px","center","hasVal(%s,'',viewButton('_view_reservation.php?id=%s','" . readLanguage(operations,view) . "','btn-primary','fas fa-search'))",false,false),
-	array("payment_record_id","سجل الدفع","120px","center","hasVal(%s,'',viewButton('_view_payment.php?id=%s','" . readLanguage(operations,view) . "','btn-primary','fas fa-search'))",false,false),
+	array("reservation_id","الحجز","120px","center","hasVal(%s,'',viewButton('_view_reservation.php?id=%s','" . readLanguage('operations','view') . "','btn-primary','fas fa-search'))",false,false),
+	array("payment_record_id","سجل الدفع","120px","center","hasVal(%s,'',viewButton('_view_payment.php?id=%s','" . readLanguage('operations','view') . "','btn-primary','fas fa-search'))",false,false),
 	array("date","التاريخ","250px","center","dateLanguage('l, d M Y h:i A','%s')",false,false),
 );
 require_once("crud/crud.php");

@@ -14,7 +14,7 @@ if ($post["token"]){
 	$file = fopen("../website/languages/" . $database_language["code"] . ".json", "w");
 	fwrite($file, json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
 	fclose($file);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
@@ -28,7 +28,7 @@ include "_header.php"; ?>
 <? $json_data = file_get_contents("../website/languages/" . $database_language["code"] . ".json"); ?>
 
 <? if (!$json_data){ ?>
-<div class="alert alert-warning align-center"><?=readLanguage(crud,records_empty)?></div>
+<div class="alert alert-warning align-center"><?=readLanguage('crud','records_empty')?></div>
 
 <? } else { ?>
 <form method=post enctype="multipart/form-data" action="<?=$action?>">
@@ -59,7 +59,7 @@ foreach ($json_array AS $key => $content_array){
 	print "</table>";
 }
 ?>
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 <? } ?>
 

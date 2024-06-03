@@ -124,8 +124,8 @@ if ($post["action"]=="search_users"){
 	while ($entry = mysqlFetch($result)){
 		$block_html = "<div class=search_box><b>" . highlightKeyword($entry["name"], $keyword) . "</b><div>" .
 			"<p><i class='fas fa-user'></i><span>" . highlightKeyword($entry["user_id"], $keyword) . "</span></p>" .
-			"<p><i class='fas fa-envelope'></i><span>" . ($entry["email"] ? highlightKeyword($entry["email"], $keyword) : readLanguage(general,na)) . "</span></p>" .
-			"<p><i class='fas fa-mobile-alt'></i><span class='d-inline-block force-ltr'>" . ($entry["mobile"] ? highlightKeyword($entry["mobile"], $keyword) : readLanguage(general,na)) . "</span></p>" .
+			"<p><i class='fas fa-envelope'></i><span>" . ($entry["email"] ? highlightKeyword($entry["email"], $keyword) : readLanguage('general','na')) . "</span></p>" .
+			"<p><i class='fas fa-mobile-alt'></i><span class='d-inline-block force-ltr'>" . ($entry["mobile"] ? highlightKeyword($entry["mobile"], $keyword) : readLanguage('general','na')) . "</span></p>" .
 		"</div></div>";
 		$data_array = array(
 			"id" => $entry["id"],

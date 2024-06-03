@@ -32,17 +32,17 @@ if ($booking_session["status"]==0 && $post["token"]){
 		//Server side validation
 		$errors = array();
 		if (mysqlNum(mysqlQuery("SELECT * FROM users_database WHERE mobile='$mobile' OR mobile_conventional='$mobile_conventional'"))){
-			array_push($errors, readLanguage(accounts,mobile_registered) . " <a class=alert-link href='reset-password/'>" . readLanguage(accounts,reset_password) . "</a>");
+			array_push($errors, readLanguage('accounts','mobile_registered') . " <a class=alert-link href='reset-password/'>" . readLanguage('accounts','reset_password') . "</a>");
 		}
 		if (mysqlNum(mysqlQuery("SELECT id FROM users_database WHERE email='$email'"))){
-			array_push($errors, readLanguage(accounts,email_registered) . " <a class=alert-link href='reset-password/'>" . readLanguage(accounts,reset_password) . "</a>");
+			array_push($errors, readLanguage('accounts','email_registered') . " <a class=alert-link href='reset-password/'>" . readLanguage('accounts','reset_password') . "</a>");
 		}
 		$rules["name"] = array("required", "max_length(100)");
 		$rules["email"] = array("required", "max_length(100)", "email");
 		$validation_result = SimpleValidator\Validator::validate($post, $rules);
 
 		if ($validation_result->isSuccess()==false){
-			$error = readLanguage(general,error);
+			$error = readLanguage('general','error');
 		} else if ($errors){
 			$error = "<ul><li>" . implode("</li><li>", $errors) . "</li></ul>";
 		} else {
@@ -184,7 +184,7 @@ $section_layout = $section_information["layout"];
 
 //Breadcrumbs
 $breadcrumbs = array();
-array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 array_push($breadcrumbs,"<li>" . $section_information["title"] . "</li>");
 
 include "system/header.php";
@@ -200,7 +200,7 @@ include "website/section_header.php"; ?>
 <div class="modal fade modal_flight_details"><div class=modal-dialog><div class=modal-content>
 	<div class=modal-header>
 		<button type=button class=close data-dismiss=modal><span>&times;</span></button>
-		<h4 class=modal-title><?=readlanguage(booking,flight_details)?></h4>
+		<h4 class=modal-title><?=readlanguage('booking','flight_details')?></h4>
 	</div>
 	<div class=modal-body></div>
 </div></div></div>
@@ -233,7 +233,7 @@ include "website/section_header.php"; ?>
 <!-- Side Column -->
 <div class="col-md-6 grid-item">
 	<div class=page_container>
-		<div class=page_subtitle><?=readlanguage(booking,flight_summary)?></div>
+		<div class=page_subtitle><?=readlanguage('booking','flight_summary')?></div>
 		<? foreach ($itinerary["trips"] AS $index=>$trip){ ?>
 			<div class=trip_summary>
 				<i class="fas fa-plane"></i>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -242,19 +242,19 @@ include "website/section_header.php"; ?>
 					<span><?=dateLanguage("l, d M Y", $trip["date"])?></span>
 					<small><?=dateLanguage("H:i A", $trip["flights"][0]["takeoff"]["time"])?></small>
 				</div>
-				<a class="btn btn-default btn-sm" onclick="$('.modal_flight_details').find('.modal-body').html($('[trip-index=<?=$index?>]').html()); $('.modal_flight_details').modal('show');"><?=readlanguage(common,details)?></a>
+				<a class="btn btn-default btn-sm" onclick="$('.modal_flight_details').find('.modal-body').html($('[trip-index=<?=$index?>]').html()); $('.modal_flight_details').modal('show');"><?=readlanguage('common','details')?></a>
 			</div>
 		<? } ?>
 		
-		<div class="page_subtitle margin-top-20"><?=readlanguage(reservation,price_details)?></div>
+		<div class="page_subtitle margin-top-20"><?=readlanguage('reservation','price_details')?></div>
 		<table class=trip_price_summary>
 			<tr>
 				<th>التذكرة</th>
-				<th class=center-large><?=readlanguage(common,price)?></th>
+				<th class=center-large><?=readlanguage('common','price')?></th>
 				<!--<th>الضرائب</th>-->
 				<!--<th>العمولة</th>-->
-				<th class=center-large><?=readlanguage(common,number)?></th>
-				<th><?=readlanguage(common,amount)?></th>
+				<th class=center-large><?=readlanguage('common','number')?></th>
+				<th><?=readlanguage('common','amount')?></th>
 			</tr>
 			<? foreach ($itinerary["trips"][0]["pricing"] AS $type=>$pricing){ ?>
 			<tr>
@@ -269,12 +269,12 @@ include "website/section_header.php"; ?>
 		</table>
 		
 		<? if ($subtract_from_balance){ ?>
-			<div class="page_subtitle margin-top-20"><?=readLanguage(booking,subtract_from_balance)?></div>
+			<div class="page_subtitle margin-top-20"><?=readLanguage('booking','subtract_from_balance')?></div>
 			<div class=blance_price><b><?=number_format($subtract_from_balance, 2)?></b> <small><?=$trip_currency["ar_name"]?></small></div>
-			<span><?=readLanguage(booking,balance_after_subtract)?> <b><?=number_format($user_balance - $subtract_from_balance, 2)?></b> <small><?=$trip_currency["ar_name"]?></small></span>
+			<span><?=readLanguage('booking','balance_after_subtract')?> <b><?=number_format($user_balance - $subtract_from_balance, 2)?></b> <small><?=$trip_currency["ar_name"]?></small></span>
 		<? } ?>
 		
-		<div class="page_subtitle margin-top-20"><?=readLanguage(common,total)?></div>
+		<div class="page_subtitle margin-top-20"><?=readLanguage('common','total')?></div>
 		<div class=trip_price><b style="color:<?=($trip_price ? "red" : "green")?>"><?=number_format($trip_price, 2)?></b> <small><?=$trip_currency["ar_name"]?></small></div>
 	</div>
 </div>

@@ -20,7 +20,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -35,7 +35,7 @@ if (!$canonical){
 	$section_cover_image = ($page_data["cover_image"] ? "uploads/database/" . $page_data["cover_image"] : $section_cover_image);
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }
@@ -77,15 +77,15 @@ if (!mysqlNum($result)){
 			<? } ?>
 			<? $country = getData("system_database_countries", "code", $page_data["country"]); ?>
 			<div class=custom_info_card>
-				<div><small><?=readLanguage(accounts,country)?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
-				<div><small><?=readLanguage(pages,code)?></small><br><?=$page_data["code"]?></div>
+				<div><small><?=readLanguage('accounts','country')?></small><br><a href="countries/<?=$country[$suffix . "slug"]?>/"><?=$country[$suffix . "name"]?></a></div>
+				<div><small><?=readLanguage('pages','code')?></small><br><?=$page_data["code"]?></div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- Booking -->
 	<div class="margin-bottom-20 margin-bottom-progressive">
-		<h2 class="page_subtitle large margin-bottom"><?=readLanguage(booking,book_now_to)?> <?=$section_title?></h2>
+		<h2 class="page_subtitle large margin-bottom"><?=readLanguage('booking','book_now_to')?> <?=$section_title?></h2>
 		<div class=inline_search>
 		<? $search["to"] = mysqlFetch(mysqlQuery("SELECT iata FROM system_database_airports WHERE country='" . $page_data["country"] . "' ORDER BY popularity DESC, priority DESC LIMIT 0,1"))["iata"];
 		include "modules/search.php"; ?>
@@ -96,7 +96,7 @@ if (!mysqlNum($result)){
 	<? $result = mysqlQuery("SELECT * FROM system_database_airports WHERE publish=$publish AND region='" . $page_data["id"] . "'"); ?>
 	<? if (mysqlNum($result)){ ?>
 	<div class="margin-bottom-20 margin-bottom-progressive">
-		<h2 class=page_subtitle><?=readLanguage(filter,popular_airports_at)?> <?=$section_title?></h2>
+		<h2 class=page_subtitle><?=readLanguage('filter','popular_airports_at')?> <?=$section_title?></h2>
 		<div class="row grid-container">
 			<? while ($entry = mysqlFetch($result)){ ?>
 			<div class="col-md-4 col-sm-three  col-xs-10 grid-item">
@@ -112,7 +112,7 @@ if (!mysqlNum($result)){
 	
 	<!-- Expressions -->
 	<div class="margin-bottom-20 margin-bottom-progressive">
-		<h2 class=page_subtitle><?=readLanguage(booking,special_trips_from)?> <?=$section_title?></h2>
+		<h2 class=page_subtitle><?=readLanguage('booking','special_trips_from')?> <?=$section_title?></h2>
 		<? $origin_type = "region";
 		$destination_type = "country";
 		$origin = $page_data["code"];

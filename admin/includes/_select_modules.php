@@ -48,7 +48,7 @@
 
 .modules_list.empty:after,
 .modules_list:empty:after {
-	content: "<?=readLanguage(builder,empty_modules)?>";
+	content: "<?=readLanguage('builder','empty_modules')?>";
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -125,8 +125,8 @@
 <div class="row grid-container">
 
 <div class="col-md-10 grid-item">
-<div class=subtitle><p><?=readLanguage(builder,layout_modules_available)?></p></div>
-	<input type=text id=modules_search placeholder="<?=readLanguage(general,search)?>">
+<div class=subtitle><p><?=readLanguage('builder','layout_modules_available')?></p></div>
+	<input type=text id=modules_search placeholder="<?=readLanguage('general','search')?>">
 	<div class=page_container>
 		<? $modules_result = mysqlQuery("SELECT * FROM " . $suffix . "website_modules_custom WHERE FIND_IN_SET($modules_type,type)");
 		if (mysqlNum($modules_result)){
@@ -145,9 +145,9 @@
 </div>
 
 <div class="col-md-10 grid-item">
-<div class=subtitle><p><?=readLanguage(builder,layout_modules_used)?></p></div>
+<div class=subtitle><p><?=readLanguage('builder','layout_modules_used')?></p></div>
 		<div class=page_container>
-		<ul class="modules_list used"><? if ($modules_content){ ?><li class=fixed data-module="content"><span><?=readLanguage(builder,page_content)?></span></li><? } ?></ul>
+		<ul class="modules_list used"><? if ($modules_content){ ?><li class=fixed data-module="content"><span><?=readLanguage('builder','page_content')?></span></li><? } ?></ul>
 	</div>
 </div>
 

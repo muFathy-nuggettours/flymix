@@ -13,7 +13,7 @@ if ($post["token"] && $post["image"]){
 		exit($path . $image);
 	} else {
 		header("HTTP/1.1 400 Bad Request");
-		exit(readLanguage(plugins,upload_error));
+		exit(readLanguage('plugins','upload_error'));
 	}
 }
 
@@ -29,7 +29,7 @@ if ($delete){
 		buildWebsiteTheme();
 	}
 	
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
@@ -60,7 +60,7 @@ if ($delete){
 		buildWebsiteTheme();
 	}
 	
-	$success = readLanguage(records,added);
+	$success = readLanguage('records','added');
 
 //==== EDIT Record ====	
 } else if ($post["token"] && $edit){
@@ -82,19 +82,19 @@ if ($delete){
 		buildWebsiteTheme();
 	}
 	
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","clone"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit","clone"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -122,11 +122,11 @@ include "_header.php"; ?>
 
 <table class="data_table margin-bottom">
 <tr>
-	<td class=title><?=readLanguage(builder,class_name)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','class_name')?>: <i class=requ></i></td>
 	<td colspan=3><input type=text name=placeholder value="<?=$entry["placeholder"]?>" data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,tags)?>:</td>
+	<td class=title><?=readLanguage('builder','tags')?>:</td>
 	<td colspan=3>
 		<select name=tags[] id=tags multiple>
 		<? $appended_tags = array();
@@ -155,8 +155,8 @@ include "_header.php"; ?>
 <div class=crud_separator></div>
 <?
 $custom_list = array(
-	["label"=>readLanguage(builder,duplicate), "icon"=>"fas fa-clone", "href"=>"$base_name.php?clone=%s"],
-	["label"=>readLanguage(crud,button_export), "icon"=>"fas fa-download", "click"=>"exportBuilder('css', '%d[class]', '%d[placeholder]')"],
+	["label"=>readLanguage('builder','duplicate'), "icon"=>"fas fa-clone", "href"=>"$base_name.php?clone=%s"],
+	["label"=>readLanguage('crud','button_export'), "icon"=>"fas fa-download", "click"=>"exportBuilder('css', '%d[class]', '%d[placeholder]')"],
 );
 $custom_list = htmlentities(json_encode($custom_list, JSON_UNESCAPED_UNICODE));
 
@@ -165,10 +165,10 @@ $crud_data["order_by"] = "priority DESC";
 $crud_data["delete_record_message"] = "placeholder";
 $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("class",readLanguage(builder,selector),"200px","center",null,false,true),
-	array("placeholder",readLanguage(builder,placeholder),"100%","center",null,false,true),
-	array("tags",readLanguage(builder,tags),"300px","center","implodeVariable('%s')",true,false),
-	array("id", readLanguage(crud,button_operations), "140px", "fixed-right", "customDropdown(\"$custom_list\", '<i class=\"fas fa-cogs\"></i>&nbsp;" . readLanguage(crud,button_operations) . "')", false, true),
+	array("class",readLanguage('builder','selector'),"200px","center",null,false,true),
+	array("placeholder",readLanguage('builder','placeholder'),"100%","center",null,false,true),
+	array("tags",readLanguage('builder','tags'),"300px","center","implodeVariable('%s')",true,false),
+	array("id", readLanguage('crud','button_operations'), "140px", "fixed-right", "customDropdown(\"$custom_list\", '<i class=\"fas fa-cogs\"></i>&nbsp;" . readLanguage('crud','button_operations') . "')", false, true),
 );
 require_once("crud/crud.php");
 ?>

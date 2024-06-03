@@ -23,7 +23,7 @@ include "system/schema.php";
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
@@ -56,7 +56,7 @@ if ($delete){
 	)";
 
 	mysqlQuery($query);
-	$success = readLanguage(records, added);
+	$success = readLanguage('records', 'added');
 
 //==== EDIT Record ====
 } else if ($post["token"] && $edit){
@@ -82,19 +82,19 @@ if ($delete){
 	WHERE id=$edit";
 
 	mysqlQuery($query);
-	$success = readLanguage(records, updated);
+	$success = readLanguage('records', 'updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -187,7 +187,7 @@ include "_header.php"; ?>
 <?=$message?>
 
 <? if (!$schema){ ?>
-<div class="alert alert-warning align-center"><?=readLanguage(crud,records_empty)?></div>
+<div class="alert alert-warning align-center"><?=readLanguage('crud','records_empty')?></div>
 
 <? } else { ?>
 <form method=post enctype="multipart/form-data" action="<?=$action?>">
@@ -198,9 +198,9 @@ include "_header.php"; ?>
 <div class=data_table_container>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(builder,placeholder)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','placeholder')?>: <i class=requ></i></td>
 	<td><input type=text name=title value="<?=$entry["title"]?>" data-validation=required></td>
-	<td class=title><?=readLanguage(builder,query_table)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','query_table')?>: <i class=requ></i></td>
 	<td>
 		<select name=target id=target>
 			<? foreach ($schema AS $table => $props){ ?>
@@ -214,21 +214,21 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,quert_sort_column)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','quert_sort_column')?>: <i class=requ></i></td>
 	<td>
 		<select name=sort_column id=sort_column></select>
 	</td>
-	<td class=title><?=readLanguage(builder,query_sort_method)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('builder','query_sort_method')?>: <i class=requ></i></td>
 	<td>
 		<select name=sort_method id=sort_method>
-			<option value="ASC"><?=readLanguage(builder,query_sort_asc)?></option>
-			<option value="DESC"><?=readLanguage(builder,query_sort_desc)?></option>
+			<option value="ASC"><?=readLanguage('builder','query_sort_asc')?></option>
+			<option value="DESC"><?=readLanguage('builder','query_sort_desc')?></option>
 		</select>
 		<? if ($entry["sort_method"]){ ?><script>setSelectValue("#sort_method", "<?=$entry["sort_method"]?>")</script><? } ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(builder,query_conditions)?>:</td>
+	<td class=title><?=readLanguage('builder','query_conditions')?>:</td>
 	<td colspan=3><div id=builder></div></td>
 </tr>
 </table>
@@ -314,7 +314,7 @@ function onBeforeValidation(){
 <?
 $crud_data["buttons"] = array(true, true, false, true, true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
-	array("title", readLanguage(builder,placeholder), "100%", "center", null, false, true),
+	array("title", readLanguage('builder','placeholder'), "100%", "center", null, false, true),
 );
 require_once("crud/crud.php");
 ?>

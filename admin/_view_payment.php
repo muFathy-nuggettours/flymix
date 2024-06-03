@@ -21,20 +21,20 @@ include "_header.php"; ?>
 			<br><small><?=($entry["reservation_id"] ? "حجز" : "شحن رصيد")?></small>
 		</div>
 		<div class="info_buttons hide_pdf">
-			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('<?=$entry["name"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage(general,export_pdf)?></button>
+			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('<?=$entry["name"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage('general','export_pdf')?></button>
 		</div>
 	</div>
 	
 	<div class=info_blocks>
-		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage(users,registration_date)?></p><span><?=dateLanguage("l, d M Y h:i A",$entry["date"])?></span></div>
-		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage(users,serial)?></p><span><?=$entry["id"]?></span></div>
+		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage('users','registration_date')?></p><span><?=dateLanguage("l, d M Y h:i A",$entry["date"])?></span></div>
+		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage('users','serial')?></p><span><?=$entry["id"]?></span></div>
 	</div>
 	
 	<div style="clear:both"></div>
 </div>	
 
 <!-- Baisc Information -->
-<div class=pdf_section><?=readLanguage(users,info_basic)?></div>
+<div class=pdf_section><?=readLanguage('users','info_basic')?></div>
 <div id=info class="tab-pane fade in active">
 <table class=data_table>
 	<tr>

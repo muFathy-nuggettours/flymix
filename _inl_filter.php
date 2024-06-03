@@ -3,41 +3,41 @@
 
 <div class="page_container">
 
-<b class=page_subtitle><?=readlanguage(filter,categorize_search)?></b>
+<b class=page_subtitle><?=readlanguage('filter','categorize_search')?></b>
 
 <div class=filters>
 	<div class="filter sort">
-		<b><?=readlanguage(filter,sort_by)?></b>
+		<b><?=readlanguage('filter','sort_by')?></b>
 		<div>
-			<span><?=readlanguage(common,price)?></span>
-			<select sort><option value="price:asc"><?=readlanguage(common,minimum)?></option><option value="price:desc"><?=readlanguage(common,maximum)?></option></select>
+			<span><?=readlanguage('common','price')?></span>
+			<select sort><option value="price:asc"><?=readlanguage('common','minimum')?></option><option value="price:desc"><?=readlanguage('common','maximum')?></option></select>
 		</div>
 		<div>
-			<span><?=readlanguage(filter,flight_time)?></span>
-			<select sort><option value="date:asc"><?=readlanguage(common,nearest)?></option><option value="date:desc"><?=readlanguage(common,furthest)?></option></select>
+			<span><?=readlanguage('filter','flight_time')?></span>
+			<select sort><option value="date:asc"><?=readlanguage('common','nearest')?></option><option value="date:desc"><?=readlanguage('common','furthest')?></option></select>
 		</div>
 		<div>
-			<span><?=readlanguage(filter,flight_duration)?></span>
-			<select sort><option value="duration:asc"><?=readlanguage(common,shortest)?></option><option value="duration:desc"><?=readlanguage(common,longest)?></option></select>
+			<span><?=readlanguage('filter','flight_duration')?></span>
+			<select sort><option value="duration:asc"><?=readlanguage('common','shortest')?></option><option value="duration:desc"><?=readlanguage('common','longest')?></option></select>
 		</div>
 	</div>
 	<div class="filter price">
-		<b><?=readlanguage(common,price)?></b>
+		<b><?=readlanguage('common','price')?></b>
 		<div>
 			<input id=price_slider type=text>
 			<div><span><b></b><?=$user_paymentCurrency[$suffix . "name"]?></span><span><b></b><?=$user_paymentCurrency[$suffix . "name"]?></span></div>
 		</div>
 	</div>
 	<div class="filter stops checkboxes">
-		<b><?=readlanguage(filter,stops)?></b>
+		<b><?=readlanguage('filter','stops')?></b>
 		<div>
-			<label filter-stops=0><input type=checkbox><span><img src="images/icons/0stops.png"><?=readlanguage(filter,no_stop)?></span></label>
-			<label filter-stops=1><input type=checkbox><span><img src="images/icons/1stops.png"><?=readlanguage(filter,one_stop)?></span></label>
-			<label filter-stops=2><input type=checkbox><span><img src="images/icons/2stops.png"><?=readlanguage(filter,two_stops)?></span></label>
+			<label filter-stops=0><input type=checkbox><span><img src="images/icons/0stops.png"><?=readlanguage('filter','no_stop')?></span></label>
+			<label filter-stops=1><input type=checkbox><span><img src="images/icons/1stops.png"><?=readlanguage('filter','one_stop')?></span></label>
+			<label filter-stops=2><input type=checkbox><span><img src="images/icons/2stops.png"><?=readlanguage('filter','two_stops')?></span></label>
 		</div>
 	</div>
 	<div class="filter airlines checkboxes">
-		<b><?=readlanguage(filter,airlines)?></b>
+		<b><?=readlanguage('filter','airlines')?></b>
 		<div></div>
 	</div>
 </div>

@@ -2,7 +2,7 @@
 
 <td class=title>ملف المستخدم:<? if ($mandatory){ ?> <i class=requ></i><? } ?></td>
 <td class=valign-middle>
-	<input type=hidden id=<?=$input?>-input name=<?=$input?> value="<?=$value?>" <? if ($mandatory){ ?>data-validation=requiredParentVisible data-validation-error-msg="<?=readLanguage(users,search_not_selected)?>"<? } ?>>
+	<input type=hidden id=<?=$input?>-input name=<?=$input?> value="<?=$value?>" <? if ($mandatory){ ?>data-validation=requiredParentVisible data-validation-error-msg="<?=readLanguage('users','search_not_selected')?>"<? } ?>>
 	<? if (($value && $removable) || !$value){ ?>
 		<select id=<?=$input?>-select><? if ($value){ ?><option value="<?=$value?>"><?=$search_data["name"]?></option><? } ?></select>
 	<? } else {
@@ -10,16 +10,16 @@
 	} ?>
 </td>
 
-<td class=title><?=readLanguage(users,profile)?>:</td>
+<td class=title><?=readLanguage('users','profile')?>:</td>
 <td data-preview=<?=$input?> class=valign-middle>
-	<a class="btn btn-primary btn-sm" href="_view_user.php?id=<?=$value?>" data-fancybox data-type=iframe style="display:none"><i class="fas fa-search"></i>&nbsp;&nbsp;<?=readLanguage(operations,view)?></a>
-	<span><?=readLanguage(users,search_not_selected)?></span>
+	<a class="btn btn-primary btn-sm" href="_view_user.php?id=<?=$value?>" data-fancybox data-type=iframe style="display:none"><i class="fas fa-search"></i>&nbsp;&nbsp;<?=readLanguage('operations','view')?></a>
+	<span><?=readLanguage('users','search_not_selected')?></span>
 	<script>
 	//Initialize Select2
 	$("#<?=$input?>-select").select2({
 		width: "100%",
 		allowClear: <?=($removable ? "true" : "false")?>,
-		placeholder: "<?=readLanguage(users,search)?>",
+		placeholder: "<?=readLanguage('users','search')?>",
 		minimumInputLength: 3,
 		escapeMarkup: function(markup){ return markup },
 		templateResult: function(data) { return data.html },

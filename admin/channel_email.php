@@ -31,17 +31,17 @@ include "_header.php"; ?>
 <input type=hidden name=token value="<?=$token?>">
 
 <table class=data_table>
-<tr><td class=title><?=readLanguage(channels,emails)?>: <i class=requ></i></td>
+<tr><td class=title><?=readLanguage('channels','emails')?>: <i class=requ></i></td>
 <td>
 	<textarea name=emails data-validation=required></textarea>
-	<div class=input_description><?=readLanguage(inputs,instructions_newline)?></div>
+	<div class=input_description><?=readLanguage('inputs','instructions_newline')?></div>
 </td></tr>
 <tr>
-	<td class=title><?=readLanguage(channels,subject)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('channels','subject')?>: <i class=requ></i></td>
 	<td><input type=text name=subject data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(channels,message)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('channels','message')?>: <i class=requ></i></td>
 	<td><textarea class=mceEditorLimited name=message data-validation=validateEditor></textarea></td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@ include "_header.php"; ?>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(channels,send)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('channels','send')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

@@ -98,11 +98,11 @@ if ($post["action"]=="upload_passport"){
 		
 		if (!validateFileName($_FILES["passport"]["name"]) || !isImage($_FILES["passport"]["name"])){
 			header("HTTP/1.1 400 Bad Request");
-			exit(readLanguage(plugins,upload_error_extension));
+			exit(readLanguage('plugins','upload_error_extension'));
 			
 		} else if (!$_FILES["passport"]["size"] || $_FILES["passport"]["size"] > parseSize(ini_get("upload_max_filesize"))){
 			header("HTTP/1.1 400 Bad Request");
-			exit(readLanguage(plugins,upload_error_size) . ini_get("upload_max_filesize"));			
+			exit(readLanguage('plugins','upload_error_size') . ini_get("upload_max_filesize"));			
 
 		} else {
 			$original_name = pathinfo($_FILES["passport"]["name"], PATHINFO_FILENAME);
@@ -145,7 +145,7 @@ if ($post["action"]=="upload_passport"){
 		exit(json_encode($return));
 	} else {
 		header("HTTP/1.1 400 Bad Request");
-		exit(readLanguage(plugins,upload_error));
+		exit(readLanguage('plugins','upload_error'));
 	}
 }
 
@@ -158,10 +158,10 @@ if ($post["action"]=="search_destinations"){
 	if (!$keyword && count($search_history)){
 		$array = array();
 		foreach ($search_history AS $key=>$value){
-			if (!in_array($value["from"])){
+			if (!in_array($keyword_original, $value["from"])){
 				array_push($array, strtoupper($value["from"]));
 			}
-			if (!in_array($value["to"])){
+			if (!in_array($keyword_original, $value["to"])){
 				array_push($array, strtoupper($value["to"]));
 			}
 		}

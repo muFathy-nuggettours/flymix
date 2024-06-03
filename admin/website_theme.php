@@ -30,7 +30,7 @@ if ($post["token"] && $post["action"]=="options"){
 	buildCSSModules();
 	buildWebsiteTheme();
 
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 
@@ -196,7 +196,7 @@ include "_header.php";?>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 
 <!-- Import -->

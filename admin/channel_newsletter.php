@@ -8,12 +8,12 @@ checkPermissions($base_name);
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 }
 
 if ($post["delete"]){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id IN (" . $post["delete"] . ")");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 }
 
 //Read and Set Operation
@@ -27,14 +27,14 @@ include "_header.php"; ?>
 
 <?
 $crud_data["multiple_operations"] = array(
-	array("multipleDelete",readLanguage(crud,operations_delete),"fas fa-times-circle")
+	array("multipleDelete",readLanguage('crud','operations_delete'),"fas fa-times-circle")
 );
 $crud_data["delete_record_message"] = "email";
 $crud_data["buttons"] = array(false,true,false,false,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
-	array("email",readLanguage(users,profile),"50%","center","getCustomData('name','users_database','email','%s','_view_user')",false,true),
-	array("email",readLanguage(channels,email),"50%","center",null,false,true,true),
-	array("date",readLanguage(inputs,date),"220px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
+	array("email",readLanguage('users','profile'),"50%","center","getCustomData('name','users_database','email','%s','_view_user')",false,true),
+	array("email",readLanguage('channels','email'),"50%","center",null,false,true,true),
+	array("date",readLanguage('inputs','date'),"220px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
 );
 require_once("crud/crud.php");
 ?>
@@ -42,7 +42,7 @@ require_once("crud/crud.php");
 <script>
 function multipleDelete(ids){
 	$.confirm({
-		title: "<?=readLanguage(crud,operations_delete)?>",
+		title: "<?=readLanguage('crud','operations_delete')?>",
 		content: readLanguage.crud.operations_delete_message.replace("{{1}}", ids.split(",").length),
 		buttons: {
 			confirm: {

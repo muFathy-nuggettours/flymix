@@ -2,7 +2,7 @@
 $facebook_login = ($system_settings["facebook_app_id"] && $system_settings["facebook_login"]);
 $google_login = ($system_settings["google_client_id"] && $system_settings["google_login"]);
 $social_login = $facebook_login || $google_login;
-$or_separator = "<div class=separator_or><label>" . readLanguage(accounts,separator) . "</label></div>";
+$or_separator = "<div class=separator_or><label>" . readLanguage('accounts','separator') . "</label></div>";
 ?>
 
 <!-- Start Platform Condition (only show if platform is not set "not completing signup profile" and not on mobile application) -->

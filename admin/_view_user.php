@@ -12,7 +12,7 @@ include "_header.php"; ?>
 <div id=view_content><!-- Start View Content -->
 
 <!-- Header -->
-<div class=title><?=readLanguage(users,user_profile)?></div>
+<div class=title><?=readLanguage('users','user_profile')?></div>
 
 <div class="info_header header_content_<?=($user_data["image"] ? "image" : "icon")?>">
 	<div class=info_icon><?=($user_data["image"] ? "<img src='../uploads/users/" . $user_data["image"] . "'>" : "<i class='fas fa-user'></i>")?></div>
@@ -20,18 +20,18 @@ include "_header.php"; ?>
 	<div class=info_title>
 		<div>
 			<b><?=$user_data["name"]?></b>
-			<br><small><?=readLanguage(users,user)?></small>
+			<br><small><?=readLanguage('users','user')?></small>
 		</div>
 		<div class="info_buttons hide_pdf">
-			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('<?=$user_data["name"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage(general,export_pdf)?></button>
+			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('<?=$user_data["name"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage('general','export_pdf')?></button>
 		</div>
 	</div>
 	
 	<div class=info_blocks>
-		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage(users,user_id)?></p><span><?=$user_data["user_id"]?></span></div>
-		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage(users,registration_date)?></p><span><?=dateLanguage("l, d M Y h:i A",$user_data["date"])?></span></div>
-		<div class=info_block_item><p><?=readLanguage(users,status)?></p><?=($user_data["banned"] ? "<span class='label label-danger'>" . readLanguage(users,status_banned) . "</span>" : "<span class='label label-success'>" . readLanguage(users,status_active) . "</span>")?></div>
-		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage(users,serial)?></p><span><?=$user_data["id"]?></span></div>
+		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage('users','user_id')?></p><span><?=$user_data["user_id"]?></span></div>
+		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage('users','registration_date')?></p><span><?=dateLanguage("l, d M Y h:i A",$user_data["date"])?></span></div>
+		<div class=info_block_item><p><?=readLanguage('users','status')?></p><?=($user_data["banned"] ? "<span class='label label-danger'>" . readLanguage('users','status_banned') . "</span>" : "<span class='label label-success'>" . readLanguage('users','status_active') . "</span>")?></div>
+		<div class=info_block_item style="flex-basis:10%"><p><?=readLanguage('users','serial')?></p><span><?=$user_data["id"]?></span></div>
 	</div>
 	
 	<div style="clear:both"></div>
@@ -39,7 +39,7 @@ include "_header.php"; ?>
 
 <!-- Tabs -->
 <ul class="nav nav-tabs tab-inline-header hide_pdf">
-	<li class=active><a data-toggle=tab href="#info"><i class="fas fa-info"></i>&nbsp;&nbsp;<?=readLanguage(users,info_basic)?></a></li>
+	<li class=active><a data-toggle=tab href="#info"><i class="fas fa-info"></i>&nbsp;&nbsp;<?=readLanguage('users','info_basic')?></a></li>
 	<li><a data-toggle=tab href="#passengers"><i class="fas fa-users"></i>&nbsp;&nbsp;المسافرين</a></li>
 	<li><a data-toggle=tab href="#reservations"><i class="fas fa-plane"></i>&nbsp;&nbsp;الحجوزات</a></li>
 	<? if ($agent){ ?>
@@ -50,13 +50,13 @@ include "_header.php"; ?>
 <div class=tab-content><!-- Start Tabs Content -->
 
 <!-- Baisc Information -->
-<div class=pdf_section><?=readLanguage(users,info_basic)?></div>
+<div class=pdf_section><?=readLanguage('users','info_basic')?></div>
 <div id=info class="tab-pane fade in active">
 <table class=data_table>
 	<tr>
-		<td class=title><?=readLanguage(users,email)?></td>
+		<td class=title><?=readLanguage('users','email')?></td>
 		<td><?=$user_data["email"]?></td>
-		<td class=title><?=readLanguage(users,mobile)?></td>
+		<td class=title><?=readLanguage('users','mobile')?></td>
 		<td><span class="d-inline-block force-ltr"><?=$user_data["mobile"]?></span></td>
 	</tr>
 	<tr>
@@ -70,7 +70,7 @@ include "_header.php"; ?>
 		<td colspan=3><?=naRes($user_data["address"], nl2br($user_data["address"]))?></td>
 	</tr>	
 	<tr class=hide_pdf>
-		<td class=title><?=readLanguage(inputs,attachments)?></td>
+		<td class=title><?=readLanguage('inputs','attachments')?></td>
 		<td colspan=3>
 		<?
 		$attachments = json_decode($user_data["attachments"],true);
@@ -81,17 +81,17 @@ include "_header.php"; ?>
 			}
 			print "</ul>";
 		} else {
-			print "<i class=na>" . readLanguage(general,na) . "</i>";
+			print "<i class=na>" . readLanguage('general','na') . "</i>";
 		}
 		?>
 		</td>
 	</tr>		
 </table>
 
-<div class="subtitle margin-top"><?=readLanguage(users,social_accounts)?></div>
+<div class="subtitle margin-top"><?=readLanguage('users','social_accounts')?></div>
 <table class=data_table>
-	<tr><td class=title><?=readLanguage(users,social_accounts_facebook)?></td><td><?=naRes($user_data["facebook"])?></td></tr>
-	<tr><td class=title><?=readLanguage(users,social_accounts_google)?></td><td><?=naRes($user_data["google"])?></td></tr>
+	<tr><td class=title><?=readLanguage('users','social_accounts_facebook')?></td><td><?=naRes($user_data["facebook"])?></td></tr>
+	<tr><td class=title><?=readLanguage('users','social_accounts_google')?></td><td><?=naRes($user_data["google"])?></td></tr>
 </table>
 </div>
 
@@ -110,7 +110,7 @@ if (mysqlNum($users_passengers_result)){
 	<tr>
 		<td class=title>تاريخ الميلاد</td>
 		<td><?=dateLanguage("l, d M Y",$passenger["birth_date"])?> (<?=$data_passenger_types[$passenger["type"]]?>)</td>
-		<td class=title><?=readLanguage(users,country)?></td>
+		<td class=title><?=readLanguage('users','country')?></td>
 		<td><img src="../images/countries/<?=$passenger["nationality"]?>.gif"> <?=getData("system_database_countries", "code", $passenger["nationality"], $panel_language . "_name")?></td>
 	</tr>
 	<tr>

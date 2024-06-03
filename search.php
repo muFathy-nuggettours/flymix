@@ -2,7 +2,7 @@
 
 setCurrentPageRedirect();
 $section_information = mysqlFetch(mysqlQuery("SELECT * FROM " . $suffix . "website_pages WHERE page='" . basename($_SERVER["SCRIPT_FILENAME"], ".php") . "'"));
-$section_title = readLanguage(general,search);
+$section_title = readLanguage('general','search');
 $section_description = $section_information["description"];
 
 include "system/header.php";

@@ -3,7 +3,7 @@
 	<div>
 		<i class="far fa-mobile"></i>
 		<span>
-			<small><?=readLanguage(mobile,contact_phone)?></small>
+			<small><?=readLanguage('mobile','contact_phone')?></small>
 			<a href="tel:<?=$website_information["primary_number"]?>"><b><?=$website_information["primary_number"]?></b></a>
 		</span>
 	</div>
@@ -13,7 +13,7 @@
 	<div>
 		<i class="far fa-envelope"></i>
 		<span>
-			<small><?=readLanguage(mobile,contact_email)?></small>
+			<small><?=readLanguage('mobile','contact_email')?></small>
 			<a href="mailto:<?=$website_information["email"]?>"><b><?=$website_information["email"]?></b></a>
 		</span>
 	</div>
@@ -23,7 +23,7 @@
 	<div>
 		<i class="fab fa-whatsapp"></i>
 		<span>
-			<small><?=readLanguage(mobile,contact_whatsapp)?></small>
+			<small><?=readLanguage('mobile','contact_whatsapp')?></small>
 			<a href="https://wa.me/<?=$website_information["whatsapp"]?>" target=_blank><b><?=$website_information["whatsapp"]?></b></a>
 		</span>
 	</div>

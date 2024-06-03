@@ -19,10 +19,10 @@ if ($post["token"] && !$edit){
 	//Server Side Validation
 	$errors = array();
 	if (mysqlNum(mysqlQuery("SELECT id FROM $mysqltable WHERE email='$email'"))){
-		array_push($errors, readLanguage(users,registered_email));
+		array_push($errors, readLanguage('users','registered_email'));
 	}
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE mobile='$mobile' OR mobile_conventional='$mobile_conventional'"))){
-		array_push($errors, readLanguage(users,registered_mobile));
+		array_push($errors, readLanguage('users','registered_mobile'));
 	}
 	
 	if (!$errors){
@@ -69,7 +69,7 @@ if ($post["token"] && !$edit){
 			'" . time() . "'
 		)";
 		mysqlQuery($query);
-		$success = readLanguage(records,added);
+		$success = readLanguage('records','added');
 	} else {
 		$error = "<ul><li>" . implode("</li><li>", $errors) . "</li></ul>";
 	}
@@ -86,10 +86,10 @@ if ($post["token"] && !$edit){
 	//Server Side Validation
 	$errors = array();
 	if (mysqlNum(mysqlQuery("SELECT id FROM $mysqltable WHERE email!='' AND email='$email' AND id!=$edit"))){
-		array_push($errors, readLanguage(users,registered_email));
+		array_push($errors, readLanguage('users','registered_email'));
 	}
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE (mobile='$mobile' OR mobile_conventional='$mobile_conventional') AND id!=$edit"))){
-		array_push($errors, readLanguage(users,registered_mobile));
+		array_push($errors, readLanguage('users','registered_mobile'));
 	}
 
 	if (!$errors){
@@ -117,7 +117,7 @@ if ($post["token"] && !$edit){
 			banned='" . $post["banned"] . "'
 		WHERE id=$edit";
 		mysqlQuery($query);
-		$success = readLanguage(records,updated);
+		$success = readLanguage('records','updated');
 	} else {
 		$error = "<ul><li>" . implode("</li><li>", $errors) . "</li></ul>";
 	}
@@ -126,13 +126,13 @@ if ($post["token"] && !$edit){
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -152,7 +152,7 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(users,name)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('users','name')?>: <i class=requ></i></td>
 	<td><input type=text name=name value="<?=$entry["name"]?>" autocomplete=new-password data-validation=required></td>
 	<td class=title>دولة الحساب: <i class=requ></i></td>
 	<td>
@@ -188,9 +188,9 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(users,email)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('users','email')?>: <i class=requ></i></td>
 	<td><input type=email name=email value="<?=$entry["email"]?>" autocomplete=new-password data-validation=required></td>
-	<td class=title><?=readLanguage(users,mobile)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('users','mobile')?>: <i class=requ></i></td>
 	<td>
 		<div class="flex-center input force-ltr" data-icon="&#xf3cd;">
 			<select name=country id=country>
@@ -199,7 +199,7 @@ include "_header.php"; ?>
 				print "<option value='" . $country_entry["code"] . "' data-name='" . $country_entry["ar_name"] . "' data-phone-code='+" . $country_entry["phone_code"] . "'>+" . $country_entry["phone_code"] . " " . $country_entry["ar_name"] . "</option>";
 			} ?>
 			</select>
-			&nbsp;&nbsp;<input type=number name=mobile value="<?=str_replace($entry["mobile_prefix"], null, $entry["mobile"])?>" maxlength=11 data-validation=validateMobile>
+			&nbsp;&nbsp;<input type=number name=mobile value="<?=str_replace($entry["mobile_prefix"], [], $entry["mobile"])?>" maxlength=11 data-validation=validateMobile>
 		</div>
 		<script>
 			//Set Default Value
@@ -245,18 +245,18 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(users,password)?>: <? if (!$edit){ print "<i class=requ></i>"; } ?></td>
+	<td class=title><?=readLanguage('users','password')?>: <? if (!$edit){ print "<i class=requ></i>"; } ?></td>
 	<td colspan=3>
-		<input type=password name=password autocomplete=new-password data-validation-optional=<?=($edit ? "true" : "false")?> data-validation=custom data-validation-regexp="^(.{8,})$" data-validation-error-msg="<?=readLanguage(pages,user_password_requirements)?>">
-		<div class=input_description><?=($edit ? readLanguage(users,password_empty) : readLanguage(pages,user_password_requirements))?></div>
+		<input type=password name=password autocomplete=new-password data-validation-optional=<?=($edit ? "true" : "false")?> data-validation=custom data-validation-regexp="^(.{8,})$" data-validation-error-msg="<?=readLanguage('pages','user_password_requirements')?>">
+		<div class=input_description><?=($edit ? readLanguage('users','password_empty') : readLanguage('pages','user_password_requirements'))?></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(users,status_banned)?>:</td>
-	<td colspan=3><div class=switch><label><?=readLanguage(plugins,message_no)?><input type=checkbox name=banned value=1 <?=($entry["banned"] ? "checked" : "")?>><span class=lever></span><?=readLanguage(plugins,message_yes)?></label></div></td>
+	<td class=title><?=readLanguage('users','status_banned')?>:</td>
+	<td colspan=3><div class=switch><label><?=readLanguage('plugins','message_no')?><input type=checkbox name=banned value=1 <?=($entry["banned"] ? "checked" : "")?>><span class=lever></span><?=readLanguage('plugins','message_yes')?></label></div></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,image)?>:</td>
+	<td class=title><?=readLanguage('inputs','image')?>:</td>
 	<td colspan=3>
 		<table class=attachment><tr>
 		<td>
@@ -273,12 +273,12 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,attachments)?>:</td>
+	<td class=title><?=readLanguage('inputs','attachments')?>:</td>
 	<td data-token="<?=$token?>" data-attachments=attachments data-upload-path="../uploads/users/" colspan=3>
 		<div class=attachment-button>
 			<input type=hidden name=attachments value="<?=$entry["attachments"]?>">
-			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage(inputs,attachments_insert)?><input type=file id=attachments accept="pdf/*" multiple></label>
-			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage(inputs,uploading)?></div>
+			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage('inputs','attachments_insert')?><input type=file id=attachments accept="pdf/*" multiple></label>
+			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage('inputs','uploading')?></div>
 		</div>
 		<ul sortable class=attachments-list></ul><div style="clear:both"></div>
 		<? if ($entry["attachments"]){ ?>
@@ -298,16 +298,16 @@ include "_header.php"; ?>
 <?
 $crud_data["buttons"] = array(true,true,false,true,false); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
-	array("id",readLanguage(users,serial),"80px","center",null,false,true),
-	array("user_id",readLanguage(users,user_id),"120px","center",null,false,true),
-	array("id",readLanguage(users,profile),"120px","center","viewButton('_view_user.php?id=%s','" . readLanguage(operations,view) . "','btn-primary','fas fa-user')",false,false),
-	array("name",readLanguage(users,name),"300px","center","",false,true),
-	array("email",readLanguage(users,email),"300px","center",null,false,true,true),
-	array("mobile",readLanguage(users,mobile),"150px","force-ltr",null,false,true,true),
+	array("id",readLanguage('users','serial'),"80px","center",null,false,true),
+	array("user_id",readLanguage('users','user_id'),"120px","center",null,false,true),
+	array("id",readLanguage('users','profile'),"120px","center","viewButton('_view_user.php?id=%s','" . readLanguage('operations','view') . "','btn-primary','fas fa-user')",false,false),
+	array("name",readLanguage('users','name'),"300px","center","",false,true),
+	array("email",readLanguage('users','email'),"300px","center",null,false,true,true),
+	array("mobile",readLanguage('users','mobile'),"150px","force-ltr",null,false,true,true),
 	array("user_country","دولة الحساب","200px","center","'<img src=\"../images/countries/%s.gif\">&nbsp;' . getData('system_database_countries','code','%s','" . $panel_language . "_name')",true,false),
 	array("user_currency","عملة الحساب","200px","center",null,true,false),
-	array("banned",readLanguage(users,status_banned),"100px","center","hasVal(%s,'" . readLanguage(plugins,message_no) . "','" . readLanguage(plugins,message_yes) . "')",true,false),
-	array("date",readLanguage(users,registration_date),"250px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
+	array("banned",readLanguage('users','status_banned'),"100px","center","hasVal(%s,'" . readLanguage('plugins','message_no') . "','" . readLanguage('plugins','message_yes') . "')",true,false),
+	array("date",readLanguage('users','registration_date'),"250px","center","dateLanguage('l, d M Y h:i A',%s)",false,false),
 );
 require_once("crud/crud.php");
 ?>

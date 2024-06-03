@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<?=$panel_language?>" dir="<?=$language["dir"]?>">
 <head>
-<title><?=$website_information["website_name"]?> | <?=readLanguage(general,control_panel)?></title>
+<title><?=$website_information["website_name"]?> | <?=readLanguage('general','control_panel')?></title>
 
 <!-- Standard Tags -->
 <meta charset="UTF-8">
@@ -83,7 +83,7 @@ var theme_version = "<?=$website_theme["version"]?>";
 		<div class="btn-group search-group">
 			<div class=search_container>
 				<i class="fas fa-search"></i>
-				<input id=header_search_input type=text placeholder="<?=readLanguage(general,search)?>">
+				<input id=header_search_input type=text placeholder="<?=readLanguage('general','search')?>">
 			</div>
 			<div class=dropdown>
 				<button type=button id=header_search_button data-toggle=dropdown></button>
@@ -124,7 +124,7 @@ var theme_version = "<?=$website_theme["version"]?>";
 				}
 			});
 			if (count <= 0){
-				$("#header_search_results").append("<li><div class=empty><i class='fas fa-exclamation-circle'></i><?=readLanguage(general,search_empty)?></div></li>");
+				$("#header_search_results").append("<li><div class=empty><i class='fas fa-exclamation-circle'></i><?=readLanguage('general','search_empty')?></div></li>");
 			}
 		}
 		</script>		
@@ -142,7 +142,7 @@ var theme_version = "<?=$website_theme["version"]?>";
 						print "<li><a href='" . ($value[2] ? $value[2] : $key . ".php") . "'><i class='fas fa-exclamation-triangle'></i> " . $value[0] . "</a></li>";
 					}
 				} else {
-					print "<li><div class=empty><i class='fas fa-check-circle'></i>" . readLanguage(general,no_notifications) . "</div></li>";
+					print "<li><div class=empty><i class='fas fa-check-circle'></i>" . readLanguage('general','no_notifications') . "</div></li>";
 				} ?>
 			</ul>
 		</div>
@@ -182,9 +182,9 @@ var theme_version = "<?=$website_theme["version"]?>";
 						<b><?=$logged_user["name"]?></b>
 						<small><?=getID($logged_user["permission"], "system_permissions")["title"]?></small>
 					</div>
-					<a class="btn btn-danger btn-sm flex-center" href="index.php?action=logout"><i class="fas fa-power-off"></i>&nbsp;<?=readLanguage(general,user_logout)?></a>
+					<a class="btn btn-danger btn-sm flex-center" href="index.php?action=logout"><i class="fas fa-power-off"></i>&nbsp;<?=readLanguage('general','user_logout')?></a>
 				</div>
-				<li><a href="_page_profile.php"><i class="fas fa-user-edit"></i>&nbsp;<?=readLanguage(general,user_profile)?></a></li>
+				<li><a href="_page_profile.php"><i class="fas fa-user-edit"></i>&nbsp;<?=readLanguage('general','user_profile')?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -208,7 +208,7 @@ var theme_version = "<?=$website_theme["version"]?>";
 	
 	<!-- Version -->
 	<div class=version>
-		<?=readLanguage(general,control_panel)?> <b><?=$website_information["website_name"]?></b>
+		<?=readLanguage('general','control_panel')?> <b><?=$website_information["website_name"]?></b>
 		<?=$powered_by?>
 		<small>Version <?=$system_settings["system_version"]?></small>
 		<br><small><?=(!$white_label ? "Prismatecs " : "")?>CMS Version <?=$cms_version?></small>

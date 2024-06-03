@@ -221,7 +221,7 @@ if ($post["action"]=="raw-table"){
 	$print_data .= "</tr></thead>";
 
 	if (!mysqlNum($crud_result)){
-		$print_data .= "<tr><td colspan='" . count($crud_data["columns"]) . "'>" . readLanguage(general,na) . "</td></tr>";
+		$print_data .= "<tr><td colspan='" . count($crud_data["columns"]) . "'>" . readLanguage('general','na') . "</td></tr>";
 	} else {
 		while ($crud_entry = mysqlFetch($crud_result)){
 			$print_data .= "<tr>";
@@ -277,11 +277,11 @@ if ($post["action"]=="operation"){
 				$eval = str_replace("%d", '$crud_entry', $eval);
 				$eval = str_replace("%c", $count, $eval);
 				eval("\$function_value = " . $eval . ";");
-				echo ($function_value ? $function_value : "<i class=na>" . readLanguage(general,na) . "</i>");
+				echo ($function_value ? $function_value : "<i class=na>" . readLanguage('general','na') . "</i>");
 			
 			//Generic Text
 			} else {
-				echo ($crud_entry[$target_column] ? $crud_entry[$target_column] : "<i class=na>" . readLanguage(general,na) . "</i>");
+				echo ($crud_entry[$target_column] ? $crud_entry[$target_column] : "<i class=na>" . readLanguage('general','na') . "</i>");
 			}
 			echo "</td>";
 			if ($crud_data["delete_record_message"] == $target_column){

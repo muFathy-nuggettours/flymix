@@ -4,12 +4,12 @@ requireLogin(true);
 
 //User Dashboard Pages
 $user_pages = array(
-	"dashboard" => array(readLanguage(user,home),"user_dashboard","fas fa-home"),
-	"reservations" => array(readLanguage(user,reservations),"user_reservations","fas fa-plane"),
-	"balance-charge" => array(readLanguage(user,balance_charge),"user_balance_charge","fas fa-wallet"),
-	"balance-operations" => array(readLanguage(user,balance_operations),"user_balance_operations","fas fa-search-dollar"),
-	"update-passengers" => array(readLanguage(user,passengers),"user_passengers","fas fa-users-cog"),
-	"update-profile" => array(readLanguage(user,update_profile),"user_profile","fas fa-user-edit"),
+	"dashboard" => array(readLanguage('user','home'),"user_dashboard","fas fa-home"),
+	"reservations" => array(readLanguage('user','reservations'),"user_reservations","fas fa-plane"),
+	"balance-charge" => array(readLanguage('user','balance_charge'),"user_balance_charge","fas fa-wallet"),
+	"balance-operations" => array(readLanguage('user','balance_operations'),"user_balance_operations","fas fa-search-dollar"),
+	"update-passengers" => array(readLanguage('user','passengers'),"user_passengers","fas fa-users-cog"),
+	"update-profile" => array(readLanguage('user','update_profile'),"user_profile","fas fa-user-edit"),
 );
 
 //Check if page exists
@@ -17,7 +17,7 @@ if ($get["page"] AND !$user_pages[$get["page"]]){ brokenLink(); }
 $page_canonical = ($user_pages[$get["page"]] ? $get["page"] : "dashboard");
 
 $section_information = mysqlFetch(mysqlQuery("SELECT * FROM " . $suffix . "website_pages WHERE page='" . basename($_SERVER["SCRIPT_FILENAME"], ".php") . "'"));
-$section_prefix = readLanguage(user,dashboard);
+$section_prefix = readLanguage('user','dashboard');
 $section_title = $user_pages[$page_canonical][0];
 
 //Update Profile Picture
@@ -53,17 +53,17 @@ include "website/section_header.php"; ?>
 			<span class=single-line><a href="user/"><b><?=$logged_user["name"]?></b></a></span>
 			<span class=single-line><?=$logged_user["email"]?></span>
 			<input type=hidden name=profile_image_base64>
-			<label><?=readLanguage(accounts,change_picture)?><input type=file id=profile_image name=profile_image accept="image/*"></label>
+			<label><?=readLanguage('accounts','change_picture')?><input type=file id=profile_image name=profile_image accept="image/*"></label>
 		</div>	
 	</div>	
 	
 	<? $user_balance = mysqlFetch(mysqlQuery("SELECT SUM(amount) AS total FROM users_balance WHERE currency='$user_currencyCode' AND user_id='" . $logged_user["id"] . "'"))["total"]; ?>
 	<div class="page_container user_balance margin-bottom">
-		<span><?=readLanguage(user,balance)?></span>
+		<span><?=readLanguage('user','balance')?></span>
 		<div><b><?=number_format(round($user_balance, 2), 2)?></b>&nbsp;&nbsp;<small><?=$user_paymentCurrency[$suffix . "name"]?></small></div>
 		<div class="flex-center margin-top-10">
-			<a class="btn btn-success btn-sm flex-grow-1" href="user/balance-charge/"><?=readLanguage(user,balance_charge)?></a>&nbsp;&nbsp;
-			<a class="btn btn-primary btn-sm flex-grow-1" href="user/balance-operations/"><?=readLanguage(user,balance_operations)?></a>
+			<a class="btn btn-success btn-sm flex-grow-1" href="user/balance-charge/"><?=readLanguage('user','balance_charge')?></a>&nbsp;&nbsp;
+			<a class="btn btn-primary btn-sm flex-grow-1" href="user/balance-operations/"><?=readLanguage('user','balance_operations')?></a>
 		</div>
 	</div>
 

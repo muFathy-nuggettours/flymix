@@ -1,1 +1,1 @@
-<?=readlanguage(payment,methods_not_working)?>
+<?=readlanguage('payment','methods_not_working')?>

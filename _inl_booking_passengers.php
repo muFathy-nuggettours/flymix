@@ -20,7 +20,7 @@ $country_array = mysqlFetchAll($country_result);
 <input type=hidden name=travelers value=<?=intval($itinerary['travelers'])?>>
 
 <!-- بيانات العميل -->
-<div class=page_subtitle><?=readLanguage(passengers,client_data)?></div>
+<div class=page_subtitle><?=readLanguage('passengers','client_data')?></div>
 <div class=page_container>
 <? if ($logged_user){ ?>
 	<div class=user_card>
@@ -35,24 +35,24 @@ $country_array = mysqlFetchAll($country_result);
 	<table class=form_table>
 	<tr>
 		<td colspan=2>
-			<div class=title><?=readLanguage(contact,name)?>: <i class=requ></i></div>
-			<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage(accounts,name_placeholder)?>" data-validation=required></div>
+			<div class=title><?=readLanguage('contact','name')?>: <i class=requ></i></div>
+			<div class=input data-icon="&#xf007;"><input type=text name=name value="<?=$post["name"]?>" maxlength=255 placeholder="<?=readLanguage('accounts','name_placeholder')?>" data-validation=required></div>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<div class=title><?=readLanguage(contact,email)?>: <i class=requ></i></div>
-			<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage(accounts,email_placeholder)?>" data-validation=email autocomplete=email></div>
+			<div class=title><?=readLanguage('contact','email')?>: <i class=requ></i></div>
+			<div class=input data-icon="&#xf1fa;"><input type=email name=email value="<?=$post["email"]?>" maxlength=100 placeholder="<?=readLanguage('accounts','email_placeholder')?>" data-validation=email autocomplete=email></div>
 		</td>
 		<td>
-			<div class=title><?=readLanguage(contact,mobile)?>: <i class=requ></i></div>
+			<div class=title><?=readLanguage('contact','mobile')?>: <i class=requ></i></div>
 			<div class="input force-ltr" data-icon="&#xf3cd;">
 				<select name=country id=country>
 				<? foreach ($country_array as $country) {?>
 					<option value="<?=$country["code"]?>" name="<?=$country[$website_language . "_name"]?>" data-phone-code="+<?=$country["phone_code"]?>">+<?=$country["phone_code"] . " " . $country[$website_language . "_name"]?></option>
 				<? }?>
 				</select>
-				&nbsp;&nbsp;<input type=number name=mobile value="<?=$post["mobile"]?>" maxlength=11 placeholder="<?=readLanguage(accounts,mobile_placeholder)?>" data-validation=validateMobile>
+				&nbsp;&nbsp;<input type=number name=mobile value="<?=$post["mobile"]?>" maxlength=11 placeholder="<?=readLanguage('accounts','mobile_placeholder')?>" data-validation=validateMobile>
 			</div>
 			<script>
 			//Set default country selection value
@@ -92,7 +92,7 @@ $country_array = mysqlFetchAll($country_result);
 					}
 					return (value ? true : false) && valid_mobile;
 				},
-				errorMessage: "<?=readLanguage(accounts,mobile_placeholder)?>"
+				errorMessage: "<?=readLanguage('accounts','mobile_placeholder')?>"
 			});
 			</script>
 		</td>
@@ -102,8 +102,8 @@ $country_array = mysqlFetchAll($country_result);
 </div>
 
 <!-- بيانات المسافرين -->
-<div class="page_subtitle margin-top-20"><?=readLanguage(passengers,passengers_data)?></div>
-<div class="alert alert-warning"><?=readLanguage(passengers,passengers_data_alert)?></div>
+<div class="page_subtitle margin-top-20"><?=readLanguage('passengers','passengers_data')?></div>
+<div class="alert alert-warning"><?=readLanguage('passengers','passengers_data_alert')?></div>
 
 <?
 //Set passenger types count
@@ -113,17 +113,17 @@ elseif ($cnn_count--> 0) $type = 1;
 elseif ($inf_count--> 0) $type = 2; ?>
 <input type=hidden name=type-<?=$i?> value="<?=$type?>">
 <input type=hidden name=passport-<?=$i?>>
-<div class="page_container margin-top"><div class=page_subtitle><?=readLanguage(common,passenger)?> (<?=$i+1?>) - <?=$data_passenger_types[$type]?></div>
+<div class="page_container margin-top"><div class=page_subtitle><?=readLanguage('common','passenger')?> (<?=$i+1?>) - <?=$data_passenger_types[$type]?></div>
 <table class=form_table>
 <tr>
 	<td colspan=2>
 		<? if ($user_passengers[$type]){ ?>
-		<select name=passengers_selection><option value=""><?=readLanguage(passengers,choosing_passengers)?></option><?=$user_passengers[$type]?></select>
-		<div class=separator_or><label><?=readLanguage(accounts,separator)?></label></div>
+		<select name=passengers_selection><option value=""><?=readLanguage('passengers','choosing_passengers')?></option><?=$user_passengers[$type]?></select>
+		<div class=separator_or><label><?=readLanguage('accounts','separator')?></label></div>
 		<? } ?>
 		<label class="upload-image margin-bottom d-block">
 			<input type=file name=passport_image-<?=$i?> class=d-none accept="image/*">
-			<?=readLanguage(passengers,upload_passport)?>
+			<?=readLanguage('passengers','upload_passport')?>
 		</label>
 		<script>
 		//On passport file change
@@ -135,7 +135,7 @@ elseif ($inf_count--> 0) $type = 2; ?>
 </tr>
 <tr>
 	<td>
-		<div class=title><?=readLanguage(common,first_name)?>: <i class=requ></i></div>
+		<div class=title><?=readLanguage('common','first_name')?>: <i class=requ></i></div>
 		<div class=d-flex>
 			<div class=input style="width: 30%" data-icon="&#xf007;">
 				<select name=name_prefix-<?=$i?> id=name_prefix-<?=$i?>>
@@ -145,17 +145,17 @@ elseif ($inf_count--> 0) $type = 2; ?>
 					setSelectValue("#name_prefix-<?=$i?>", "<?=($post["name_prefix-$i"] ?: 1)?>");
 				</script>
 			</div>&nbsp;&nbsp;
-			<div class=input style="width: 70%" data-icon="&#xf007;"><input type=text name=first_name-<?=$i?> value="<?=$post["first_name-$i"]?>" maxlength=255 placeholder="<?=readLanguage(common,first_name_placeholder)?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage(common,first_name_validate)?>"></div>
+			<div class=input style="width: 70%" data-icon="&#xf007;"><input type=text name=first_name-<?=$i?> value="<?=$post["first_name-$i"]?>" maxlength=255 placeholder="<?=readLanguage('common','first_name_placeholder')?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage('common','first_name_validate')?>"></div>
 		</div>
 	</td>
 	<td>
 		<div class=title>الإسم الأخير: <i class=requ></i></div>
-		<div class=input data-icon="&#xf007;"><input type=text name=last_name-<?=$i?> value="<?=$post["last_name-$i"]?>" maxlength=255 placeholder="<?=readLanguage(common,last_name_validate)?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage(common,last_name_validate)?>"></div>
+		<div class=input data-icon="&#xf007;"><input type=text name=last_name-<?=$i?> value="<?=$post["last_name-$i"]?>" maxlength=255 placeholder="<?=readLanguage('common','last_name_validate')?>" data-validation=alphanumeric data-validation-error-msg="<?=readLanguage('common','last_name_validate')?>"></div>
 	</td>
 </tr>
 <tr>
 	<td>
-		<div class=title><?=readLanguage(passengers,birth_date)?>: <i class=requ></i></div>
+		<div class=title><?=readLanguage('passengers','birth_date')?>: <i class=requ></i></div>
 		<div>
 			<input class=caleran name=birth_date-<?=$i?> type=text value="<?=$post["birth_date-$i"]?>">
 			<script>
@@ -173,7 +173,7 @@ elseif ($inf_count--> 0) $type = 2; ?>
 		</div>
 	</td>
 	<td>
-		<div class=title><?=readLanguage(common,nationality_country)?>: <i class=requ></i></div>
+		<div class=title><?=readLanguage('common','nationality_country')?>: <i class=requ></i></div>
 		<div>
 			<select name=nationality-<?=$i?> id=nationality-<?=$i?>>
 			<? foreach ($country_array as $country) {?>
@@ -202,11 +202,11 @@ elseif ($inf_count--> 0) $type = 2; ?>
 </tr>
 <tr>
 	<td>
-		<div class=title><?=readLanguage(passengers,passport_number)?>: <i class=requ></i></div>
+		<div class=title><?=readLanguage('passengers','passport_number')?>: <i class=requ></i></div>
 			<div class=input data-icon="&#xf2c2;"><input type=text name=ssn-<?=$i?> value="<?=$post["ssn-$i"]?>" placeholder="قم بإدخال رقم جواز السفر او رقم الهوية للطيران الداخلي" data-validation=required></div>
 	</td>
 	<td>
-		<div class=title><?=readLanguage(common,end_date)?>: <i class=requ></i></div>
+		<div class=title><?=readLanguage('common','end_date')?>: <i class=requ></i></div>
 		<div>
 			<input class=caleran type=text name=ssn_end-<?=$i?> value="<?=$post["ssn_end-$i"]?>">
 			<script>
@@ -227,21 +227,21 @@ elseif ($inf_count--> 0) $type = 2; ?>
 <tr>
 	<td colspan=4>
 		<div class="panel panel-default">
-			<div class=panel-heading><a data-toggle=collapse href="#collapse-<?=$i?>"><?=readLanguage(passengers,special_requests)?></a><i class="fa fa-caret-down"></i></div>
+			<div class=panel-heading><a data-toggle=collapse href="#collapse-<?=$i?>"><?=readLanguage('passengers','special_requests')?></a><i class="fa fa-caret-down"></i></div>
 			<div id="collapse-<?=$i?>" class="panel-collapse collapse">
 			<div class="panel-body">
 				<table class=form_table>
 					<tr>
 					<td>
-						<div class=title><?=readLanguage(passengers,special_needs)?>:</div>
-						<select name=special_needs-<?=$i?> id=special_needs-<?=$i?>><option value="0"><?=readLanguage(common,undefined)?></option><?=populateOptions($data_special_needs)?></select>
+						<div class=title><?=readLanguage('passengers','special_needs')?>:</div>
+						<select name=special_needs-<?=$i?> id=special_needs-<?=$i?>><option value="0"><?=readLanguage('common','undefined')?></option><?=populateOptions($data_special_needs)?></select>
 						<script>
 						setSelectValue("#special_needs-<?=$i?>", "<?=$post["special_needs-$i"] ?: 0?>");
 						</script>
 					</td>
 					<td>
-						<div class=title><?=readLanguage(passengers,special_meals)?>:</div>
-						<select name=special_meals-<?=$i?> id=special_meals-<?=$i?>><option value="0"><?=readLanguage(common,undefined)?></option><?=populateOptions($data_special_meals)?></select>
+						<div class=title><?=readLanguage('passengers','special_meals')?>:</div>
+						<select name=special_meals-<?=$i?> id=special_meals-<?=$i?>><option value="0"><?=readLanguage('common','undefined')?></option><?=populateOptions($data_special_meals)?></select>
 						<script>
 						setSelectValue("#special_meals-<?=$i?>", "<?=$post["special_meals-$i"] ?: 0?>");
 						</script>
@@ -257,12 +257,12 @@ elseif ($inf_count--> 0) $type = 2; ?>
 </div>
 <? } ?>
 
-<div class="page_subtitle margin-top-20"><?=readLanguage(common,extra_notes)?></div>
+<div class="page_subtitle margin-top-20"><?=readLanguage('common','extra_notes')?></div>
 <div class=page_container>
-	<textarea name=notes value="<?=$post["notes"]?>" placeholder="<?=readLanguage(common,extra_notes_placeholder)?>"></textarea>
+	<textarea name=notes value="<?=$post["notes"]?>" placeholder="<?=readLanguage('common','extra_notes_placeholder')?>"></textarea>
 </div>
 
-<button type=button class="submit large margin-top-30"><?=readLanguage(passengers,goto_payment)?></button>
+<button type=button class="submit large margin-top-30"><?=readLanguage('passengers','goto_payment')?></button>
 </form>
 
 <script>

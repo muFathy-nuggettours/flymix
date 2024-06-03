@@ -10,15 +10,15 @@ if ($post["token"] && $edit) {
 		variables='" . $post["variables"] . "'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records, updated);
+	$success = readLanguage('records', 'updated');
 }
 
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 }
 
@@ -38,9 +38,9 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,content)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','content')?>: <i class=requ></i></td>
 	<td data-multiple=variables>
-		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('variables')"><?=readLanguage(operations,insert)?></button>
+		<button type=button class="btn btn-primary btn-sm" onclick="multipleDataCreate('variables')"><?=readLanguage('operations','insert')?></button>
 		<input type=hidden name=variables>
 		<ul multiple-sortable>
 			<li data-template>
@@ -60,7 +60,7 @@ include "_header.php"; ?>
 					<div class=check_container id=checkboxes>
 						<label>
 							<input type=checkbox data-type=checkbox data-name=hidden class=filled-in value=1>
-							<span><?=readLanguage(inputs,hidden)?></span>
+							<span><?=readLanguage('inputs','hidden')?></span>
 						</label>
 					</div>
 					<a class="btn btn-danger btn-sm remove d-none"><i class="fas fa-times"></i></a>
@@ -120,7 +120,7 @@ include "_header.php"; ?>
 <?
 $crud_data["buttons"] = array(false, true, false, true, false); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
-    array("placeholder", readLanguage(general,variable), "100%", "center", null, false, true),
+    array("placeholder", readLanguage('general','variable'), "100%", "center", null, false, true),
 );
 require_once("crud/crud.php");
 ?>

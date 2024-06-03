@@ -24,15 +24,15 @@ include "_header.php"; ?>
 			<br><small><?=$data_platforms[$trip["platform"]]?></small>
 		</div>
 		<div class="info_buttons hide_pdf">
-			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('حجز #<?=$reservation["code"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage(general,export_pdf)?></button>
+			<button type=button class="btn btn-danger btn-sm" onclick="exportHTML('حجز #<?=$reservation["code"]?>', $('#view_content div.title').text(), '#view_content')"><i class="fas fa-file-pdf"></i>&nbsp;&nbsp;<?=readLanguage('general','export_pdf')?></button>
 		</div>
 	</div>
 	
 	<div class=info_blocks>
-		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage(users,registration_date)?></p><span><?=dateLanguage("l, d M Y h:i A",$reservation["date"])?></span></div>
+		<div class=info_block_item style="flex-grow:1"><p><?=readLanguage('users','registration_date')?></p><span><?=dateLanguage("l, d M Y h:i A",$reservation["date"])?></span></div>
 		<div class=info_block_item><p>IP</p><?=naRes($reservation["user_ip"])?></div>
 		<div class=info_block_item><p>رقم الحجز</p><?=naRes($reservation["pnr"])?></div>
-		<div class=info_block_item><p><?=readLanguage(users,status)?></p><?=returnStatusLabel("data_reservation_status", $reservation["status"])?></div>
+		<div class=info_block_item><p><?=readLanguage('users','status')?></p><?=returnStatusLabel("data_reservation_status", $reservation["status"])?></div>
 	</div>
 	
 	<div style="clear:both"></div>

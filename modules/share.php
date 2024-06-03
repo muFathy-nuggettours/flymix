@@ -13,7 +13,7 @@ $(".<?=$share_uniqid?>").jsSocials({
 <? } else { ?>
 <center>
 	<button class="btn btn-primary btn-insert btn-block" onclick='sendApplicationMessage("Share-Page", ["<?=rawurlencode(str_replace('&#34;','"',$page_title))?>", "<?=rawurlencode($page_image)?>", "<?=rawurlencode($page_url)?>"])'>
-		<i class="fas fa-share-alt"></i>&nbsp;&nbsp;<?=readLanguage(general,share)?>
+		<i class="fas fa-share-alt"></i>&nbsp;&nbsp;<?=readLanguage('general','share')?>
 	</button>
 </center>
 

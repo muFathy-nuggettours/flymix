@@ -8,10 +8,10 @@
 	<!-- Copyrights -->
 	<div class=copyrights>
 		<div class=container>
-			<div><?=readLanguage(footer,copyright)?> © <?=$website_information["website_name"]?> <?=dateLanguage("Y",time())?></div>
+			<div><?=readLanguage('footer','copyright')?> © <?=$website_information["website_name"]?> <?=dateLanguage("Y",time())?></div>
 			<? if (!$white_label){ ?>
 				<div class=copyrights_links>
-					<?=readLanguage(footer,developer)?>&nbsp;&nbsp;<a href="https://www.prismatecs.com/" target=_blank>Prismatecs Smart Solutions</a>
+					<?=readLanguage('footer','developer')?>&nbsp;&nbsp;<a href="https://www.prismatecs.com/" target=_blank>Prismatecs Smart Solutions</a>
 				</div>
 			<? } ?>
 		</div>

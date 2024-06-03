@@ -26,19 +26,19 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(channels,mobiles)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('channels','mobiles')?>: <i class=requ></i></td>
 	<td>
 		<textarea name=mobile data-validation=required></textarea>
-		<div class=input_description><?=readLanguage(inputs,instructions_newline)?></div>
+		<div class=input_description><?=readLanguage('inputs','instructions_newline')?></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(channels,message)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('channels','message')?>: <i class=requ></i></td>
 	<td><input type=text name=message data-validation=required maxlength=140></td>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(channels,send)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('channels','send')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

@@ -1,6 +1,6 @@
 <form class=module_newsletter>
-	<input type=email data-validation=email placeholder="<?=readLanguage(newsletter,placeholder)?>">
-	<input type=button value="<?=readLanguage(newsletter,subscribe)?>" class="btn btn-primary btn-sm" onclick="newsletterSubscribe(this)">			
+	<input type=email data-validation=email placeholder="<?=readLanguage('newsletter','placeholder')?>">
+	<input type=button value="<?=readLanguage('newsletter','subscribe')?>" class="btn btn-primary btn-sm" onclick="newsletterSubscribe(this)">			
 </form>
 
 <script>
@@ -22,9 +22,9 @@ if (typeof newsletterSubscribe === "undefined"){
 				},
 			}).done(function(response){
 				email.val("");
-				messageBox("<?=readLanguage(footer,newsletter)?>", response, "fas fa-check", "green");
+				messageBox("<?=readLanguage('footer','newsletter')?>", response, "fas fa-check", "green");
 			}).fail(function(response){
-				messageBox("<?=readLanguage(footer,newsletter)?>", response.responseText, "fas fa-times", "red");
+				messageBox("<?=readLanguage('footer','newsletter')?>", response.responseText, "fas fa-times", "red");
 			});					   
 		}
 	}

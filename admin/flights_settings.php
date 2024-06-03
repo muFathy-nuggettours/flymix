@@ -34,7 +34,7 @@ if ($post["token"]){
 		
 		ELSE content
 	END");
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
@@ -240,7 +240,7 @@ include "_header.php"; ?>
 </table>
 </div>
 
-</div><div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+</div><div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

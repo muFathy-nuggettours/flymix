@@ -53,7 +53,7 @@ if ($post["token"]){
 
 		ELSE content
 	END");
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
@@ -85,43 +85,43 @@ textarea.code {
 	<li role=presentation class=active>
 		<a href="#settings_general" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-cogs"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_general)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_general')?></div>
 		</a>
 	</li>
 	<li role=presentation>
 		<a href="#settings_email" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-envelope"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_email)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_email')?></div>
 		</a>
 	</li>
 	<li role=presentation>
 		<a href="#settings_push" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-bell"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_push)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_push')?></div>
 		</a>
 	</li>
 	<li role=presentation>
 		<a href="#settings_sms" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-sms"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_sms)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_sms')?></div>
 		</a>
 	</li>
 	<li role=presentation>
 		<a href="#settings_application" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-mobile-alt"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_application)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_application')?></div>
 		</a>
 	</li>
 	<li role=presentation>
 		<a href="#settings_code" data-toggle=tab>
 			<span class=round-tab><i class="fas fa-code"></i></span>
-			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage(pages,settings_code)?></div>
+			<div class="tab-title hidden-sm hidden-xs"><?=readLanguage('pages','settings_code')?></div>
 		</a>
 	</li>
 </ul></div></div>
 
 <div class=tab-title-container>
-	<span><?=readLanguage(pages,settings_general)?></span>
+	<span><?=readLanguage('pages','settings_general')?></span>
 	<div class=tab-title-buttons>
 		<button type=button class="btn btn-default btn-sm prev-step"><i class="glyphicon glyphicon-chevron-left"></i></button>&nbsp;
 		<button type=button class="btn btn-default btn-sm next-step"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -133,7 +133,7 @@ textarea.code {
 
 <!-- General Settings -->
 <div class="tab-pane active" id=settings_general>
-<div class=subtitle><?=readLanguage(pages,settings_general_google)?></div>
+<div class=subtitle><?=readLanguage('pages','settings_general_google')?></div>
 <div class=data_table_container><table class=data_table>
 <tr>
 	<td class=title>Maps Javascript Key:</td>
@@ -184,7 +184,7 @@ textarea.code {
 </tr>
 </table></div>
 
-<div class=subtitle><?=readLanguage(pages,settings_general_social)?></div>
+<div class=subtitle><?=readLanguage('pages','settings_general_social')?></div>
 <table class=data_table>
 <tr>
 	<td class=title>Facebook Login:</td>
@@ -221,35 +221,35 @@ textarea.code {
 
 <!-- E-Mail -->
 <div class=tab-pane id=settings_email>
-<div class=subtitle><?=readLanguage(pages,settings_email_connection)?></div>
+<div class=subtitle><?=readLanguage('pages','settings_email_connection')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(pages,settings_email_server)?>:</td>
+	<td class=title><?=readLanguage('pages','settings_email_server')?>:</td>
 	<td><input type=text name=mail_server value="<?=$system_settings["mail_server"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,user_username)?>:</td>
+	<td class=title><?=readLanguage('pages','user_username')?>:</td>
 	<td><input type=text name=mail_username value="<?=$system_settings["mail_username"]?>"></td>
 </tr>
-	<tr><td class=title><?=readLanguage(pages,user_password)?>:</td>
+	<tr><td class=title><?=readLanguage('pages','user_password')?>:</td>
 	<td><input type=text name=mail_password value="<?=$system_settings["mail_password"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,settings_email_port)?>:</td>
+	<td class=title><?=readLanguage('pages','settings_email_port')?>:</td>
 	<td><input type=text name=mail_port value="<?=$system_settings["mail_port"]?>"></td>
 </tr>
 </table>
 
-<div class=subtitle><?=readLanguage(pages,settings_email)?></div>
+<div class=subtitle><?=readLanguage('pages','settings_email')?></div>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(pages,settings_email_sender_name)?>:</td>
+	<td class=title><?=readLanguage('pages','settings_email_sender_name')?>:</td>
 	<td>
 		<input type=text name=mail_from_name value="<?=$system_settings["mail_from_name"]?>">
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,settings_email_sender_email)?>:</td>
+	<td class=title><?=readLanguage('pages','settings_email_sender_email')?>:</td>
 	<td>
 		<input type=text name=mail_from value="<?=$system_settings["mail_from"]?>">
 	</td>
@@ -259,7 +259,7 @@ textarea.code {
 
 <!-- Push Notifications -->
 <div class=tab-pane id=settings_push>
-<div class=subtitle><?=readLanguage(pages,settings_firebase)?></div>
+<div class=subtitle><?=readLanguage('pages','settings_firebase')?></div>
 <table class=data_table>
 <tr>
 	<td class=title>Project ID:</td>
@@ -288,19 +288,19 @@ textarea.code {
 <div class=tab-pane id=settings_sms>
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,url)?>:</td>
+	<td class=title><?=readLanguage('inputs','url')?>:</td>
 	<td><?=$system_settings["sms_post_url"]?></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,user_username)?>:</td>
+	<td class=title><?=readLanguage('pages','user_username')?>:</td>
 	<td><input type=text name=sms_username value="<?=$system_settings["sms_username"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,user_password)?>:</td>
+	<td class=title><?=readLanguage('pages','user_password')?>:</td>
 	<td><input type=text name=sms_password value="<?=$system_settings["sms_password"]?>"></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,settings_sender_id)?>:</td>
+	<td class=title><?=readLanguage('pages','settings_sender_id')?>:</td>
 	<td>
 		<input type=text name=sms_sender_id value="<?=$system_settings["sms_sender_id"]?>">
 	</td>
@@ -352,7 +352,7 @@ $(".code").keydown(function(e){
 </script>
 </div>
 
-</div><div class=submit_container><input type=button class=submit value="<?=readLanguage(records,update)?>"></div>
+</div><div class=submit_container><input type=button class=submit value="<?=readLanguage('records','update')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

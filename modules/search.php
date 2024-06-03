@@ -17,9 +17,9 @@
 <!-- Buttons -->
 <div class=search_types>
 	<ul class="nav nav-tabs tab-inline-header">
-		<li><a data-toggle=tab data-type=1><i class="fal fa-reply"></i>&nbsp;&nbsp;<?=readLanguage(reservation,going)?></a></li>
-		<li><a data-toggle=tab data-type=2><i class="fal fa-repeat"></i>&nbsp;&nbsp;<?=readLanguage(reservation,going_comingback)?></a></li>
-		<li><a data-toggle=tab data-type=3><i class="fal fa-sync"></i>&nbsp;&nbsp;<?=readLanguage(reservation,several_distinations)?></a></li>
+		<li><a data-toggle=tab data-type=1><i class="fal fa-reply"></i>&nbsp;&nbsp;<?=readLanguage('reservation','going')?></a></li>
+		<li><a data-toggle=tab data-type=2><i class="fal fa-repeat"></i>&nbsp;&nbsp;<?=readLanguage('reservation','going_comingback')?></a></li>
+		<li><a data-toggle=tab data-type=3><i class="fal fa-sync"></i>&nbsp;&nbsp;<?=readLanguage('reservation','several_distinations')?></a></li>
 	</ul>
 </div>
 
@@ -31,7 +31,7 @@
 <div class=trip>
 	<div class=destination_container>
 		<div class="component destination">
-			<span><?=readLanguage(reservation,departure_arrival_station)?></span>
+			<span><?=readLanguage('reservation','departure_arrival_station')?></span>
 			<div>
 				<button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
 				<div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from></select></div>
@@ -42,7 +42,7 @@
 	
 	<div class="date_container departure_only" style="display:none">
 		<div class="component date">
-			<span><?=readLanguage(reservation,departure_date)?></span>
+			<span><?=readLanguage('reservation','departure_date')?></span>
 			<div>
 				<input type=hidden data-input=departure-only value="<?=($search["departure"] ? $search["departure"] : date("j-n-Y", time() + 86400))?>">
 				<div class=input_date date-picker-departure-only>
@@ -55,7 +55,7 @@
 	
 	<div class="date_container departure">
 		<div class="component date">
-			<span><?=readLanguage(reservation,departure_date)?></span>
+			<span><?=readLanguage('reservation','departure_date')?></span>
 			<div>
 				<input type=hidden data-input=departure value="<?=($search["departure"] ? $search["departure"] : date("j-n-Y", time() + 86400))?>">
 				<div class=input_date date-picker-departure>
@@ -68,7 +68,7 @@
 	
 	<div class="date_container arrival">
 		<div class="component date">
-			<span><?=readLanguage(reservation,arrival_date)?></span>
+			<span><?=readLanguage('reservation','arrival_date')?></span>
 			<div>
 				<input type=hidden data-input=arrival value="<?=($search["arrival"] ? $search["arrival"] : date("j-n-Y", time() + (86400 * 2)))?>">
 				<div class=input_date date-picker-arrival>
@@ -81,15 +81,15 @@
 
 	<div class=options_container>
 		<div class="component options">
-			<span><?=readLanguage(reservation,passengers_class)?></span>
+			<span><?=readLanguage('reservation','passengers_class')?></span>
 			<div>
 				<div class=input><i class="fal fa-chair-office icon"></i><select data-input=class><?=populateOptions($data_flight_classes)?></select></div>
 				<div style="position:relative">
 					<a class="travelers_dropdown input" data-toggle=dropdown><i class="fal fa-users icon"></i><span></span></a>
 					<ul class="dropdown-menu travelers"><li>
-						<div><b><?=readLanguage(common,adult)?></b><select data-input=adults onchange="updateTravelers()"><? for ($i=1; $i<=9; $i++){ print "<option value=$i>$i</option>"; } ?></select><span>12 <?=readLanguage(common,years_more)?></span></div>
-						<div><b><?=readLanguage(common,child)?></b><select data-input=children onchange="updateTravelers()"><? for ($i=0; $i<=8; $i++){ print "<option value=$i>$i</option>"; } ?></select><span><?=readLanguage(common,from)?> 2 <?=readLanguage(common,to)?> 12 <?=readLanguage(common,years_old)?></span></div>
-						<div><b><?=readLanguage(common,infant)?></b><select data-input=toddlers onchange="updateTravelers()"><? for ($i=0; $i<=8; $i++){ print "<option value=$i>$i</option>"; } ?></select><span><?=readLanguage(common,less_than)?><?=readLanguage(common,two_years)?></span></div>
+						<div><b><?=readLanguage('common','adult')?></b><select data-input=adults onchange="updateTravelers()"><? for ($i=1; $i<=9; $i++){ print "<option value=$i>$i</option>"; } ?></select><span>12 <?=readLanguage('common','years_more')?></span></div>
+						<div><b><?=readLanguage('common','child')?></b><select data-input=children onchange="updateTravelers()"><? for ($i=0; $i<=8; $i++){ print "<option value=$i>$i</option>"; } ?></select><span><?=readLanguage('common','from')?> 2 <?=readLanguage('common','to')?> 12 <?=readLanguage('common','years_old')?></span></div>
+						<div><b><?=readLanguage('common','infant')?></b><select data-input=toddlers onchange="updateTravelers()"><? for ($i=0; $i<=8; $i++){ print "<option value=$i>$i</option>"; } ?></select><span><?=readLanguage('common','less_than')?><?=readLanguage('common','two_years')?></span></div>
 					</li></ul>
 				</div>
 				<script>
@@ -108,14 +108,14 @@
 	<div class=trip_separator>
 		<i class="fal fa-plane"></i>
 		<span></span>
-		<a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip()"><i class="fal fa-plus-circle"></i> <?=readLanguage(booking,add_trip)?></a>
-		<a class="btn btn-danger btn-sm trip_remove" onclick="removeTrip(this)"><i class="fal fa-times-circle"></i> <?=readLanguage(plugins,message_delete)?></a>
+		<a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip()"><i class="fal fa-plus-circle"></i> <?=readLanguage('booking','add_trip')?></a>
+		<a class="btn btn-danger btn-sm trip_remove" onclick="removeTrip(this)"><i class="fal fa-times-circle"></i> <?=readLanguage('plugins','message_delete')?></a>
 	</div>
 
 	<div class=trip>
 		<div class=destination_container>
 			<div class="component destination">
-				<span><?=readLanguage(reservation,departure_arrival_station)?></span>
+				<span><?=readLanguage('reservation','departure_arrival_station')?></span>
 				<div>
 					<button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
 					<div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from-multiple></select></div>
@@ -126,7 +126,7 @@
 		
 		<div class="date_container departure_multiple">
 			<div class="component date">
-				<span><?=readLanguage(reservation,departure_date)?></span>
+				<span><?=readLanguage('reservation','departure_date')?></span>
 				<div>
 					<input type=hidden data-input=departure-multiple value="<?=date("j/n/Y", time() + (86400 * 2))?>">
 					<div class=input_date date-picker-departure-multiple>
@@ -144,14 +144,14 @@
 
 </div><!-- End Trips -->
 
-<button class="search_button btn btn-primary btn-sm" onclick="submitSearch()"><i class="fal fa-search fa-2x"></i><span><?=readLanguage(search,search_for_trips)?></span></button>
+<button class="search_button btn btn-primary btn-sm" onclick="submitSearch()"><i class="fal fa-search fa-2x"></i><span><?=readLanguage('search','search_for_trips')?></span></button>
 
 </div><!-- End Search Box -->
 
 <!-- Options -->
 <div class=check_container>
-	<label><input type=checkbox class=filled-in data-input=nonstop><span><?=readLanguage(common,non_stop_trips)?></span></label>
-	<label><input type=checkbox class=filled-in data-input=flexible><span><?=readLanguage(common,flex_dates)?></span></label>
+	<label><input type=checkbox class=filled-in data-input=nonstop><span><?=readLanguage('common','non_stop_trips')?></span></label>
+	<label><input type=checkbox class=filled-in data-input=flexible><span><?=readLanguage('common','flex_dates')?></span></label>
 	<script>
 	$("[data-input=nonstop]").prop("checked", <?=($search["nonstop"] ? "true" : "false")?>);
 	$("[data-input=flexible]").prop("checked", <?=($search["flexible"] ? "true" : "false")?>);
@@ -336,7 +336,7 @@ function updateTravelers(){
 	var children = parseInt($("[data-input=children]").val());
 	var toddlers = parseInt($("[data-input=toddlers]").val());
 	var total = adults + children + toddlers;
-	$(".travelers_dropdown span").text(`${total} <?=readLanguage(common,passengers2)?> (${adults} <?=readLanguage(common,adult)?>، ${children} <?=readLanguage(common,child)?>، ${toddlers} <?=readLanguage(common,infant)?>)`);
+	$(".travelers_dropdown span").text(`${total} <?=readLanguage('common','passengers2')?> (${adults} <?=readLanguage('common','adult')?>، ${children} <?=readLanguage('common','child')?>، ${toddlers} <?=readLanguage('common','infant')?>)`);
 }
 $(document).ready(function(){
 	updateTravelers();
@@ -352,7 +352,7 @@ function bindDestinationSelect2(object, value=null){
 	object.select2({
 		containerCssClass: object.attr("data-input"),
 		width: "100%",
-		placeholder: (object.attr("data-input")=="from" ? "<?=readLanguage(reservation,departure_city_airport)?>" : "<?=readLanguage(reservation,arrival_city_airport)?>"),
+		placeholder: (object.attr("data-input")=="from" ? "<?=readLanguage('reservation','departure_city_airport')?>" : "<?=readLanguage('reservation','arrival_city_airport')?>"),
 		dropdownParent: $(".flight_search_module"),
 		minimumInputLength: 0,
 		escapeMarkup: function(markup){
@@ -466,12 +466,12 @@ $("[data-input=class]").select2({
 function insertTrip(from=null, to=null, departure=null){
 	var total_trips = parseInt($(".trip_extra").length) + 1;
 	if (total_trips > 6){
-		quickNotify("الحد الاقصي هو 6 رحلات فقط", "<?=readLanguage(search,entrydata_err)?>", "danger", "fas fa-times fa-2x");
+		quickNotify("الحد الاقصي هو 6 رحلات فقط", "<?=readLanguage('search','entrydata_err')?>", "danger", "fas fa-times fa-2x");
 		return false;
 	}
 	var clone = $(".trip_template.template").clone();
 	clone.removeClass("template").addClass("trip_extra");
-	clone.find(".trip_separator span").text("<?=readLanguage(reservation,trip)?> " + (total_trips + 1));
+	clone.find(".trip_separator span").text("<?=readLanguage('reservation','trip')?> " + (total_trips + 1));
 	if (from){
 		clone.find("[data-input=from-multiple]").val(from);
 	}	
@@ -614,11 +614,11 @@ function submitSearch(){
 	var errors = [];
 	if (!$("[data-input=from]").val()){
 		$(".select2-selection--single.from").addClass("error");
-		errors.push("<?=readLanguage(search,departure_choose_err)?>");
+		errors.push("<?=readLanguage('search','departure_choose_err')?>");
 	}
 	if (!$("[data-input=to]").val()){
 		$(".select2-selection--single.to").addClass("error");
-		errors.push("<?=readLanguage(search,arrival_choose_err)?>");
+		errors.push("<?=readLanguage('search','arrival_choose_err')?>");
 	}
 	
 	if (trip_type==3){
@@ -652,18 +652,18 @@ function submitSearch(){
 			}
 		});
 		if (!valid){
-			errors.push("<?=readLanguage(search,multi_destination_err)?>");
+			errors.push("<?=readLanguage('search','multi_destination_err')?>");
 		}
 		if (!toValid){
-			errors.push("<?=readLanguage(search,multi_destination_err)?>");
+			errors.push("<?=readLanguage('search','multi_destination_err')?>");
 		}
 		if (!dateValid){
-			errors.push("<?=readLanguage(search,multi_destination_err)?>");
+			errors.push("<?=readLanguage('search','multi_destination_err')?>");
 		}
 	}
 	
 	if (errors.length){
-		quickNotify(errors.join("<br>"), "<?=readLanguage(search,entrydata_err)?>", "danger", "fas fa-times fa-2x");
+		quickNotify(errors.join("<br>"), "<?=readLanguage('search','entrydata_err')?>", "danger", "fas fa-times fa-2x");
 	} else {
 		let u = new URLSearchParams(trip_object).toString();
 		setWindowLocation("flights/?" + u);

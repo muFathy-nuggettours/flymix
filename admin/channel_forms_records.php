@@ -13,7 +13,7 @@ if ($get["show"]){
 if ($form_data && $post["delete"]){
 	mysqlQuery("DELETE FROM " . $suffix . "website_forms_records WHERE id IN (" . $post["delete"] . ")");
 	mysqlQuery("UPDATE $mysqltable SET records='" . mysqlNum(mysqlQuery("SELECT id FROM " . $suffix . "website_forms_records WHERE form_id='" . $get["show"] . "'")) . "' WHERE id=" . $get["show"]);
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 }
 
 if ($success){ $message = "<div class='alert alert-success'>$success</div>"; }
@@ -44,9 +44,9 @@ $excluded_types = array("heading", "plain"); ?>
 			print "<th style='min-width:200px'>" . $value["properties"]["label"] . "</th>";
 		}
 	} ?>
-	<th style="min-width:250px"><?=readLanguage(users,user)?></th>
-	<th style="min-width:150px"><?=readLanguage(forms,ip)?></th>
-	<th style="min-width:250px"><?=readLanguage(inputs,date)?></th>
+	<th style="min-width:250px"><?=readLanguage('users','user')?></th>
+	<th style="min-width:150px"><?=readLanguage('forms','ip')?></th>
+	<th style="min-width:250px"><?=readLanguage('inputs','date')?></th>
 </thead>
 <? $result = mysqlQuery("SELECT * FROM " . $suffix . "website_forms_records WHERE form_id='" . $form_data["id"] . "'");
 while ($entry = mysqlFetch($result)){ $serial++; ?>
@@ -59,7 +59,7 @@ while ($entry = mysqlFetch($result)){ $serial++; ?>
 			$input = $user_input[$value["id"]];
 			switch ($value["type"]){
 				case "textarea":
-					$content = naRes($input, maxLength($input, 40) . " <a modal-content='" . base64_encode($input) . "'>". readLanguage(forms,read_more) ."</a>");
+					$content = naRes($input, maxLength($input, 40) . " <a modal-content='" . base64_encode($input) . "'>". readLanguage('forms','read_more') ."</a>");
 				break;
 				
 				case "file":
@@ -175,14 +175,14 @@ $("[name=select_records]").on("change", function(){
 //Remove selection
 function removeSelections(){
 	if (!$("[record-checkbox]:checked").length){
-		quickNotify("<?=readLanguage(crud,operations_selection)?>", null, "danger", "fas fa-times fa-3x");
+		quickNotify("<?=readLanguage('crud','operations_selection')?>", null, "danger", "fas fa-times fa-3x");
 	} else {
 		var checked_values = [];
 		$("[record-checkbox]:checked").each(function(){
 			checked_values.push($(this).val());
 		});
 		$.confirm({
-			title: "<?=readLanguage(crud,operations_delete)?>",
+			title: "<?=readLanguage('crud','operations_delete')?>",
 			content: readLanguage.crud.operations_delete_message.replace("{{1}}", $("[record-checkbox]:checked").length),
 			buttons: {
 				confirm: {
@@ -208,9 +208,9 @@ function removeSelections(){
 <?
 $crud_data["buttons"] = array(false, true, false, false, false); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array( //Filter - Search - Copy Enabled
-    array("placeholder", readLanguage(builder,placeholder), "100%", "center", null, false, true),
-	array("records", readLanguage(forms,records), "120px", "center", null, false, true),
-	array("id", readLanguage(forms,records_show), "120px", "center", "'<a class=\"btn btn-primary btn-sm btn-block\" href=\"$base_name.php?show=%s\">".readLanguage(forms,records_show)."</a>'", false, false),
+    array("placeholder", readLanguage('builder','placeholder'), "100%", "center", null, false, true),
+	array("records", readLanguage('forms','records'), "120px", "center", null, false, true),
+	array("id", readLanguage('forms','records_show'), "120px", "center", "'<a class=\"btn btn-primary btn-sm btn-block\" href=\"$base_name.php?show=%s\">".readLanguage('forms','records_show')."</a>'", false, false),
 );
 require_once("crud/crud.php");
 ?>

@@ -7,14 +7,14 @@ checkPermissions($base_name);
 //==== DELETE Record ====
 if ($delete){
 	mysqlQuery("DELETE FROM $mysqltable WHERE id=$delete");
-	if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+	if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 
 //==== ADD Record ====
 } else if ($post["token"] && !$edit){
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE canonical='" . $post["canonical"] . "'"))){
-		$error = readLanguage(records,exists);
+		$error = readLanguage('records','exists');
 	} else if (!validateCanonical($post["canonical"])){
-		$error = readLanguage(records,invalid_canonical);
+		$error = readLanguage('records','invalid_canonical');
 	} else {
 		$query = "INSERT INTO $mysqltable (
 			airport,
@@ -38,15 +38,15 @@ if ($delete){
 			'" . newRecordID($mysqltable) . "'
 		)";
 		mysqlQuery($query);
-		$success = readLanguage(records,added);
+		$success = readLanguage('records','added');
 	}
 
 //==== EDIT Record ====	
 } else if ($post["token"] && $edit){
 	if (mysqlNum(mysqlQuery("SELECT * FROM $mysqltable WHERE canonical='" . $post["canonical"] . "' AND id!=$edit"))){
-		$error = readLanguage(records,exists);
+		$error = readLanguage('records','exists');
 	} else if (!validateCanonical($post["canonical"])){
-		$error = readLanguage(records,invalid_canonical);
+		$error = readLanguage('records','invalid_canonical');
 	} else {
 		$record_data = getID($edit,$mysqltable);
 		$query = "UPDATE $mysqltable SET
@@ -60,20 +60,20 @@ if ($delete){
 			gallery='" . $post["gallery"] . "'
 		WHERE id=$edit";
 		mysqlQuery($query);
-		$success = readLanguage(records,updated);
+		$success = readLanguage('records','updated');
 	}
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -90,13 +90,13 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','title')?>: <i class=requ></i></td>
 	<td>
 		<input type=text name=title onkeyup="createCanonical(this.value,'canonical')" value="<?=$entry["title"]?>" data-validation=required>
 	</td>
-	<td class=title><?=readLanguage(inputs,canonical)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','canonical')?>: <i class=requ></i></td>
 	<td>
-		<input type=text name=canonical id=canonical value="<?=$entry["canonical"]?>" placeholder="<?=readLanguage(inputs,canonical_placeholder)?>" data-validation=required>
+		<input type=text name=canonical id=canonical value="<?=$entry["canonical"]?>" placeholder="<?=readLanguage('inputs','canonical_placeholder')?>" data-validation=required>
 	</td>
 </tr>
 <tr>
@@ -115,16 +115,16 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,description)?>:</td>
+	<td class=title><?=readLanguage('inputs','description')?>:</td>
 	<td colspan=3><textarea name=description style="min-height:initial; height:55px"><?=$entry["description"]?></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,header_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','header_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=header_image id=header_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["header_image"] ? "../uploads/destinations/" . $entry["header_image"] : "images/placeholder.png") ?>
@@ -134,12 +134,12 @@ include "_header.php"; ?>
 		<!-- Used Only For Upload -->
 		<script>$(document).ready(function(){ bindImage("header_image") })</script>
 	</td>
-	<td class=title><?=readLanguage(inputs,cover_image)?>:</td>
+	<td class=title><?=readLanguage('inputs','cover_image')?>:</td>
 	<td>
 		<table class=attachment><tr>
 		<td>
 			<input type=file name=cover_image id=cover_image accept="image/*" data-validation=mime data-validation-allowing="image/bmp,image/jpeg,image/png,image/gif">
-			<div class=input_description><?=readLanguage(inputs,instructions_design)?></div>
+			<div class=input_description><?=readLanguage('inputs','instructions_design')?></div>
 		</td>
 		<td width=150>
 			<? $path = ($entry["cover_image"] ? "../uploads/destinations/" . $entry["cover_image"] : "images/placeholder.png") ?>
@@ -151,16 +151,16 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,content)?>:</td>
+	<td class=title><?=readLanguage('inputs','content')?>:</td>
 	<td colspan=3><textarea class=contentEditor style="height:400px" name=content id=content><?=$entry["content"]?></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,gallery)?>:</td>
+	<td class=title><?=readLanguage('inputs','gallery')?>:</td>
 	<td colspan=3 data-token="<?=$token?>" data-attachments=gallery data-upload-path="../uploads/destinations/">
 		<div class=attachment-button>
 			<input type=hidden name=gallery value="<?=$entry["gallery"]?>">
-			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage(inputs,gallery_insert)?><input type=file id=gallery accept="image/*" multiple></label>
-			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage(inputs,uploading)?></div>
+			<label class="btn btn-primary btn-lrg btn-upload"><?=readLanguage('inputs','gallery_insert')?><input type=file id=gallery accept="image/*" multiple></label>
+			<div><i class="fas fa-spinner fa-spin"></i><?=readLanguage('inputs','uploading')?></div>
 		</div>
 		<ul sortable class=attachments-list></ul><div style="clear:both"></div>
 		<? if ($entry["gallery"]){ ?>
@@ -185,7 +185,7 @@ $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View 
 $crud_data["columns"] = array(
 	array("title","العنوان","100%","center",null,false,true),
 	array("airport","المطار","100px","center",null,true,true),
-	array("canonical",readLanguage(inputs,url),"300px","center","pageURL('{$base_url}destinations/%s/')",false,true),
+	array("canonical",readLanguage('inputs','url'),"300px","center","pageURL('{$base_url}destinations/%s/')",false,true),
 );
 require_once("crud/crud.php");
 ?>

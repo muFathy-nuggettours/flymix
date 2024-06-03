@@ -15,11 +15,11 @@ if (isset($_FILES["files"]) && !empty($_FILES["files"])){
 			
 		} else if (!validateFileName($_FILES["files"]["name"][$i])){
 			header("HTTP/1.1 400 Bad Request");
-			exit(readLanguage(plugins,upload_error_extension));
+			exit(readLanguage('plugins','upload_error_extension'));
 			
 		} else if (!$_FILES["files"]["size"][$i] || $_FILES["files"]["size"][$i] > parseSize(ini_get("upload_max_filesize"))){
 			header("HTTP/1.1 400 Bad Request");
-			exit(readLanguage(plugins,upload_error_size) . ini_get("upload_max_filesize"));			
+			exit(readLanguage('plugins','upload_error_size') . ini_get("upload_max_filesize"));			
 
 		} else {
 			$is_image = isImage($_FILES["files"]["name"][$i]);
@@ -53,6 +53,6 @@ if (sizeof($uploaded_files)){
 	echo json_encode($uploaded_files,JSON_UNESCAPED_UNICODE);
 } else {
 	header("HTTP/1.1 400 Bad Request");
-	exit(readLanguage(plugins,upload_error));
+	exit(readLanguage('plugins','upload_error'));
 }
 ?>

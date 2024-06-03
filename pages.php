@@ -29,7 +29,7 @@ $section_layout = $page_data["page_layout"];
 
 //Breadcrumbs
 $breadcrumbs = array();
-array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 if ($page_data["parent"]){
 	$page_path = explode(",", customPagePath($page_data["id"]));
 	array_pop($page_path); //Remove the displayed page from path

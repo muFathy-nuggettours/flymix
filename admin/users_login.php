@@ -10,10 +10,10 @@ if ($post["token"]){
 	if ($user_data){
 		writeCookie($user_session, null, time() - (86400 * 30), "/");
 		$_SESSION[$user_session] = $user_data["hash"];
-		$success = readLanguage(users,login_success) . "<b>" . $user_data["name"] . "</b>";
+		$success = readLanguage('users','login_success') . "<b>" . $user_data["name"] . "</b>";
 		$success .= "<script>window.open('../');</script>";
 	} else {
-		$error = readLanguage(general,error);
+		$error = readLanguage('general','error');
 	}
 }
 
@@ -44,7 +44,7 @@ function onUnselectProfile_<?=$input?>(){
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(users,login)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('users','login')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

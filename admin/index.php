@@ -12,7 +12,7 @@ if ($post["token"]){
 	$rules["login_password"] = array("required", "max_length(255)", "min_length(8)");
 	$validation_result = SimpleValidator\Validator::validate($post,$rules);	
 	if ($validation_result->isSuccess()==false){
-		$message = "<div class='alert alert-danger'>" . readLanguage(login,invalid) . "</div>";
+		$message = "<div class='alert alert-danger'>" . readLanguage('login','invalid') . "</div>";
 	} else {
 		$valid_attempt = false;
 		if ($system_settings["recaptcha_secret_key"] && $_SESSION[$recaptcha_session] >= $rate_limit){
@@ -31,11 +31,11 @@ if ($post["token"]){
 				$_SESSION[$recaptcha_session] = 0;
 				header("Location: .");
 			} else {
-				$message = "<div class='alert alert-danger'>" . readLanguage(login,invalid) . "</div>";
+				$message = "<div class='alert alert-danger'>" . readLanguage('login','invalid') . "</div>";
 				$_SESSION[$recaptcha_session]++;
 			}
 		} else {
-			$message = "<div class='alert alert-danger'>" . readLanguage(general,recaptcha_error) . "</div>";
+			$message = "<div class='alert alert-danger'>" . readLanguage('general','recaptcha_error') . "</div>";
 		}
 	}
 }
@@ -46,34 +46,34 @@ include "_header.php"; ?>
 	<? if ($system_settings["recaptcha_secret_key"]){ ?><script src="https://www.google.com/recaptcha/api.js" async defer></script><? } ?>
 	<div class="row login">
 		<div class="col-md-10 login_form">
-			<h1><?=$website_information["website_name"]?><br><small><?=readLanguage(general,control_panel)?></small></h1>
+			<h1><?=$website_information["website_name"]?><br><small><?=readLanguage('general','control_panel')?></small></h1>
 			<div class=login_form>
 				<img src="../uploads/_website/<?=$website_information["website_logo"]?>">
 				<?=$message?>
 				<form method=post>
 					<input type=hidden name=token value="<?=$token?>">
-					<center><?=readLanguage(login,description)?></center>
+					<center><?=readLanguage('login','description')?></center>
 					<table class="form_table margin-top-5">
-						<tr><td><div class=input data-icon="&#xf1fa;"><input type=text name=login_username maxlength=100 placeholder="<?=readLanguage(login,username)?>" data-validation=required autocomplete=new-password></div></td></tr>
-						<tr><td><div class=input data-icon="&#xf023;"><input type=password name=login_password placeholder="<?=readLanguage(login,password)?>" data-validation=required autocomplete=new-password></div></td>			</tr>
+						<tr><td><div class=input data-icon="&#xf1fa;"><input type=text name=login_username maxlength=100 placeholder="<?=readLanguage('login','username')?>" data-validation=required autocomplete=new-password></div></td></tr>
+						<tr><td><div class=input data-icon="&#xf023;"><input type=password name=login_password placeholder="<?=readLanguage('login','password')?>" data-validation=required autocomplete=new-password></div></td>			</tr>
 					</table>
 					<div class="check_container margin-top-5">
-						<label><input type=checkbox class=filled-in name=remember value=remember checked><span><?=readLanguage(login,remember)?></span></label>
+						<label><input type=checkbox class=filled-in name=remember value=remember checked><span><?=readLanguage('login','remember')?></span></label>
 					</div>
 					<? if ($_SESSION[$recaptcha_session] >= $rate_limit){ ?>
 					<div class=recaptcha_box>
-						<small><?=readLanguage(general,recaptcha_required)?></small>
+						<small><?=readLanguage('general','recaptcha_required')?></small>
 						<center><div class=g-recaptcha data-sitekey="<?=$system_settings["recaptcha_site_key"]?>"></div></center>
 					</div>
 					<? } ?>
-					<div class=submit_container><button type=button class=submit><?=readLanguage(login,login)?></button></div>
+					<div class=submit_container><button type=button class=submit><?=readLanguage('login','login')?></button></div>
 				</form>
 			</div>
 		</div>
 		<div class="col-md-10 login_side">
 			<!-- Version -->
 			<div class="version align-center">
-				<?=readLanguage(general,control_panel)?> <b><?=$website_information["website_name"]?></b>
+				<?=readLanguage('general','control_panel')?> <b><?=$website_information["website_name"]?></b>
 				<?=$powered_by?>
 				<small>Version <?=$system_settings["system_version"]?></small>
 				<br><small><?=(!$white_label ? "Prismatecs " : "")?>CMS Version <?=$cms_version?></small>

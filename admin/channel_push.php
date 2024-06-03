@@ -36,13 +36,13 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(channels,subscribers)?>:</td>
+	<td class=title><?=readLanguage('channels','subscribers')?>:</td>
 	<td>
 		<select name=subscribers id=subscribers multiple></select>
 		<script>
 		$("#subscribers").select2({
 			width: "100%",
-			placeholder: "<?=readLanguage(users,search)?>",
+			placeholder: "<?=readLanguage('users','search')?>",
 			minimumInputLength: 3,
 			escapeMarkup: function(markup){ return markup },
 			templateResult: function(data) { return data.html },
@@ -61,19 +61,19 @@ include "_header.php"; ?>
 			}
 		});
 		</script>
-		<div class=input_description><?=readLanguage(channels,push_empty)?></div>
+		<div class=input_description><?=readLanguage('channels','push_empty')?></div>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','title')?>: <i class=requ></i></td>
 	<td><input type=text name=title data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(channels,message)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('channels','message')?>: <i class=requ></i></td>
 	<td><textarea name=message data-validation=required></textarea></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,url)?>:</td>
+	<td class=title><?=readLanguage('inputs','url')?>:</td>
 	<td class=ltr-input>
 		<div class="input-addon input-addon-ltr">
 			<span before><?=$base_url?></span>
@@ -83,7 +83,7 @@ include "_header.php"; ?>
 	</td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(inputs,image)?>:</td>
+	<td class=title><?=readLanguage('inputs','image')?>:</td>
 	<td colspan=3>
 		<table class=attachment><tr>
 		<td>
@@ -100,7 +100,7 @@ include "_header.php"; ?>
 </tr>
 </table>
 
-<div class=submit_container><input type=button class=submit value="<?=readLanguage(channels,send)?>"></div>
+<div class=submit_container><input type=button class=submit value="<?=readLanguage('channels','send')?>"></div>
 </form>
 
 <? include "_footer.php"; ?>

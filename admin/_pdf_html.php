@@ -27,7 +27,7 @@ $header .= "</tr></table>";
 //Footer
 $footer .= "<table class=pdf_footer><tr>";
 $footer .= "<td>" . $pdf_title . ($pdf_subtitle ? " - " . $pdf_subtitle : "") . "</td>";
-$footer .= "<td align=$page_negative_align>" . readLanguage(general,page) . " {PAGENO} " . readLanguage(general,of) . " {nb}</td>";
+$footer .= "<td align=$page_negative_align>" . readLanguage('general','page') . " {PAGENO} " . readLanguage('general','of') . " {nb}</td>";
 $footer .= "</tr></table>";
 
 //Page header

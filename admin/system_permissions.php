@@ -8,10 +8,10 @@ checkPermissions($base_name);
 //==== DELETE Record ====
 if ($delete){
 	if (mysqlNum(mysqlQuery("SELECT * FROM system_administrators WHERE permission=$delete"))){
-		$error = readLanguage(pages,permissions_error);
+		$error = readLanguage('pages','permissions_error');
 	} else {
 		mysqlQuery("DELETE FROM $mysqltable WHERE id!=1 AND id=$delete");
-		if (mysqlAffectedRows()){ $success = readLanguage(records,deleted); } else { $error = readLanguage(records,unavailable); }
+		if (mysqlAffectedRows()){ $success = readLanguage('records','deleted'); } else { $error = readLanguage('records','unavailable'); }
 	}
 	
 //==== ADD Record ====
@@ -24,7 +24,7 @@ if ($delete){
 		'" . implode(",",$post["permissions"]) . "'
 	)";
 	mysqlQuery($query);
-	$success = readLanguage(records,added);
+	$success = readLanguage('records','added');
 	
 //==== EDIT Record ====
 } else if ($post["token"] && $edit){
@@ -33,19 +33,19 @@ if ($delete){
 		permissions='" . implode(",", $post["permissions"]) . "'
 	WHERE id=$edit";
 	mysqlQuery($query);
-	$success = readLanguage(records,updated);
+	$success = readLanguage('records','updated');
 }
 
 //Read and Set Operation
 if ($edit){
 	$entry = getID($edit,$mysqltable);
-	if (!$entry){ $error = readLanguage(records,unavailable); $edit = null; }
+	if (!$entry){ $error = readLanguage('records','unavailable'); $edit = null; }
 }
 if ($edit){
-	$button = readLanguage(records,update);
+	$button = readLanguage('records','update');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token"));
 } else {
-	$button = readLanguage(records,add);
+	$button = readLanguage('records','add');
 	$action = "$base_name.php" . rebuildQueryParameters(array("delete","token","edit"));
 	if ($error){ foreach ($_POST as $key => $value){ $entry[$key] = $value; } }
 }
@@ -70,11 +70,11 @@ include "_header.php"; ?>
 
 <table class=data_table>
 <tr>
-	<td class=title><?=readLanguage(inputs,title)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('inputs','title')?>: <i class=requ></i></td>
 	<td><input type=text name=title value="<?=$entry["title"]?>" data-validation=required></td>
 </tr>
 <tr>
-	<td class=title><?=readLanguage(pages,user_role)?>: <i class=requ></i></td>
+	<td class=title><?=readLanguage('pages','user_role')?>: <i class=requ></i></td>
 	<td>
 		<div>
 		<? foreach ($panel_categories as $category_title => $category_panels){
@@ -88,7 +88,7 @@ include "_header.php"; ?>
 				if ($sections_persmission){
 					$permissions .= "<div class=inline-subtitle>";
 						$permissions .= "<b>" . $category_title . " » " . $panel_title . "</b>";
-						$permissions .= "<span><a select-panel='$panel_title' select-value=1>" . readLanguage(operations,select_all) . "</a> | <a select-panel='$panel_title' select-value=0>" . readLanguage(operations,select_none) . "</a></span>";
+						$permissions .= "<span><a select-panel='$panel_title' select-value=1>" . readLanguage('operations','select_all') . "</a> | <a select-panel='$panel_title' select-value=0>" . readLanguage('operations','select_none') . "</a></span>";
 					$permissions .= "</div>";	
 					$permissions .= "<div class='check_container fixed-width'>";
 						$permissions .= $sections_persmission;
@@ -111,7 +111,7 @@ $crud_data["delete_record_message"] = "title";
 $crud_data["buttons"] = array(true,true,false,true,true); //Add - Search - View - Edit - Delete
 $crud_data["columns"] = array(
 	//Column Name - Column Title - Width - Alignment - Function - Filter Enabled - Search Enabled - Copy Enabled
-	array("title",readLanguage(inputs,title),"100%","center","",false,true),
+	array("title",readLanguage('inputs','title'),"100%","center","",false,true),
 );
 require_once("crud/crud.php");
 ?>

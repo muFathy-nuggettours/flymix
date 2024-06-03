@@ -19,7 +19,7 @@ if (!$canonical){
 	$section_description = $section_information["description"];
 
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 	
 //========= Content =========
@@ -35,7 +35,7 @@ if (!$canonical){
 	$section_cover_image = ($page_data["cover_image"] ? "uploads/destinations/" . $page_data["cover_image"] : $section_cover_image);
 	
 	$breadcrumbs = array();
-	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage(general,home) . "</a></li>");
+	array_push($breadcrumbs,"<li><a href='.'>" . readLanguage('general','home') . "</a></li>");
 	array_push($breadcrumbs,"<li><a href='" . $section_information["canonical"] . "/'>" . $section_information["title"] . "</a></li>");
 	array_push($breadcrumbs,"<li>" . $section_title . "</li>");
 }
@@ -84,7 +84,7 @@ if (!mysqlNum($result)){
 <!-- Gallery -->
 <? $gallery = json_decode($page_data["gallery"],true);
 if (count($gallery)){ ?>
-<div class=subtitle><?=readLanguage(sections,page_gallery)?></div>
+<div class=subtitle><?=readLanguage('sections','page_gallery')?></div>
 <div class="row grid-container">
 <? foreach ($gallery AS $key=>$value){ ?>
 	<div class="col-md-4 col-sm-5 col-xs-10 grid-item">
@@ -101,7 +101,7 @@ if (count($gallery)){ ?>
 <? } ?>
 
 <!-- Booking -->
-<h2 class="page_subtitle large margin-top-30"><?=readLanguage(booking,book_now_to)?> <?=$section_title?></h2>
+<h2 class="page_subtitle large margin-top-30"><?=readLanguage('booking','book_now_to')?> <?=$section_title?></h2>
 <div class=inline_search>
 <? $search["to"] = $page_data["airport"];
 include "modules/search.php"; ?>
