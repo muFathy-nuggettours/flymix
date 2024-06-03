@@ -4054,7 +4054,7 @@ function renderWebsiteMenu($type=0){
 
 		
 		//Dropdown menu
-		if (isset($sub_menus)){
+		if (count($sub_menus)){
 			$menu_links = "";
 			foreach ($sub_menus AS $sub_menu){
 				$image = explode(":", $sub_menu['content']['icon'])[1];
