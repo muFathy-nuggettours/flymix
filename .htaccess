@@ -97,6 +97,7 @@ RewriteRule ^([A-Z]{2}/|)planes/([^/]+)/?$ page_planes.php?language=$1&id=$2		[N
 #USERS
 RewriteRule ^([A-Z]{2}/|)logout/?$ accounts.php?language=$1&action=logout	[NC,L]
 RewriteRule ^([A-Z]{2}/|)login/?$ accounts.php?language=$1&action=login	[NC,L]
+RewriteRule ^([A-Z]{2}/|)info/?$ info.php?language=$1	[NC,L]
 RewriteRule ^([A-Z]{2}/|)signup/?$ accounts.php?language=$1&action=signup	[NC,L]
 RewriteRule ^([A-Z]{2}/|)reset-password/?$ accounts.php?language=$1&action=reset-password	[NC,L]
 RewriteRule ^([A-Z]{2}/|)reset-password/([^/]+)/?$ accounts.php?language=$1&action=reset-password&hash=$2	[NC,L]
