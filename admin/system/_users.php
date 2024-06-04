@@ -6,12 +6,12 @@ if (isset($_COOKIE[$panel_cookie])){
 
 //Retrieve user data from session
 $user_hash = $_SESSION[$panel_session];
-if ($user_hash){
+if (isset($user_hash)){
 	$logged_user = mysqlFetch(mysqlQuery("SELECT * FROM system_administrators WHERE hash='$user_hash'"));
 }
 
 //If no user is found, reset session and cookie
-if (!$logged_user){
+if (!isset($logged_user)){
 	$user_hash = null;
 	$_SESSION[$panel_session] = null;
 	unsetCookie($panel_cookie);
