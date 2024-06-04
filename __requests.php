@@ -158,12 +158,8 @@ if ($post["action"]=="search_destinations"){
 	if (!$keyword && count($search_history)){
 		$array = array();
 		foreach ($search_history AS $key=>$value){
-			if (!in_array($array, $value["from"])){
 				array_push($array, strtoupper($value["from"]));
-			}
-			if (!in_array($array, $value["to"])){
 				array_push($array, strtoupper($value["to"]));
-			}
 		}
 		$condition = "iata IN ('" . implode("','", $array) . "')";
 		$order = "popularity DESC, priority DESC";
