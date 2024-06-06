@@ -1475,8 +1475,8 @@ function maxLength($text, $max, $suffix = ".."){
  * @return string
  */
 function highlightKeyword($string, $search, $highlightcolor = "red"){
-	if (!isset($search)) {
-		return $string;
+	if (empty($search) || empty($string)) {
+		return '';
 	}
     $occurrences = substr_count(strtolower($string), strtolower($search));
     $newstring = $string;
