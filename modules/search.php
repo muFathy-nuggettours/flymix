@@ -48,7 +48,7 @@
 					<div class="component date">
 						<span><?= readLanguage('reservation', 'departure_date') ?></span>
 						<div>
-							<input type=hidden data-input=departure-only value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time() + 86400)) ?>">
+							<input type=hidden data-input=departure-only value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time())) ?>">
 							<div class=input_date date-picker-departure-only>
 								<i class="fal fa-calendar"></i>
 								<small></small><b></b><span></span>
@@ -138,7 +138,7 @@
 						<div class="component date">
 							<span><?= readLanguage('reservation', 'departure_date') ?></span>
 							<div>
-								<input id="dr-1" type=hidden data-input=departure-multiple value="<?= date("j/n/Y", time() + (86400 * 2)) ?>">
+								<input id="dr-1" type=hidden data-input=departure-multiple value="<?= date("j/n/Y", time()) ?>">
 								<div class=input_date date-picker-departure-multiple>
 									<i class="fal fa-calendar"></i>
 									<div class="date_values">
@@ -356,6 +356,8 @@
 						parent.find(".input_date .date_values small").text(targetDate.format("dddd"));
 						parent.find(".input_date .date_values b").text(targetDate.format("DD"));
 						parent.find(".input_date .date_values span").text(targetDate.format("MMMM"));
+						changeMinDate = true;
+					} else if (startUpdating && date1 < date2) {
 						changeMinDate = true;
 					}
 
