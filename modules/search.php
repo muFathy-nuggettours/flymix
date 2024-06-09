@@ -332,23 +332,33 @@
 				var targetDate = moment(targetValue, "D-M-YYYY").locale("ar");
 				var allInputs = $('input[data-input=departure-multiple]');
 				var startUpdating = false;
+				var changeMinDate = false;
+				var date1 = moment(targetValue, "D-M-YYYY");
 
 				if ($(target)[0] === $('input[data-input=departure-only]')[0]) {
 					startUpdating = true;
 				}
 
 				allInputs.each(function() {
+
+					var date2 = moment(this.value, "D-M-YYYY");
+					if (changeMinDate) {
+						$(this).parent().find(".input_date").data('caleran').setMinDate(targetValue);
+					}
+
 					if (this === target[0]) {
 						startUpdating = true;
 					}
 
-					if (startUpdating) {
+					if (startUpdating && date1 >= date2) {
 						this.value = targetValue;
 						var parent = $(this).parent();
 						parent.find(".input_date .date_values small").text(targetDate.format("dddd"));
 						parent.find(".input_date .date_values b").text(targetDate.format("DD"));
 						parent.find(".input_date .date_values span").text(targetDate.format("MMMM"));
+						changeMinDate = true;
 					}
+
 				});
 			},
 
