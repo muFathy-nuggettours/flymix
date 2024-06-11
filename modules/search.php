@@ -6,6 +6,31 @@
 	.multiple_trips .switch_destinations {
 		display: none !important;
 	}
+
+	.caleran-rtl .caleran-calendar-container {
+		direction: rtl;
+	}
+
+	.caleran-rtl .caleran-inner {
+		text-align: right;
+	}
+
+	.caleran-rtl .caleran-days .caleran-day {
+		float: right;
+	}
+
+	.caleran-rtl .caleran-prev-next {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+
+	.caleran-rtl .caleran-prev-month {
+		order: 2;
+	}
+
+	.caleran-rtl .caleran-next-month {
+		order: 1;
+	}
 </style>
 
 <!-- Set default search values from history -->
@@ -301,20 +326,24 @@
 
 	//Bind calendar function
 	function bindCalendar(source, target, minimum = moment()) {
+		var websiteLanguage = '<?= $website_language ?>';
+		var isRTL = websiteLanguage === 'ar';
+
 		source.caleran({
-			//Primary parameters
+			// Primary parameters
 			target: target,
 			format: "D-M-YYYY",
 			calendarCount: 1,
-			locale: "<?= $website_language ?>",
+			locale: websiteLanguage,
 			showHeader: false,
 			showFooter: false,
 			minDate: minimum,
 			maxDate: moment().add(1, "year"),
-			hideOutOfRange: true,
+			hideOutOfRange: false,
 			singleDate: true,
+			isRTL: isRTL,
 
-			//Linked parameters
+			// Linked parameters
 			startEmpty: target.val() === "",
 			startDate: target.val(),
 			enableKeyboard: false,
@@ -340,7 +369,6 @@
 				}
 
 				allInputs.each(function() {
-
 					var date2 = moment(this.value, "D-M-YYYY");
 					if (changeMinDate) {
 						$(this).parent().find(".input_date").data('caleran').setMinDate(targetValue);
@@ -360,22 +388,21 @@
 					} else if (startUpdating && date1 < date2) {
 						changeMinDate = true;
 					}
-
 				});
 			},
-
-
-
-
-
-
-
 		});
+
 		updateCalendarDivision(target, source);
 	}
 
+
 	//Bind departure calendars
 	bindCalendar($("[date-picker-departure-only]"), $("[data-input=departure-only]"));
+	$(document).ready(function() {
+		var target = $('#datepicker');
+		var source = $('#datepicker');
+		bindCalendar(source, target);
+	});
 
 	//Update calendar division test
 	function updateCalendarDivision(source, target) {
