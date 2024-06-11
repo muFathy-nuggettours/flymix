@@ -174,7 +174,7 @@
 						</div>
 					</div>
 					<div style="margin: auto;">
-						<a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip(null, null, null, $(this).closest('.trip').find('input[type=hidden]').val())"><i class="fal fa-plus-circle"></i> <?= readLanguage('booking', 'add_trip') ?></a>
+						<a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip($(this), null, null, $(this).closest('.trip').find('input[type=hidden]').val())"><i class="fal fa-plus-circle"></i> <?= readLanguage('booking', 'add_trip') ?></a>
 						<a class="btn btn-danger btn-sm trip_remove" onclick="removeTrip(this)"><i class="fal fa-times-circle"></i> <?= readLanguage('plugins', 'message_delete') ?></a>
 					</div>
 				</div>
@@ -557,6 +557,7 @@
 
 	//Insert trip
 	function insertTrip(from = null, to = null, departure = null, minimum = moment()) {
+		var fromVal = null;
 		var total_trips = parseInt($(".trip_extra").length) + 1;
 		if (total_trips > 6) {
 			quickNotify("الحد الاقصي هو 6 رحلات فقط", "<?= readLanguage('search', 'entrydata_err') ?>", "danger", "fas fa-times fa-2x");
@@ -566,12 +567,13 @@
 		clone.removeClass("template").addClass("trip_extra");
 		clone.find(".trip_separator span").text("<?= readLanguage('reservation', 'trip') ?> " + (total_trips + 1));
 		if (from) {
+			fromVal = ($(from).parent().parent().find("[data-input=to-multiple]").val());
 			clone.find("[data-input=from-multiple]").val(from);
 		}
 		clone.appendTo(".multiple_trips");
 
 		//Bind plugins
-		bindDestinationSelect2(clone.find("[data-input=from-multiple]"), from);
+		bindDestinationSelect2(clone.find("[data-input=from-multiple]"), fromVal);
 		bindDestinationSelect2(clone.find("[data-input=to-multiple]"), to);
 		bindCalendar(clone.find("[date-picker-departure-multiple]"), clone.find("[data-input=departure-multiple]"), minimum);
 
