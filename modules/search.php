@@ -210,17 +210,20 @@
 	};
 
 	//Departure
+	var websiteLanguage = '<?= $website_language ?>';
+	var isRTL = websiteLanguage === 'ar';
 	$("[date-picker-departure]").caleran({
 		//Primary parameters
 		target: $("[data-input=departure]"),
 		format: "D-M-YYYY",
 		calendarCount: 1,
-		locale: "ar",
+		locale: websiteLanguage,
 		showHeader: false,
 		showFooter: false,
 		minDate: moment(),
 		maxDate: moment().add(1, "year"),
-		hideOutOfRange: true,
+		hideOutOfRange: false,
+		isRTL: isRTL,
 
 		//Linked parameters
 		startEmpty: $("[data-input=departure]").val() === "",
@@ -270,17 +273,20 @@
 	});
 
 	//Arrival
+	var websiteLanguage = '<?= $website_language ?>';
+	var isRTL = websiteLanguage === 'ar';
 	$("[date-picker-arrival]").caleran({
 		//Primary parameters
 		target: $("[data-input=arrival]"),
 		format: "D-M-YYYY",
 		calendarCount: 1,
-		locale: "<?= $website_language ?>",
+		locale: websiteLanguage,
 		showHeader: false,
 		showFooter: false,
 		minDate: moment(),
 		maxDate: moment().add(1, "year"),
-		hideOutOfRange: true,
+		hideOutOfRange: false,
+		isRTL: isRTL,
 
 		//Linked parameters
 		startEmpty: $("[data-input=arrival]").val() === "",
@@ -356,6 +362,8 @@
 				moment.updateLocale("ar", {
 					months: ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
 					weekdays: ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+					weekdaysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
+					weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
 				});
 
 				var targetDate = moment(targetValue, "D-M-YYYY").locale("ar");
