@@ -202,574 +202,604 @@
 </div><!-- End Search Module -->
 
 <script>
-	//Calendar
-	var startDate, endDate, startInstance, endInstance;
-	var fillInputs = function() {
-		startInstance.config.target.val(startDate ? startDate.locale(startInstance.config.format).format(startInstance.config.format) : "");
-		endInstance.config.target.val(endDate ? endDate.locale(endInstance.config.format).format(endInstance.config.format) : "");
-	};
+    //Calendar
+    var startDate, endDate, startInstance, endInstance;
+    var fillInputs = function() {
+        startInstance.config.target.val(startDate ? startDate.locale(startInstance.config.format).format(startInstance.config.format) : "");
+        endInstance.config.target.val(endDate ? endDate.locale(endInstance.config.format).format(endInstance.config.format) : "");
+    };
 
-	//Departure
-	var websiteLanguage = '<?= $website_language ?>';
-	var isRTL = websiteLanguage === 'ar';
-	$("[date-picker-departure]").caleran({
-		//Primary parameters
-		target: $("[data-input=departure]"),
-		format: "D-M-YYYY",
-		calendarCount: 1,
-		locale: websiteLanguage,
-		showHeader: false,
-		showFooter: false,
-		minDate: moment(),
-		maxDate: moment().add(1, "year"),
-		hideOutOfRange: false,
-		isRTL: isRTL,
+    //Departure
+    var websiteLanguage = '<?= $website_language ?>';
+    var isRTL = websiteLanguage === 'ar';
+    if (isRTL) {
+        var cancel = 'إلغاء';
+        var apply = 'تأكيد';
+    } else {
+        var cancel = 'Cancel';
+        var apply = 'Apply';
+    }
 
-		//Linked parameters
-		startEmpty: $("[data-input=departure]").val() === "",
-		startDate: $("[data-input=departure]").val(),
-		endDate: $("[data-input=arrival]").val(),
-		enableKeyboard: false,
-		oninit: function(instance) {
-			startInstance = instance;
-			if (!instance.config.startEmpty && instance.config.startDate) {
-				instance.$elem.val(instance.config.startDate.locale(instance.config.format).format(instance.config.format));
-				startDate = instance.config.startDate.clone();
-			}
-		},
-		onbeforeshow: function(instance) {
-			if (startDate) {
-				startInstance.config.startDate = startDate;
-				endInstance.config.startDate = startDate;
-			}
-			if (endDate) {
-				startInstance.config.endDate = endDate.clone();
-				endInstance.config.endDate = endDate.clone();
-			}
-			fillInputs();
-			instance.updateHeader();
-			instance.reDrawCells();
-		},
-		onfirstselect: function(instance, start) {
-			startDate = start.clone();
-			startInstance.globals.startSelected = false;
-			startInstance.hideDropdown();
-			endInstance.showDropdown();
-			endInstance.config.minDate = startDate.clone();
-			endInstance.config.startDate = startDate.clone();
-			endInstance.config.endDate = null;
-			endInstance.globals.startSelected = true;
-			endInstance.globals.endSelected = false;
-			endInstance.globals.firstValueSelected = true;
-			endInstance.setDisplayDate(start);
-			if (endDate && startDate.isAfter(endDate)) {
-				endInstance.globals.endDate = endDate.clone();
-			}
-			endInstance.updateHeader();
-			endInstance.reDrawCells();
-			fillInputs();
-			updateCalendarDivision($("[data-input=departure]"), $("[date-picker-departure]"));
-		}
-	});
+    $("[date-picker-departure]").caleran({
+        //Primary parameters
+        target: $("[data-input=departure]"),
+        format: "D-M-YYYY",
+        calendarCount: 1,
+        locale: websiteLanguage,
+        showHeader: false,
+        showFooter: false,
+        minDate: moment(),
+        maxDate: moment().add(1, "year"),
+        hideOutOfRange: false,
+        isRTL: isRTL,
+        cancelLabel: cancel,
+        applyLabel: apply,
 
-	//Arrival
-	var websiteLanguage = '<?= $website_language ?>';
-	var isRTL = websiteLanguage === 'ar';
-	$("[date-picker-arrival]").caleran({
-		//Primary parameters
-		target: $("[data-input=arrival]"),
-		format: "D-M-YYYY",
-		calendarCount: 1,
-		locale: websiteLanguage,
-		showHeader: false,
-		showFooter: false,
-		minDate: moment(),
-		maxDate: moment().add(1, "year"),
-		hideOutOfRange: false,
-		isRTL: isRTL,
+        //Linked parameters
+        startEmpty: $("[data-input=departure]").val() === "",
+        startDate: $("[data-input=departure]").val(),
+        endDate: $("[data-input=arrival]").val(),
+        enableKeyboard: false,
+        oninit: function(instance) {
+            startInstance = instance;
+            if (!instance.config.startEmpty && instance.config.startDate) {
+                instance.$elem.val(instance.config.startDate.locale(instance.config.format).format(instance.config.format));
+                startDate = instance.config.startDate.clone();
+            }
+        },
+        onbeforeshow: function(instance) {
+            if (startDate) {
+                startInstance.config.startDate = startDate;
+                endInstance.config.startDate = startDate;
+            }
+            if (endDate) {
+                startInstance.config.endDate = endDate.clone();
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            instance.updateHeader();
+            instance.reDrawCells();
+        },
+        onfirstselect: function(instance, start) {
+            startDate = start.clone();
+            startInstance.globals.startSelected = false;
+            startInstance.hideDropdown();
+            endInstance.showDropdown();
+            endInstance.config.minDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+            endInstance.config.endDate = null;
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+            endInstance.globals.firstValueSelected = true;
+            endInstance.setDisplayDate(start);
+            if (endDate && startDate.isAfter(endDate)) {
+                endInstance.globals.endDate = endDate.clone();
+            }
+            endInstance.updateHeader();
+            endInstance.reDrawCells();
+            fillInputs();
+            updateCalendarDivision($("[data-input=departure]"), $("[date-picker-departure]"));
+        }
+    });
 
-		//Linked parameters
-		startEmpty: $("[data-input=arrival]").val() === "",
-		startDate: $("[data-input=departure]").val(),
-		endDate: $("[data-input=arrival]").val(),
-		enableKeyboard: false,
-		autoCloseOnSelect: true,
-		oninit: function(instance) {
-			endInstance = instance;
-			if (!instance.config.startEmpty && instance.config.endDate) {
-				instance.$elem.val(instance.config.endDate.locale(instance.config.format).format(instance.config.format));
-				endDate = instance.config.endDate.clone();
-			}
-		},
-		onbeforeshow: function(instance) {
-			if (startDate) {
-				startInstance.config.startDate = startDate;
-				endInstance.config.startDate = startDate;
-			}
-			if (endDate) {
-				startInstance.config.endDate = endDate.clone();
-				endInstance.config.endDate = endDate.clone();
-			}
-			fillInputs();
-			instance.updateHeader();
-			instance.reDrawCells();
-		},
-		onafterselect: function(instance, start, end) {
-			startDate = start.clone();
-			endDate = end.clone();
-			endInstance.hideDropdown();
-			startInstance.config.endDate = endDate.clone();
-			startInstance.globals.firstValueSelected = true;
-			fillInputs();
-			endInstance.globals.startSelected = true;
-			endInstance.globals.endSelected = false;
-			updateCalendarDivision($("[data-input=arrival]"), $("[date-picker-arrival]"));
-		}
-	});
+    //Arrival
+    var websiteLanguage = '<?= $website_language ?>';
+    var isRTL = websiteLanguage === 'ar';
+    if (isRTL) {
+        var cancel = 'إلغاء';
+        var apply = 'تأكيد';
+    } else {
+        var cancel = 'Cancel';
+        var apply = 'Apply';
+    }
+    $("[date-picker-arrival]").caleran({
+        //Primary parameters
+        target: $("[data-input=arrival]"),
+        format: "D-M-YYYY",
+        calendarCount: 1,
+        locale: websiteLanguage,
+        showHeader: false,
+        showFooter: false,
+        minDate: moment(),
+        maxDate: moment().add(1, "year"),
+        hideOutOfRange: false,
+        isRTL: isRTL,
+        cancelLabel: cancel,
+        applyLabel: apply,
 
-	//Fill inputs on start
-	fillInputs();
+        //Linked parameters
+        startEmpty: $("[data-input=arrival]").val() === "",
+        startDate: $("[data-input=departure]").val(),
+        endDate: $("[data-input=arrival]").val(),
+        enableKeyboard: false,
+        autoCloseOnSelect: true,
+        oninit: function(instance) {
+            endInstance = instance;
+            if (!instance.config.startEmpty && instance.config.endDate) {
+                instance.$elem.val(instance.config.endDate.locale(instance.config.format).format(instance.config.format));
+                endDate = instance.config.endDate.clone();
+            }
+        },
+        onbeforeshow: function(instance) {
+            if (startDate) {
+                startInstance.config.startDate = startDate;
+                endInstance.config.startDate = startDate;
+            }
+            if (endDate) {
+                startInstance.config.endDate = endDate.clone();
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            instance.updateHeader();
+            instance.reDrawCells();
+        },
+        onafterselect: function(instance, start, end) {
+            startDate = start.clone();
+            endDate = end.clone();
+            endInstance.hideDropdown();
+            startInstance.config.endDate = endDate.clone();
+            startInstance.globals.firstValueSelected = true;
+            fillInputs();
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+            updateCalendarDivision($("[data-input=arrival]"), $("[date-picker-arrival]"));
+        }
+    });
 
-	//Bind calendar function
-	function bindCalendar(source, target, minimum = moment()) {
-		var websiteLanguage = '<?= $website_language ?>';
-		var isRTL = websiteLanguage === 'ar';
+    //Fill inputs on start
+    fillInputs();
 
-		source.caleran({
-			// Primary parameters
-			target: target,
-			format: "D-M-YYYY",
-			calendarCount: 1,
-			locale: websiteLanguage,
-			showHeader: false,
-			showFooter: false,
-			minDate: minimum,
-			maxDate: moment().add(1, "year"),
-			hideOutOfRange: false,
-			singleDate: true,
-			isRTL: isRTL,
+    //Bind calendar function
+    function bindCalendar(source, target, minimum = moment()) {
+        var websiteLanguage = '<?= $website_language ?>';
+        var isRTL = websiteLanguage === 'ar';
 
-			// Linked parameters
-			startEmpty: target.val() === "",
-			startDate: target.val(),
-			enableKeyboard: false,
-			autoCloseOnSelect: true,
-			onafterselect: function(instance, start, end) {
-				updateCalendarDivision(target, source);
+        if (isRTL) {
+            var cancel = 'إلغاء';
+            var apply = 'تأكيد';
+        } else {
+            var cancel = 'Cancel';
+            var apply = 'Apply';
+        }
 
-				var targetValue = target.val();
-
-				moment.updateLocale("ar", {
-					months: ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
-					weekdays: ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-					weekdaysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
-					weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
-				});
-
-				var targetDate = moment(targetValue, "D-M-YYYY").locale("ar");
-				var allInputs = $('input[data-input=departure-multiple]');
-				var startUpdating = false;
-				var changeMinDate = false;
-				var date1 = moment(targetValue, "D-M-YYYY");
-
-				if ($(target)[0] === $('input[data-input=departure-only]')[0]) {
-					startUpdating = true;
-				}
-
-				allInputs.each(function() {
-					var date2 = moment(this.value, "D-M-YYYY");
-					if (changeMinDate) {
-						$(this).parent().find(".input_date").data('caleran').setMinDate(targetValue);
-					}
-
-					if (this === target[0]) {
-						startUpdating = true;
-					}
-
-					if (startUpdating && date1 >= date2) {
-						this.value = targetValue;
-						var parent = $(this).parent();
-						parent.find(".input_date .date_values small").text(targetDate.format("dddd"));
-						parent.find(".input_date .date_values b").text(targetDate.format("DD"));
-						parent.find(".input_date .date_values span").text(targetDate.format("MMMM"));
-						changeMinDate = true;
-					} else if (startUpdating && date1 < date2) {
-						changeMinDate = true;
-					}
-				});
-			},
-		});
-
-		updateCalendarDivision(target, source);
-	}
+        source.caleran({
+            // Primary parameters
+            target: target,
+            format: "D-M-YYYY",
+            calendarCount: 1,
+            locale: websiteLanguage,
+            showHeader: false,
+            showFooter: false,
+            minDate: minimum,
+            maxDate: moment().add(1, "year"),
+            hideOutOfRange: false,
+            singleDate: true,
+            isRTL: isRTL,
+            cancelLabel: cancel,
+            applyLabel: apply,
 
 
-	//Bind departure calendars
-	bindCalendar($("[date-picker-departure-only]"), $("[data-input=departure-only]"));
-	$(document).ready(function() {
-		var target = $('#datepicker');
-		var source = $('#datepicker');
-		bindCalendar(source, target);
-	});
+            // Linked parameters
+            startEmpty: target.val() === "",
+            startDate: target.val(),
+            enableKeyboard: false,
+            autoCloseOnSelect: true,
+            onafterselect: function(instance, start, end) {
+                updateCalendarDivision(target, source);
 
-	//Update calendar division test
-	function updateCalendarDivision(source, target) {
-		moment.updateLocale("ar", {
-			months: ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
-			weekdays: ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-			weekdaysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
-			weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
-		});
-		var date = moment(source.val(), "D-M-YYYY").locale("<?= $website_language ?>");
-		target.find("small").text(moment(date).format("dddd"));
-		target.find("b").text(moment(date).format("DD"));
-		target.find("span").text(moment(date).format("MMMM"));
-	}
-	updateCalendarDivision($("[data-input=departure-only]"), $("[date-picker-departure-only]"));
-	updateCalendarDivision($("[data-input=departure]"), $("[date-picker-departure]"));
-	updateCalendarDivision($("[data-input=arrival]"), $("[date-picker-arrival]"));
+                var targetValue = target.val();
 
-	//==============================
+                moment.updateLocale("ar", {
+                    months: ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+                    weekdays: ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+                    weekdaysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
+                    weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
+                });
 
-	//Update travelers count
-	function updateTravelers() {
-		var adults = parseInt($("[data-input=adults]").val());
-		var children = parseInt($("[data-input=children]").val());
-		var toddlers = parseInt($("[data-input=toddlers]").val());
-		var total = adults + children + toddlers;
-		$(".travelers_dropdown span").text(`${total} <?= readLanguage('common', 'passengers2') ?> (${adults} <?= readLanguage('common', 'adult') ?>، ${children} <?= readLanguage('common', 'child') ?>، ${toddlers} <?= readLanguage('common', 'infant') ?>)`);
-	}
-	$(document).ready(function() {
-		updateTravelers();
-	});
+                var targetDate = moment(targetValue, "D-M-YYYY").locale("ar");
+                var allInputs = $('input[data-input=departure-multiple]');
+                var startUpdating = false;
+                var changeMinDate = false;
+                var date1 = moment(targetValue, "D-M-YYYY");
 
-	//Prevent travelers dropdown closing
-	$("body").on("click", ".dropdown-menu.travelers", function(e) {
-		$(this).parent().is(".open") && e.stopPropagation();
-	});
+                if ($(target)[0] === $('input[data-input=departure-only]')[0]) {
+                    startUpdating = true;
+                }
 
-	//Bind destination Select2
-	function bindDestinationSelect2(object, value = null) {
-		object.select2({
-			containerCssClass: object.attr("data-input"),
-			width: "100%",
-			placeholder: (object.attr("data-input") == "from" ? "<?= readLanguage('reservation', 'departure_city_airport') ?>" : "<?= readLanguage('reservation', 'arrival_city_airport') ?>"),
-			dropdownParent: $(".flight_search_module"),
-			minimumInputLength: 0,
-			escapeMarkup: function(markup) {
-				return markup;
-			},
-			templateResult: function(data) {
-				return data.html;
-			},
-			templateSelection: function(data) {
-				return data.text;
-			},
-			ajax: {
-				url: "requests/",
-				method: "POST",
-				dataType: "json",
-				processResults: function(data) {
-					return {
-						results: data.results
-					};
-				},
-				data: function(params) {
-					var query = {
-						action: "search_destinations",
-						token: "<?= $token ?>",
-						search: params.term
-					};
-					return query;
-				}
-			}
-		});
-		object.on("select2:select", function(e) {
-			let value = $(this).val();
-			object.parent().find(".error").removeClass("error");
-			if (object.attr("data-input") == "to-multiple" || (object.attr("data-input") == "to" && trip_type == 3)) {
-				if (object.attr("data-input") == "to" && trip_type == 3) {
-					var container = $(".multiple_trips .trip_extra").first();
-				} else {
-					var container = object.parents(".trip_extra").next();
-				}
-				let next_from = container.find("[data-input=from-multiple]");
-				if (next_from) {
-					$.ajax({
-						url: "requests/",
-						method: "POST",
-						data: {
-							action: "get_destination",
-							token: "<?= $token ?>",
-							iata: value
-						},
-						success: function(result) {
-							if (result) {
-								next_from.append("<option value='" + value + "' selected>" + result + "</option>").trigger("change");
-							}
-						}
-					});
-				}
-			}
-		});
-		if (value) {
-			$.ajax({
-				url: "requests/",
-				method: "POST",
-				data: {
-					action: "get_destination",
-					token: "<?= $token ?>",
-					iata: value
-				},
-				success: function(result) {
-					if (result) {
-						object.append("<option value='" + value + "' selected>" + result + "</option>");
-					}
-				}
-			});
-		}
-		object.trigger("change");
-	}
+                allInputs.each(function() {
+                    var date2 = moment(this.value, "D-M-YYYY");
+                    if (changeMinDate) {
+                        $(this).parent().find(".input_date").data('caleran').setMinDate(targetValue);
+                    }
 
-	$(document).ready(function() {
-		bindDestinationSelect2($("[data-input=from]"), "<?= $search["from"] ?>");
-		bindDestinationSelect2($("[data-input=to]"), "<?= $search["to"] ?>");
-	});
+                    if (this === target[0]) {
+                        startUpdating = true;
+                    }
 
-	//Switch Destinations
-	function switchDestinations(target) {
-		var from = $(target).parent().find("[data-input=from]");
-		var to = $(target).parent().find("[data-input=to]");
+                    if (startUpdating && date1 >= date2) {
+                        this.value = targetValue;
+                        var parent = $(this).parent();
+                        parent.find(".input_date .date_values small").text(targetDate.format("dddd"));
+                        parent.find(".input_date .date_values b").text(targetDate.format("DD"));
+                        parent.find(".input_date .date_values span").text(targetDate.format("MMMM"));
+                        changeMinDate = true;
+                    } else if (startUpdating && date1 < date2) {
+                        changeMinDate = true;
+                    }
+                });
+            },
+        });
 
-		var from_selected = from.find("option:selected");
-		var to_selected = to.find("option:selected");
+        updateCalendarDivision(target, source);
+    }
 
-		var from_data = from.select2("data")[0];
-		var to_data = to.select2("data")[0];
 
-		from.empty().append(to_selected).select2("data", to_data);
-		from.val(to_data.id).trigger("change");
+    //Bind departure calendars
+    bindCalendar($("[date-picker-departure-only]"), $("[data-input=departure-only]"));
+    $(document).ready(function() {
+        var target = $('#datepicker');
+        var source = $('#datepicker');
+        bindCalendar(source, target);
+    });
 
-		to.empty().append(from_selected).select2("data", from_data);
-		to.val(from_data.id).trigger("change");
-	}
+    //Update calendar division test
+    function updateCalendarDivision(source, target) {
+        moment.updateLocale("ar", {
+            months: ["يناير", "فبراير", "مارس", "إبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+            weekdays: ["الأحد", "الأثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+            weekdaysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
+            weekdaysMin: ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
+        });
+        var date = moment(source.val(), "D-M-YYYY").locale("<?= $website_language ?>");
+        target.find("small").text(moment(date).format("dddd"));
+        target.find("b").text(moment(date).format("DD"));
+        target.find("span").text(moment(date).format("MMMM"));
+    }
+    updateCalendarDivision($("[data-input=departure-only]"), $("[date-picker-departure-only]"));
+    updateCalendarDivision($("[data-input=departure]"), $("[date-picker-departure]"));
+    updateCalendarDivision($("[data-input=arrival]"), $("[date-picker-arrival]"));
 
-	//Start class Select2
-	$("[data-input=class]").select2({
-		width: "100%",
-		dropdownParent: $(".flight_search_module"),
-		minimumResultsForSearch: Infinity
-	});
+    //==============================
 
-	//===== Multiple Trips =====
+    //Update travelers count
+    function updateTravelers() {
+        var adults = parseInt($("[data-input=adults]").val());
+        var children = parseInt($("[data-input=children]").val());
+        var toddlers = parseInt($("[data-input=toddlers]").val());
+        var total = adults + children + toddlers;
+        $(".travelers_dropdown span").text(`${total} <?= readLanguage('common', 'passengers2') ?> (${adults} <?= readLanguage('common', 'adult') ?>، ${children} <?= readLanguage('common', 'child') ?>، ${toddlers} <?= readLanguage('common', 'infant') ?>)`);
+    }
+    $(document).ready(function() {
+        updateTravelers();
+    });
 
-	//Insert trip
-	function insertTrip(from = null, to = null, departure = null, minimum = moment()) {
-		var fromVal = null;
-		var total_trips = parseInt($(".trip_extra").length) + 1;
-		if (total_trips > 6) {
-			quickNotify("الحد الاقصي هو 6 رحلات فقط", "<?= readLanguage('search', 'entrydata_err') ?>", "danger", "fas fa-times fa-2x");
-			return false;
-		}
-		var clone = $(".trip_template.template").clone();
-		clone.removeClass("template").addClass("trip_extra");
-		clone.find(".trip_separator span").text("<?= readLanguage('reservation', 'trip') ?> " + (total_trips + 1));
-		if (from) {
-			fromVal = ($(from).parent().parent().find("[data-input=to-multiple]").val());
-			clone.find("[data-input=from-multiple]").val(from);
-		}
-		clone.appendTo(".multiple_trips");
+    //Prevent travelers dropdown closing
+    $("body").on("click", ".dropdown-menu.travelers", function(e) {
+        $(this).parent().is(".open") && e.stopPropagation();
+    });
 
-		//Bind plugins
-		bindDestinationSelect2(clone.find("[data-input=from-multiple]"), fromVal);
-		bindDestinationSelect2(clone.find("[data-input=to-multiple]"), to);
-		bindCalendar(clone.find("[date-picker-departure-multiple]"), clone.find("[data-input=departure-multiple]"), minimum);
+    //Bind destination Select2
+    function bindDestinationSelect2(object, value = null) {
+        object.select2({
+            containerCssClass: object.attr("data-input"),
+            width: "100%",
+            placeholder: (object.attr("data-input") == "from" ? "<?= readLanguage('reservation', 'departure_city_airport') ?>" : "<?= readLanguage('reservation', 'arrival_city_airport') ?>"),
+            dropdownParent: $(".flight_search_module"),
+            minimumInputLength: 0,
+            escapeMarkup: function(markup) {
+                return markup;
+            },
+            templateResult: function(data) {
+                return data.html;
+            },
+            templateSelection: function(data) {
+                return data.text;
+            },
+            ajax: {
+                url: "requests/",
+                method: "POST",
+                dataType: "json",
+                processResults: function(data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                data: function(params) {
+                    var query = {
+                        action: "search_destinations",
+                        token: "<?= $token ?>",
+                        search: params.term
+                    };
+                    return query;
+                }
+            }
+        });
+        object.on("select2:select", function(e) {
+            let value = $(this).val();
+            object.parent().find(".error").removeClass("error");
+            if (object.attr("data-input") == "to-multiple" || (object.attr("data-input") == "to" && trip_type == 3)) {
+                if (object.attr("data-input") == "to" && trip_type == 3) {
+                    var container = $(".multiple_trips .trip_extra").first();
+                } else {
+                    var container = object.parents(".trip_extra").next();
+                }
+                let next_from = container.find("[data-input=from-multiple]");
+                if (next_from) {
+                    $.ajax({
+                        url: "requests/",
+                        method: "POST",
+                        data: {
+                            action: "get_destination",
+                            token: "<?= $token ?>",
+                            iata: value
+                        },
+                        success: function(result) {
+                            if (result) {
+                                next_from.append("<option value='" + value + "' selected>" + result + "</option>").trigger("change");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        if (value) {
+            $.ajax({
+                url: "requests/",
+                method: "POST",
+                data: {
+                    action: "get_destination",
+                    token: "<?= $token ?>",
+                    iata: value
+                },
+                success: function(result) {
+                    if (result) {
+                        object.append("<option value='" + value + "' selected>" + result + "</option>");
+                    }
+                }
+            });
+        }
+        object.trigger("change");
+    }
 
-		//Height compensation in slider
-		if (typeof heightCompensation === "function") {
-			heightCompensation();
-		}
-	}
+    $(document).ready(function() {
+        bindDestinationSelect2($("[data-input=from]"), "<?= $search["from"] ?>");
+        bindDestinationSelect2($("[data-input=to]"), "<?= $search["to"] ?>");
+    });
 
-	//Remove trip
-	function removeTrip(target) {
-		$(target).parent().parent().parent().remove();
+    //Switch Destinations
+    function switchDestinations(target) {
+        var from = $(target).parent().find("[data-input=from]");
+        var to = $(target).parent().find("[data-input=to]");
 
-		//Renumber trips
-		var count = 1;
-		$(".trip_extra").each(function() {
-			count++;
-			$(this).find(".trip_separator span").text("رحلة " + count);
-		});
+        var from_selected = from.find("option:selected");
+        var to_selected = to.find("option:selected");
 
-		//Height compensation in slider
-		if (typeof heightCompensation === "function") {
-			heightCompensation();
-		}
-	}
+        var from_data = from.select2("data")[0];
+        var to_data = to.select2("data")[0];
 
-	//Remove all extra trips
-	function removeAllTrips() {
-		$(".trip_extra").remove();
+        from.empty().append(to_selected).select2("data", to_data);
+        from.val(to_data.id).trigger("change");
 
-		//Height compensation in slider
-		if (typeof heightCompensation === "function") {
-			heightCompensation();
-		}
-	}
+        to.empty().append(from_selected).select2("data", from_data);
+        to.val(from_data.id).trigger("change");
+    }
 
-	//Set active trip type
-	var trip_type = null;
+    //Start class Select2
+    $("[data-input=class]").select2({
+        width: "100%",
+        dropdownParent: $(".flight_search_module"),
+        minimumResultsForSearch: Infinity
+    });
 
-	function setActiveType(type) {
-		if (type != trip_type) {
-			$(".search_types [data-type=" + type + "]").click();
-			switch (type) {
-				case 1:
-					removeAllTrips();
-					$(".date_container.departure_only").show();
-					$(".date_container.departure").hide();
-					$(".date_container.arrival").hide();
-					break;
+    //===== Multiple Trips =====
 
-				case 2:
-					removeAllTrips();
-					$(".date_container.departure_only").hide();
-					$(".date_container.departure").show();
-					$(".date_container.arrival").show();
-					break;
+    //Insert trip
+    function insertTrip(from = null, to = null, departure = null, minimum = moment()) {
+        var fromVal = null;
+        var total_trips = parseInt($(".trip_extra").length) + 1;
+        if (total_trips > 6) {
+            quickNotify("الحد الاقصي هو 6 رحلات فقط", "<?= readLanguage('search', 'entrydata_err') ?>", "danger", "fas fa-times fa-2x");
+            return false;
+        }
+        var clone = $(".trip_template.template").clone();
+        clone.removeClass("template").addClass("trip_extra");
+        clone.find(".trip_separator span").text("<?= readLanguage('reservation', 'trip') ?> " + (total_trips + 1));
+        if (from) {
+            fromVal = ($(from).parent().parent().find("[data-input=to-multiple]").val());
+            clone.find("[data-input=from-multiple]").val(from);
+        }
+        clone.appendTo(".multiple_trips");
 
-				case 3:
-					removeAllTrips();
-					<? if (!$search["trips"]) {
-						echo "insertTrip();";
-					} else {
-						foreach ($search["trips"] as $trip) {
-							echo "insertTrip('" . $trip["from"] . "', '" . $trip["to"] . "', '" . $trip["departure"] . "');";
-						}
-					} ?>
-					$(".date_container.departure_only").show();
-					$(".date_container.departure").hide();
-					$(".date_container.arrival").hide();
-					break;
-			}
-			trip_type = type;
-		}
-	}
+        //Bind plugins
+        bindDestinationSelect2(clone.find("[data-input=from-multiple]"), fromVal);
+        bindDestinationSelect2(clone.find("[data-input=to-multiple]"), to);
+        bindCalendar(clone.find("[date-picker-departure-multiple]"), clone.find("[data-input=departure-multiple]"), minimum);
 
-	$(".search_types [data-toggle=tab]").on("shown.bs.tab", function(e) {
-		setActiveType(parseInt($(e.target).attr("data-type")));
-	});
+        //Height compensation in slider
+        if (typeof heightCompensation === "function") {
+            heightCompensation();
+        }
+    }
 
-	setActiveType(<?= ($search["type"] ? $search["type"] : 1) ?>);
+    //Remove trip
+    function removeTrip(target) {
+        $(target).parent().parent().parent().remove();
 
-	//===== Submit =====
+        //Renumber trips
+        var count = 1;
+        $(".trip_extra").each(function() {
+            count++;
+            $(this).find(".trip_separator span").text("رحلة " + count);
+        });
 
-	function submitSearch() {
-		var trip_object = {};
-		switch (trip_type) {
-			case 1:
-				trip_object.departure = $("[data-input=departure-only]").val();
-				break;
+        //Height compensation in slider
+        if (typeof heightCompensation === "function") {
+            heightCompensation();
+        }
+    }
 
-			case 2:
-				trip_object.departure = $("[data-input=departure]").val();
-				trip_object.arrival = $("[data-input=arrival]").val();
-				break;
+    //Remove all extra trips
+    function removeAllTrips() {
+        $(".trip_extra").remove();
 
-			case 3:
-				trip_object.departure = $("[data-input=departure-only]").val();
-				trip_object.trips = $(".trip_extra").length;
-				var count = 0;
-				$(".trip_extra").each(function() {
-					count++;
-					var trip_parameter = "trip" + count;
-					trip_object[trip_parameter + "from"] = $(this).find("[data-input=from-multiple]").val();
-					trip_object[trip_parameter + "to"] = $(this).find("[data-input=to-multiple]").val();
-					trip_object[trip_parameter + "departure"] = $(this).find("[data-input=departure-multiple]").val();
-				});
-				break;
-		}
+        //Height compensation in slider
+        if (typeof heightCompensation === "function") {
+            heightCompensation();
+        }
+    }
 
-		//Build common parameters
-		trip_object.type = trip_type;
-		trip_object.from = $("[data-input=from]").val();
-		trip_object.to = $("[data-input=to]").val();
-		trip_object.class = parseInt($("[data-input=class]").val());
-		if ($("[data-input=nonstop]").prop("checked")) {
-			trip_object.nonstop = true;
-		}
-		if ($("[data-input=flexible]").prop("checked")) {
-			trip_object.flexible = true;
-		}
-		trip_object.adults = parseInt($("[data-input=adults]").val());
-		if (parseInt($("[data-input=children]").val())) {
-			trip_object.children = parseInt($("[data-input=children]").val());
-		}
-		if (parseInt($("[data-input=toddlers]").val())) {
-			trip_object.toddlers = parseInt($("[data-input=toddlers]").val());
-		}
-		<? if ($search["airline"]) { ?>
-			trip_object.airline = "<?= $search["airline"] ?>";
-		<? } ?>
+    //Set active trip type
+    var trip_type = null;
 
-		//Form validation
-		var errors = [];
-		if (!$("[data-input=from]").val()) {
-			$(".select2-selection--single.from").addClass("error");
-			errors.push("<?= readLanguage('search', 'departure_choose_err') ?>");
-		}
-		if (!$("[data-input=to]").val()) {
-			$(".select2-selection--single.to").addClass("error");
-			errors.push("<?= readLanguage('search', 'arrival_choose_err') ?>");
-		}
+    function setActiveType(type) {
+        if (type != trip_type) {
+            $(".search_types [data-type=" + type + "]").click();
+            switch (type) {
+                case 1:
+                    removeAllTrips();
+                    $(".date_container.departure_only").show();
+                    $(".date_container.departure").hide();
+                    $(".date_container.arrival").hide();
+                    break;
 
-		if (trip_type == 3) {
-			var last_to = $("[data-input=to]").val();
-			var last_date = moment($("[data-input=departure-only]").val(), "D-M-YYYY");
-			var valid = true;
-			var toValid = true;
-			var dateValid = true;
+                case 2:
+                    removeAllTrips();
+                    $(".date_container.departure_only").hide();
+                    $(".date_container.departure").show();
+                    $(".date_container.arrival").show();
+                    break;
 
-			$(".trip_extra").each(function() {
-				var from = $(this).find("[data-input=from-multiple]");
-				var to = $(this).find("[data-input=to-multiple]");
-				var date = moment($(this).find("[data-input=departure-multiple]").val(), "D-M-YYYY");
+                case 3:
+                    removeAllTrips();
+                    <? if (!$search["trips"]) {
+                        echo "insertTrip();";
+                    } else {
+                        foreach ($search["trips"] as $trip) {
+                            echo "insertTrip('" . $trip["from"] . "', '" . $trip["to"] . "', '" . $trip["departure"] . "');";
+                        }
+                    } ?>
+                    $(".date_container.departure_only").show();
+                    $(".date_container.departure").hide();
+                    $(".date_container.arrival").hide();
+                    break;
+            }
+            trip_type = type;
+        }
+    }
 
-				if (last_to != from.val()) {
-					toValid = false;
-				}
-				if (last_date > date) {
-					dateValid = false;
-				}
-				last_date = date;
-				last_to = to.val();
+    $(".search_types [data-toggle=tab]").on("shown.bs.tab", function(e) {
+        setActiveType(parseInt($(e.target).attr("data-type")));
+    });
 
-				if (!from.val()) {
-					valid = false;
-					from.parent().find(".select2-selection--single.from-multiple").addClass("error");
-				}
-				if (!to.val()) {
-					valid = false;
-					to.parent().find(".select2-selection--single.to-multiple").addClass("error");
-				}
-			});
-			if (!valid) {
-				errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
-			}
-			if (!toValid) {
-				errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
-			}
-			if (!dateValid) {
-				errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
-			}
-		}
+    setActiveType(<?= ($search["type"] ? $search["type"] : 1) ?>);
 
-		if (errors.length) {
-			quickNotify(errors.join("<br>"), "<?= readLanguage('search', 'entrydata_err') ?>", "danger", "fas fa-times fa-2x");
-		} else {
-			let u = new URLSearchParams(trip_object).toString();
-			setWindowLocation("flights/?" + u);
-		}
-	}
+    //===== Submit =====
+
+    function submitSearch() {
+        var trip_object = {};
+        switch (trip_type) {
+            case 1:
+                trip_object.departure = $("[data-input=departure-only]").val();
+                break;
+
+            case 2:
+                trip_object.departure = $("[data-input=departure]").val();
+                trip_object.arrival = $("[data-input=arrival]").val();
+                break;
+
+            case 3:
+                trip_object.departure = $("[data-input=departure-only]").val();
+                trip_object.trips = $(".trip_extra").length;
+                var count = 0;
+                $(".trip_extra").each(function() {
+                    count++;
+                    var trip_parameter = "trip" + count;
+                    trip_object[trip_parameter + "from"] = $(this).find("[data-input=from-multiple]").val();
+                    trip_object[trip_parameter + "to"] = $(this).find("[data-input=to-multiple]").val();
+                    trip_object[trip_parameter + "departure"] = $(this).find("[data-input=departure-multiple]").val();
+                });
+                break;
+        }
+
+        //Build common parameters
+        trip_object.type = trip_type;
+        trip_object.from = $("[data-input=from]").val();
+        trip_object.to = $("[data-input=to]").val();
+        trip_object.class = parseInt($("[data-input=class]").val());
+        if ($("[data-input=nonstop]").prop("checked")) {
+            trip_object.nonstop = true;
+        }
+        if ($("[data-input=flexible]").prop("checked")) {
+            trip_object.flexible = true;
+        }
+        trip_object.adults = parseInt($("[data-input=adults]").val());
+        if (parseInt($("[data-input=children]").val())) {
+            trip_object.children = parseInt($("[data-input=children]").val());
+        }
+        if (parseInt($("[data-input=toddlers]").val())) {
+            trip_object.toddlers = parseInt($("[data-input=toddlers]").val());
+        }
+        <? if ($search["airline"]) { ?>
+            trip_object.airline = "<?= $search["airline"] ?>";
+        <? } ?>
+
+        //Form validation
+        var errors = [];
+        if (!$("[data-input=from]").val()) {
+            $(".select2-selection--single.from").addClass("error");
+            errors.push("<?= readLanguage('search', 'departure_choose_err') ?>");
+        }
+        if (!$("[data-input=to]").val()) {
+            $(".select2-selection--single.to").addClass("error");
+            errors.push("<?= readLanguage('search', 'arrival_choose_err') ?>");
+        }
+
+        if (trip_type == 3) {
+            var last_to = $("[data-input=to]").val();
+            var last_date = moment($("[data-input=departure-only]").val(), "D-M-YYYY");
+            var valid = true;
+            var toValid = true;
+            var dateValid = true;
+
+            $(".trip_extra").each(function() {
+                var from = $(this).find("[data-input=from-multiple]");
+                var to = $(this).find("[data-input=to-multiple]");
+                var date = moment($(this).find("[data-input=departure-multiple]").val(), "D-M-YYYY");
+
+                if (last_to != from.val()) {
+                    toValid = false;
+                }
+                if (last_date > date) {
+                    dateValid = false;
+                }
+                last_date = date;
+                last_to = to.val();
+
+                if (!from.val()) {
+                    valid = false;
+                    from.parent().find(".select2-selection--single.from-multiple").addClass("error");
+                }
+                if (!to.val()) {
+                    valid = false;
+                    to.parent().find(".select2-selection--single.to-multiple").addClass("error");
+                }
+            });
+            if (!valid) {
+                errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
+            }
+            if (!toValid) {
+                errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
+            }
+            if (!dateValid) {
+                errors.push("<?= readLanguage('search', 'multi_destination_err') ?>");
+            }
+        }
+
+        if (errors.length) {
+            quickNotify(errors.join("<br>"), "<?= readLanguage('search', 'entrydata_err') ?>", "danger", "fas fa-times fa-2x");
+        } else {
+            let u = new URLSearchParams(trip_object).toString();
+            setWindowLocation("flights/?" + u);
+        }
+    }
 </script>
