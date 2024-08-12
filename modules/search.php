@@ -209,31 +209,16 @@
         endInstance.config.target.val(endDate ? endDate.locale(endInstance.config.format).format(endInstance.config.format) : "");
     };
 
-	//Departure
-	var websiteLanguage = '<?= $website_language ?>';
-	var isRTL = websiteLanguage === 'ar';
-    if(isRTL) {
+    //Departure
+    var websiteLanguage = '<?= $website_language ?>';
+    var isRTL = websiteLanguage === 'ar';
+    if (isRTL) {
         var cancel = 'إلغاء';
         var apply = 'تأكيد';
     } else {
         var cancel = 'Cancel';
         var apply = 'Apply';
     }
-
-	$("[date-picker-departure]").caleran({
-		//Primary parameters
-		target: $("[data-input=departure]"),
-		format: "D-M-YYYY",
-		calendarCount: 1,
-		locale: websiteLanguage,
-		showHeader: false,
-		showFooter: false,
-		minDate: moment(),
-		maxDate: moment().add(1, "year"),
-		hideOutOfRange: false,
-		isRTL: isRTL,
-        cancelLabel: cancel, 
-        applyLabel: apply,
 
     $("[date-picker-departure]").caleran({
         //Primary parameters
@@ -250,30 +235,52 @@
         cancelLabel: cancel,
         applyLabel: apply,
 
-	//Arrival
-	var websiteLanguage = '<?= $website_language ?>';
-	var isRTL = websiteLanguage === 'ar';
-    if(isRTL) {
-        var cancel = 'إلغاء';
-        var apply = 'تأكيد';
-    } else {
-        var cancel = 'Cancel';
-        var apply = 'Apply';
-    }
-	$("[date-picker-arrival]").caleran({
-		//Primary parameters
-		target: $("[data-input=arrival]"),
-		format: "D-M-YYYY",
-		calendarCount: 1,
-		locale: websiteLanguage,
-		showHeader: false,
-		showFooter: false,
-		minDate: moment(),
-		maxDate: moment().add(1, "year"),
-		hideOutOfRange: false,
-		isRTL: isRTL,
-        cancelLabel: cancel, 
-        applyLabel: apply,
+        //Linked parameters
+        startEmpty: $("[data-input=departure]").val() === "",
+        startDate: $("[data-input=departure]").val(),
+        endDate: $("[data-input=arrival]").val(),
+        enableKeyboard: false,
+        oninit: function(instance) {
+            startInstance = instance;
+            if (!instance.config.startEmpty && instance.config.startDate) {
+                instance.$elem.val(instance.config.startDate.locale(instance.config.format).format(instance.config.format));
+                startDate = instance.config.startDate.clone();
+            }
+        },
+        onbeforeshow: function(instance) {
+            if (startDate) {
+                startInstance.config.startDate = startDate;
+                endInstance.config.startDate = startDate;
+            }
+            if (endDate) {
+                startInstance.config.endDate = endDate.clone();
+                endInstance.config.endDate = endDate.clone();
+            }
+            fillInputs();
+            instance.updateHeader();
+            instance.reDrawCells();
+        },
+        onfirstselect: function(instance, start) {
+            startDate = start.clone();
+            startInstance.globals.startSelected = false;
+            startInstance.hideDropdown();
+            endInstance.showDropdown();
+            endInstance.config.minDate = startDate.clone();
+            endInstance.config.startDate = startDate.clone();
+            endInstance.config.endDate = null;
+            endInstance.globals.startSelected = true;
+            endInstance.globals.endSelected = false;
+            endInstance.globals.firstValueSelected = true;
+            endInstance.setDisplayDate(start);
+            if (endDate && startDate.isAfter(endDate)) {
+                endInstance.globals.endDate = endDate.clone();
+            }
+            endInstance.updateHeader();
+            endInstance.reDrawCells();
+            fillInputs();
+            updateCalendarDivision($("[data-input=departure]"), $("[date-picker-departure]"));
+        }
+    });
 
     //Arrival
     var websiteLanguage = '<?= $website_language ?>';
@@ -342,30 +349,10 @@
     //Fill inputs on start
     fillInputs();
 
-        if(isRTL) {
-            var cancel = 'إلغاء';
-            var apply = 'تأكيد';
-        } else {
-            var cancel = 'Cancel';
-            var apply = 'Apply';
-        }
-    
-		source.caleran({
-			// Primary parameters
-			target: target,
-			format: "D-M-YYYY",
-			calendarCount: 1,
-			locale: websiteLanguage,
-			showHeader: false,
-			showFooter: false,
-			minDate: minimum,
-			maxDate: moment().add(1, "year"),
-			hideOutOfRange: false,
-			singleDate: true,
-			isRTL: isRTL,
-            cancelLabel: cancel, 
-            applyLabel: apply,
-        
+    //Bind calendar function
+    function bindCalendar(source, target, minimum = moment()) {
+        var websiteLanguage = '<?= $website_language ?>';
+        var isRTL = websiteLanguage === 'ar';
 
         if (isRTL) {
             var cancel = 'إلغاء';
