@@ -1329,9 +1329,9 @@ function ratingCalculate($flight = null, $airport = null, $airline = null)
 
 	$result = mysqlFetch(mysqlQuery("SELECT SUM(rating_flight) AS flights, SUM(rating_airport) AS airports, SUM(rating_airline) AS airlines, COUNT(id) AS total FROM flights_ratings $conditions"));
 
-	$return["flight"] = round($result["flights"] / $result["total"], 2);
-	$return["airport"] = round($result["airports"] / $result["total"], 2);
-	$return["airline"] = round($result["airlines"] / $result["total"], 2);
+	$return["flight"] = round($result["flights"] / ($result["total"] > 0 ? $result["total"] : 1), 2);
+	$return["airport"] = round($result["airports"] / ($result["total"] > 0 ? $result["total"] : 1), 2);
+	$return["airline"] = round($result["airlines"] / ($result["total"] > 0 ? $result["total"] : 1), 2);
 	$return["total"] = $result["total"];
 
 	return $return;
