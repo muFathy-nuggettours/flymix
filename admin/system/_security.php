@@ -92,7 +92,7 @@ function unescapeJson($string)
 }
 
 //Generate CSRF token
-if (!$_SESSION["token"]) {
+if (!isset($_SESSION["token"])) {
 	$token = substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, 32);
 	$_SESSION["token"] = $token;
 } else {
@@ -100,7 +100,7 @@ if (!$_SESSION["token"]) {
 }
 
 //Clean post requests on valid token
-if (($_POST["token"] && $_POST["token"] === $_SESSION["token"]) || $skip_csrf_token == true) {
+if ((isset($_POST["token"]) && $_POST["token"] === $_SESSION["token"]) || $skip_csrf_token == true) {
 	foreach ($_POST as $key => $value) {
 		if (is_array($value)) {
 			$json = json_encode($value, JSON_UNESCAPED_UNICODE);

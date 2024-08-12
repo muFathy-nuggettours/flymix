@@ -1,7 +1,7 @@
 <? include "system/_handler.php";
 
 //Security Measure: Validate post token
-if (!$post["token"]){ brokenLink(); exit(); }
+if (!$_SESSION["token"]){ brokenLink(); exit(); }
 
 //========== [Air Search Request Operations] ==========
 

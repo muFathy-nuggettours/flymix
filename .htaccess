@@ -97,6 +97,7 @@ RewriteRule ^([A-Z]{2}/|)planes/([^/]+)/?$ page_planes.php?language=$1&id=$2		[N
 #USERS
 RewriteRule ^([A-Z]{2}/|)logout/?$ accounts.php?language=$1&action=logout	[NC,L]
 RewriteRule ^([A-Z]{2}/|)login/?$ accounts.php?language=$1&action=login	[NC,L]
+RewriteRule ^([A-Z]{2}/|)not_active/?$ not_active.php?language=$1	[NC,L]
 RewriteRule ^([A-Z]{2}/|)info/?$ info.php?language=$1	[NC,L]
 RewriteRule ^([A-Z]{2}/|)signup/?$ accounts.php?language=$1&action=signup	[NC,L]
 RewriteRule ^([A-Z]{2}/|)reset-password/?$ accounts.php?language=$1&action=reset-password	[NC,L]
@@ -121,7 +122,7 @@ RewriteRule ^(.*)$ 404.php [NC,L]
 #==========================================
 
 # php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php74” package as the default “PHP” programming language.
+# Set the “ea-php82” package as the default “PHP” programming language.
 <IfModule mime_module>
   AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
 </IfModule>

@@ -1,5 +1,5 @@
 <?
-error_reporting(0);
+error_reporting(1);
 date_default_timezone_set("Africa/Cairo");
 
 //PHP Settings
@@ -15,9 +15,9 @@ $supported_languages = array("ar","en");
 $panel_language = "ar";
 
 //Database Connection
-$mysqlname="zj7bfwgv_flymix";
-$mysqlpass="P@ssw0rd@2021";
-$mysqldatabase="zj7bfwgv_flymix";
+$mysqlname="nuggetto_new";
+$mysqlpass="XSavoo331@5588";
+$mysqldatabase="nuggetto_dev_flymix";
 $mysqlserver="localhost";
 
 //Set development mode variable (false on localhost & true on production)
@@ -28,7 +28,7 @@ $connection = mysqli_connect($mysqlserver, $mysqlname, $mysqlpass, $mysqldatabas
 mysqli_set_charset($connection, "utf8");
 
 //Base URL
-$base_url = "https://www.flymix.com/";
+$base_url = "https://www.fly4test.com/";
 
 //Encryption Key
 $private_key = hash("sha256", $mysqlname . $mysqlpass . $mysqldatabase);
@@ -58,6 +58,7 @@ $white_label = true;
 $upload_allow = array("txt");
 
 //Start Sessions
+session_save_path(__DIR__ . '/sessions');
 session_start();
 
 //Start GZip Compression

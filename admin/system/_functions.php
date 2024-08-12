@@ -218,7 +218,7 @@ function unescapeString($string){
  */
 function newRecordID($table){
 	global $mysqldatabase;
-	mysqlQuery("SET PERSIST information_schema_stats_expiry = 0");
+	// mysqlQuery("SET PERSIST information_schema_stats_expiry = 0");
 	$increment = mysqlFetch(mysqlQuery("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE (TABLE_SCHEMA='$mysqldatabase' AND TABLE_NAME='$table')"))["AUTO_INCREMENT"];
 	return ($increment ? $increment : 1);
 }

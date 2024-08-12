@@ -29,7 +29,7 @@ switch ($get["action"]){
 	break;	
 	
 	case "logout":
-		requireLogin(true);
+		requireLogin(true, true);
 		$section_title = readLanguage('accounts','logout');
 		$_SESSION[$user_session] = null;
 		writeCookie($user_cookie, null, time() - (86400 * 30), "/");

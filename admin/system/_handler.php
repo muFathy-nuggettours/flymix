@@ -1,5 +1,5 @@
 <?
-$root_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $_SERVER['DEVELOPMENT_FOLDER'];
+$root_path = $_SERVER['DOCUMENT_ROOT'] . '/';
 $panel_path = $root_path . $_SERVER['PANEL_FOLDER'];
 
 require_once("_config.php");
