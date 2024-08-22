@@ -3,201 +3,484 @@
 <link href="plugins/caleran.min.css?v=<?= $system_settings["system_version"] ?>" rel="stylesheet">
 
 <style>
-	.multiple_trips .switch_destinations {
-		display: none !important;
-	}
+    @media only screen and (min-width: 768px) {
+        .web-view {
+            display: block;
+        }
 
-	.caleran-rtl .caleran-calendar-container {
-		direction: rtl;
-	}
+        .modal-view {
+            display: none;
+        }
+    }
 
-	.caleran-rtl .caleran-inner {
-		text-align: right;
-	}
+    @media only screen and (max-width:768px) {
 
-	.caleran-rtl .caleran-days .caleran-day {
-		float: right;
-	}
+        .modal-view {
+            display: block;
+        }
 
-	.caleran-rtl .caleran-prev-next {
-		display: flex;
-		flex-direction: row-reverse;
-	}
+        .web-view {
+            display: none;
+        }
 
-	.caleran-rtl .caleran-prev-month {
-		order: 2;
-	}
+        .modal {
+            visibility: hidden;
+            /* Hidden by default */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            top: 20vh !important;
+            width: 100vw;
+            background-color: white;
+            box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            /* Invisible by default */
+            z-index: 10000;
+            /* Ensure it appears above other elements */
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            /* Transition for smooth fade and slide */
+            transform: translateY(100%);
+            height: 100vh;
+            overflow: hidden !important;
+            /* Start off-screen */
+        }
 
-	.caleran-rtl .caleran-next-month {
-		order: 1;
-	}
+        /* Modal visible state */
+        .modal.show {
+            visibility: visible;
+            /* Make visible */
+            opacity: 1;
+            /* Fade in */
+            transform: translateY(0);
+            /* Slide to visible position */
+        }
+
+        .modal-content {
+            padding: 20px;
+            position: relative;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Close button styling */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        /* Select container styling */
+        .select-container {
+            margin: 20px 0;
+        }
+
+        /* Styled select input */
+        .styled-select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            background-color: white;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23007bff" d="M2 0L0 2h4zM2 5L0 3h4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px;
+            cursor: pointer;
+        }
+
+        .styled-select:focus {
+            outline: none;
+            border-color: #0056b3;
+        }
+
+        /* Age selector container */
+        .age-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        /* Age buttons styling */
+        .age-button {
+            padding: 10px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #age {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        .age-input {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Submit button styling */
+        .submit-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+        #swiper-prev-slider {
+            z-index: 1 !important;
+        }
+
+        #swiper-next-slider {
+            z-index: 1 !important;
+        }
+    }
+
+    /* Modal hidden state */
+
+
+    @media only screen and (max-width: 768px) {
+        .search_destinations.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            /* or any background color you prefer */
+            z-index: 9999;
+            /* Make sure it's on top */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .input-group {
+        display: flex;
+        align-items: center;
+        border: 1px solid darkgray;
+        /* Add blue outer border */
+        border-radius: 5px;
+        /* Optional: rounded corners */
+        overflow: hidden;
+        /* Ensure inner elements do not overflow */
+    }
+
+    .input-group .btn {
+        height: 38px;
+        /* Adjust height to be the same as input */
+        width: 38px;
+        /* Adjust width to your preference */
+        border: none;
+        /* Remove default border */
+        background-color: #f8f9fa;
+        /* Optional: button background color */
+        color: black;
+        /* Button text color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .input-group .form-control {
+        width: 30px;
+        /* Adjust width to your preference */
+        height: 38px;
+        /* Adjust height to be the same as button */
+        text-align: center;
+        border: none;
+        margin: 0;
+        color: #0d5c96;
+    }
+
+    .multiple_trips .switch_destinations {
+        display: none !important;
+    }
+
+    .caleran-rtl .caleran-calendar-container {
+        direction: rtl;
+    }
+
+    .caleran-rtl .caleran-inner {
+        text-align: right;
+    }
+
+    .caleran-rtl .caleran-days .caleran-day {
+        float: right;
+    }
+
+    .caleran-rtl .caleran-prev-next {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .caleran-rtl .caleran-prev-month {
+        order: 2;
+    }
+
+    .caleran-rtl .caleran-next-month {
+        order: 1;
+    }
 </style>
 
 <!-- Set default search values from history -->
 <? if (!$search && $search_history) {
-	$search = $search_history[0];
+    $search = $search_history[0];
 } ?>
 <? if (!$search["from"]) {
-	$search["from"] = mysqlFetch(mysqlQuery("SELECT iata FROM system_database_airports WHERE country='$user_countryCode' ORDER BY popularity DESC, priority DESC LIMIT 0,1"))["iata"];
+    $search["from"] = mysqlFetch(mysqlQuery("SELECT iata FROM system_database_airports WHERE country='$user_countryCode' ORDER BY popularity DESC, priority DESC LIMIT 0,1"))["iata"];
 } ?>
 
 <div class=flight_search_module><!-- Start Search Module -->
 
-	<!-- Buttons -->
-	<div class=search_types>
-		<ul class="nav nav-tabs tab-inline-header">
-			<li><a data-toggle=tab data-type=1><i class="fal fa-reply"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'going') ?></a></li>
-			<li><a data-toggle=tab data-type=2><i class="fal fa-repeat"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'going_comingback') ?></a></li>
-			<li><a data-toggle=tab data-type=3><i class="fal fa-sync"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'several_distinations') ?></a></li>
-		</ul>
-	</div>
+    <!-- Buttons -->
+    <div class=search_types>
+        <ul class="nav nav-tabs tab-inline-header">
+            <li><a data-toggle=tab data-type=1><i class="fal fa-reply"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'going') ?></a></li>
+            <li><a data-toggle=tab data-type=2><i class="fal fa-repeat"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'going_comingback') ?></a></li>
+            <li><a data-toggle=tab data-type=3><i class="fal fa-sync"></i>&nbsp;&nbsp;<?= readLanguage('reservation', 'several_distinations') ?></a></li>
+        </ul>
+    </div>
 
-	<div class=search_box><!-- Start Search Box -->
+    <div class=search_box><!-- Start Search Box -->
 
-		<div class=trips><!-- Start Trips -->
+        <div class=trips><!-- Start Trips -->
 
-			<!-- Base Trip -->
-			<div class=trip>
-				<div class=destination_container>
-					<div class="component destination">
-						<span><?= readLanguage('reservation', 'departure_arrival_station') ?></span>
-						<div>
-							<button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
-							<div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from></select></div>
-							<div class=input><i class="fal fa-plane-arrival icon"></i><select data-input=to></select></div>
-						</div>
-					</div>
-				</div>
+            <!-- Base Trip -->
+            <div class=trip>
+                <div class=destination_container>
+                    <div class="component destination">
+                        <span><?= readLanguage('reservation', 'departure_arrival_station') ?></span>
+                        <div>
+                            <button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
+                            <div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from></select></div>
+                            <div class=input><i class="fal fa-plane-arrival icon"></i><select data-input=to></select></div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="date_container departure_only" style="display:none">
-					<div class="component date">
-						<span><?= readLanguage('reservation', 'departure_date') ?></span>
-						<div>
-							<input type=hidden data-input=departure-only value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time())) ?>">
-							<div class=input_date date-picker-departure-only>
-								<i class="fal fa-calendar"></i>
-								<small></small><b></b><span></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="date_container departure_only" style="display:none">
+                    <div class="component date">
+                        <span><?= readLanguage('reservation', 'departure_date') ?></span>
+                        <div>
+                            <input type=hidden data-input=departure-only value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time())) ?>">
+                            <div class=input_date date-picker-departure-only>
+                                <i class="fal fa-calendar"></i>
+                                <small></small><b></b><span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="date_container departure">
-					<div class="component date">
-						<span><?= readLanguage('reservation', 'departure_date') ?></span>
-						<div>
-							<input type=hidden data-input=departure value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time() + 86400)) ?>">
-							<div class=input_date date-picker-departure>
-								<i class="fal fa-calendar"></i>
-								<small></small><b></b><span></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="date_container departure">
+                    <div class="component date">
+                        <span><?= readLanguage('reservation', 'departure_date') ?></span>
+                        <div>
+                            <input type=hidden data-input=departure value="<?= ($search["departure"] ? $search["departure"] : date("j-n-Y", time() + 86400)) ?>">
+                            <div class=input_date date-picker-departure>
+                                <i class="fal fa-calendar"></i>
+                                <small></small><b></b><span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="date_container arrival">
-					<div class="component date">
-						<span><?= readLanguage('reservation', 'arrival_date') ?></span>
-						<div>
-							<input type=hidden data-input=arrival value="<?= ($search["arrival"] ? $search["arrival"] : date("j-n-Y", time() + (86400 * 2))) ?>">
-							<div class=input_date date-picker-arrival>
-								<i class="fal fa-calendar"></i>
-								<small></small><b></b><span></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="date_container arrival">
+                    <div class="component date">
+                        <span><?= readLanguage('reservation', 'arrival_date') ?></span>
+                        <div>
+                            <input type=hidden data-input=arrival value="<?= ($search["arrival"] ? $search["arrival"] : date("j-n-Y", time() + (86400 * 2))) ?>">
+                            <div class=input_date date-picker-arrival>
+                                <i class="fal fa-calendar"></i>
+                                <small></small><b></b><span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class=options_container>
-					<div class="component options">
-						<span><?= readLanguage('reservation', 'passengers_class') ?></span>
-						<div>
-							<div class=input><i class="fal fa-chair-office icon"></i><select data-input=class><?= populateOptions($data_flight_classes) ?></select></div>
-							<div style="position:relative">
-								<a class="travelers_dropdown input" data-toggle=dropdown><i class="fal fa-users icon"></i><span></span></a>
-								<ul class="dropdown-menu travelers">
-									<li>
-										<div><b><?= readLanguage('common', 'adult') ?></b><select data-input=adults onchange="updateTravelers()"><? for ($i = 1; $i <= 9; $i++) {
-																																						print "<option value=$i>$i</option>";
-																																					} ?></select><span>12 <?= readLanguage('common', 'years_more') ?></span></div>
-										<div><b><?= readLanguage('common', 'child') ?></b><select data-input=children onchange="updateTravelers()"><? for ($i = 0; $i <= 8; $i++) {
-																																						print "<option value=$i>$i</option>";
-																																					} ?></select><span><?= readLanguage('common', 'from') ?> 2 <?= readLanguage('common', 'to') ?> 12 <?= readLanguage('common', 'years_old') ?></span></div>
-										<div><b><?= readLanguage('common', 'infant') ?></b><select data-input=toddlers onchange="updateTravelers()"><? for ($i = 0; $i <= 8; $i++) {
-																																						print "<option value=$i>$i</option>";
-																																					} ?></select><span><?= readLanguage('common', 'less_than') ?><?= readLanguage('common', 'two_years') ?></span></div>
-									</li>
-								</ul>
-							</div>
-							<script>
-								$("[data-input=adults]").val(<?= ($search["adults"] ? $search["adults"] : 1) ?>);
-								$("[data-input=children]").val(<?= ($search["children"] ? $search["children"] : 0) ?>);
-								$("[data-input=toddlers]").val(<?= ($search["toddlers"] ? $search["toddlers"] : 0) ?>);
-								$("[data-input=class]").val(<?= ($search["class"] ? $search["class"] : 1) ?>);
-							</script>
-						</div>
-					</div>
-				</div>
-			</div>
+                <div class=options_container>
+                    <div class="component options">
 
-			<!-- Trip Template -->
-			<div class="trip_template template">
-				<div class=trip_separator>
-					<i class="fal fa-plane"></i>
-					<span></span>
-				</div>
+                        <span><?= readLanguage('reservation', 'passengers_class') ?></span>
+                        <div>
+                            <div class=input><i class="fal fa-chair-office icon"></i><select data-input=class><?= populateOptions($data_flight_classes) ?></select></div>
+                            <div style="position:relative" class="modal-view">
+                                <a id="openModal" class="travelers_dropdown input" data-toggle=dropdown><i class="fal fa-users icon"></i><span></span></a>
+                            </div>
 
-				<div class=trip>
-					<div class=destination_container>
-						<div class="component destination">
-							<span><?= readLanguage('reservation', 'departure_arrival_station') ?></span>
-							<div>
-								<button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
-								<div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from-multiple></select></div>
-								<div class=input><i class="fal fa-plane-arrival icon"></i><select data-input=to-multiple></select></div>
-							</div>
-						</div>
-					</div>
+                            <div class="web-view" style="position:relative">
+                                <a class="travelers_dropdown input" data-toggle=dropdown><i class="fal fa-users icon"></i><span></span></a>
+                                <ul class="dropdown-menu travelers">
+                                    <li>
+                                        <div class="mb-2">
+                                            <b><?= readLanguage('common', 'adult') ?></b>
+                                            <span>(12 <?= readLanguage('common', 'years_more') ?>)</span>
+                                            <div class="input-group">
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('adults', 1)"><span class="fa fa-plus"></span></button>
+                                                <input class="form-control" data-input=adults onchange="updateTravelers()" type="number" id="adults" value="1" min="1" max="9" readonly>
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('adults', -1)"><span class="fa fa-minus"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2">
+                                            <b><?= readLanguage('common', 'child') ?></b>
+                                            <span>(<?= readLanguage('common', 'from') ?> 2 <?= readLanguage('common', 'to') ?> 12 <?= readLanguage('common', 'years_old') ?>)</span>
+                                            <div class="input-group">
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('children', 1)"><span class="fa fa-plus"></span></button>
+                                                <input class="form-control" data-input=children onchange="updateTravelers()" type="number" id="children" value="0" min="0" max="8" readonly>
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('children', -1)"><span class="fa fa-minus"></span></button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <b><?= readLanguage('common', 'infant') ?></b>
+                                            <span>(<?= readLanguage('common', 'less_than') ?> <?= readLanguage('common', 'two_years') ?>)</span>
+                                            <div class="input-group">
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('toddlers', 1)"><span class="fa fa-plus"></span></button>
+                                                <input class="form-control" data-input=toddlers onchange="updateTravelers()" type="number" id="toddlers" value="0" min="0" max="8" readonly>
+                                                <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('toddlers', -1)"><span class="fa fa-minus"></span></button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
 
-					<div class="date_container departure_multiple">
-						<div class="component date">
-							<span><?= readLanguage('reservation', 'departure_date') ?></span>
-							<div>
-								<input id="dr-1" type=hidden data-input=departure-multiple value="<?= date("j/n/Y", time()) ?>">
-								<div class=input_date date-picker-departure-multiple>
-									<i class="fal fa-calendar"></i>
-									<div class="date_values">
-										<small></small><b></b><span></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div style="margin: auto;">
-						<a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip($(this), null, null, $(this).closest('.trip').find('input[type=hidden]').val())"><i class="fal fa-plus-circle"></i> <?= readLanguage('booking', 'add_trip') ?></a>
-						<a class="btn btn-danger btn-sm trip_remove" onclick="removeTrip(this)"><i class="fal fa-times-circle"></i> <?= readLanguage('plugins', 'message_delete') ?></a>
-					</div>
-				</div>
-			</div>
+                            <div id="modal" class="modal">
+                                <div class="modal-content">
+                                    <div style="margin: 50px;">
+                                        <span id="closeModal" class="close-button"><span class="fa fa-times"></span></span>
+                                    </div>
+                                    <div class="age-input">
+                                        <div class="col-6">
+                                            <b><?= readLanguage('common', 'adult') ?></b>
+                                            <span>(12 <?= readLanguage('common', 'years_more') ?>)</span>
+                                        </div>
+                                        <div class="input-group col-6">
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('adults', 1)"><span class="fa fa-plus"></span></button>
+                                            <input class="form-control" data-input=adults onchange="updateTravelers()" type="number" id="adults" value="1" min="1" max="9" readonly>
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('adults', -1)"><span class="fa fa-minus"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="age-input">
+                                        <div class="col-6">
+                                            <b><?= readLanguage('common', 'child') ?></b>
+                                            <span>(<?= readLanguage('common', 'from') ?> 2 <?= readLanguage('common', 'to') ?> 12 <?= readLanguage('common', 'years_old') ?>)</span>
+                                        </div>
+                                        <div class="input-group col-6">
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('children', 1)"><span class="fa fa-plus"></span></button>
+                                            <input class="form-control" data-input=children onchange="updateTravelers()" type="number" id="children" value="0" min="0" max="8" readonly>
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('children', -1)"><span class="fa fa-minus"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="age-input">
+                                        <div class="col-6">
+                                            <b><?= readLanguage('common', 'infant') ?></b>
+                                            <span>(<?= readLanguage('common', 'less_than') ?> <?= readLanguage('common', 'two_years') ?>)</span>
+                                        </div>
+                                        <div class="input-group col-6">
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('toddlers', 1)"><span class="fa fa-plus"></span></button>
+                                            <input class="form-control" data-input=toddlers onchange="updateTravelers()" type="number" id="toddlers" value="0" min="0" max="8" readonly>
+                                            <button style="color: #0d5c96; font-size: larger;" class="btn" type="button" onclick="updateTravelerCount('toddlers', -1)"><span class="fa fa-minus"></span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-			<!-- Multiple Trips -->
-			<div class=multiple_trips></div>
+                            <script>
+                                $("[data-input=adults]").val(<?= ($search["adults"] ? $search["adults"] : 1) ?>);
+                                $("[data-input=children]").val(<?= ($search["children"] ? $search["children"] : 0) ?>);
+                                $("[data-input=toddlers]").val(<?= ($search["toddlers"] ? $search["toddlers"] : 0) ?>);
+                                $("[data-input=class]").val(<?= ($search["class"] ? $search["class"] : 1) ?>);
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		</div><!-- End Trips -->
+            <!-- Trip Template -->
+            <div class="trip_template template">
+                <div class=trip_separator>
+                    <i class="fal fa-plane"></i>
+                    <span></span>
+                </div>
 
-		<button class="search_button btn btn-primary btn-sm" onclick="submitSearch()"><i class="fal fa-search fa-2x"></i><span><?= readLanguage('search', 'search_for_trips') ?></span></button>
+                <div class=trip>
+                    <div class=destination_container>
+                        <div class="component destination">
+                            <span><?= readLanguage('reservation', 'departure_arrival_station') ?></span>
+                            <div>
+                                <button type=button class=switch_destinations onclick="switchDestinations(this)"><i class="fal fa-sort-alt"></i></button>
+                                <div class=input><i class="fal fa-plane-departure icon"></i><select data-input=from-multiple></select></div>
+                                <div class=input><i class="fal fa-plane-arrival icon"></i><select data-input=to-multiple></select></div>
+                            </div>
+                        </div>
+                    </div>
 
-	</div><!-- End Search Box -->
+                    <div class="date_container departure_multiple">
+                        <div class="component date">
+                            <span><?= readLanguage('reservation', 'departure_date') ?></span>
+                            <div>
+                                <input id="dr-1" type=hidden data-input=departure-multiple value="<?= date("j/n/Y", time()) ?>">
+                                <div class=input_date date-picker-departure-multiple>
+                                    <i class="fal fa-calendar"></i>
+                                    <div class="date_values">
+                                        <small></small><b></b><span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: auto;">
+                        <a class="btn btn-primary btn-sm trip_insert" onclick="insertTrip($(this), null, null, $(this).closest('.trip').find('input[type=hidden]').val())"><i class="fal fa-plus-circle"></i> <?= readLanguage('booking', 'add_trip') ?></a>
+                        <a class="btn btn-danger btn-sm trip_remove" onclick="removeTrip(this)"><i class="fal fa-times-circle"></i> <?= readLanguage('plugins', 'message_delete') ?></a>
+                    </div>
+                </div>
+            </div>
 
-	<!-- Options -->
-	<div class=check_container>
-		<label><input type=checkbox class=filled-in data-input=nonstop><span><?= readLanguage('common', 'non_stop_trips') ?></span></label>
-		<label><input type=checkbox class=filled-in data-input=flexible><span><?= readLanguage('common', 'flex_dates') ?></span></label>
-		<script>
-			$("[data-input=nonstop]").prop("checked", <?= ($search["nonstop"] ? "true" : "false") ?>);
-			$("[data-input=flexible]").prop("checked", <?= ($search["flexible"] ? "true" : "false") ?>);
-		</script>
-	</div>
+            <!-- Multiple Trips -->
+            <div class=multiple_trips></div>
+
+        </div><!-- End Trips -->
+
+        <button class="search_button btn btn-primary btn-sm" onclick="submitSearch()"><i class="fal fa-search fa-2x"></i><span><?= readLanguage('search', 'search_for_trips') ?></span></button>
+
+    </div><!-- End Search Box -->
+
+    <!-- Options -->
+    <div class=check_container>
+        <label><input type=checkbox class=filled-in data-input=nonstop><span><?= readLanguage('common', 'non_stop_trips') ?></span></label>
+        <label><input type=checkbox class=filled-in data-input=flexible><span><?= readLanguage('common', 'flex_dates') ?></span></label>
+        <script>
+            $("[data-input=nonstop]").prop("checked", <?= ($search["nonstop"] ? "true" : "false") ?>);
+            $("[data-input=flexible]").prop("checked", <?= ($search["flexible"] ? "true" : "false") ?>);
+        </script>
+    </div>
 
 </div><!-- End Search Module -->
 
@@ -802,4 +1085,54 @@
             setWindowLocation("flights/?" + u);
         }
     }
+
+    function updateTravelerCount(type, change) {
+        
+        // Select all inputs that have id #type
+        var inputs = document.querySelectorAll(`#${type}`);
+    
+        inputs.forEach((input) => {
+            var newValue = parseInt(input.value) + change;
+
+            var adults = parseInt(document.getElementById('adults').value);
+        var toddlersInput = document.getElementById('toddlers');
+
+        if (type === 'adults' && newValue < parseInt(toddlersInput.value)) {
+            toddlersInput.value = newValue;
+        }
+
+        if (type === 'toddlers' && newValue > adults) {
+            return;
+        }
+
+        if (newValue >= input.min && newValue <= input.max) {
+            input.value = newValue;
+        }
+
+        });
+        
+        
+
+        
+        updateTravelers();
+    }
+
+    document.getElementById("openModal").addEventListener("click", function() {
+        document.getElementById("modal").classList.add("show");
+        // document.body.style.overflow = "hidden !important" ; // Disable background scroll
+        // console.log('here');
+
+        const style = document.createElement('style');
+        style.innerHTML = 'body { overflow: hidden !important; }';
+        document.head.appendChild(style);
+
+    });
+
+    document.getElementById("closeModal").addEventListener("click", function() {
+        document.getElementById("modal").classList.remove("show");
+        const style = document.createElement('style');
+        style.innerHTML = 'body { overflow: auto !important; }';
+        document.head.appendChild(style);
+
+    });
 </script>
