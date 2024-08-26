@@ -24,35 +24,32 @@
         }
 
         .modal {
-            visibility: hidden;
+            
             /* Hidden by default */
-            position: fixed;
+            position: sticky;
             bottom: 0;
             left: 0;
-            top: 20vh !important;
+            /* top: 20vh !important; */
             width: 100vw;
             background-color: white;
             box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.2);
-            opacity: 0;
+            
             /* Invisible by default */
             z-index: 10000;
             /* Ensure it appears above other elements */
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: all 1s ease-in-out;
             /* Transition for smooth fade and slide */
             transform: translateY(100%);
-            height: 100vh;
-            overflow: hidden !important;
+            /* height: 100vh; */
+            /* overflow: hidden !important; */
             /* Start off-screen */
         }
 
         /* Modal visible state */
         .modal.show {
-            visibility: visible;
-            /* Make visible */
-            opacity: 1;
+            
             /* Fade in */
-            transform: translateY(0);
-            /* Slide to visible position */
+            transform: translateY(0px);
         }
 
         .modal-content {
@@ -371,7 +368,7 @@
                                 </ul>
                             </div>
 
-                            <div id="modal" class="modal">
+                            <!-- <div id="modal" class="modal">
                                 <div class="modal-content">
                                     <div style="margin: 50px;">
                                         <span id="closeModal" class="close-button"><span class="fa fa-times"></span></span>
@@ -410,7 +407,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <script>
                                 $("[data-input=adults]").val(<?= ($search["adults"] ? $search["adults"] : 1) ?>);
@@ -1095,10 +1092,17 @@
             var newValue = parseInt(input.value) + change;
 
             var adults = parseInt(document.getElementById('adults').value);
-        var toddlersInput = document.getElementById('toddlers');
+            var toddlersInput = document.getElementById('toddlers');
 
         if (type === 'adults' && newValue < parseInt(toddlersInput.value)) {
-            toddlersInput.value = newValue;
+            // toddlersInput.value = newValue;
+
+            const toddlersInputs =  document.querySelectorAll(`#toddlers`);
+
+            toddlersInputs.forEach((input) => {
+                input.value = newValue;
+            })
+
         }
 
         if (type === 'toddlers' && newValue > adults) {
@@ -1117,9 +1121,12 @@
         updateTravelers();
     }
 
-    document.getElementById("openModal").addEventListener("click", function() {
+
+    window.addEventListener("DOMContentLoaded", (event) => {
+        document.getElementById("openModal").addEventListener("click", function() {
         document.getElementById("modal").classList.add("show");
-        // document.body.style.overflow = "hidden !important" ; // Disable background scroll
+       
+        document.body.style.overflow = "hidden !important" ; // Disable background scroll
         // console.log('here');
 
         const style = document.createElement('style');
@@ -1130,9 +1137,14 @@
 
     document.getElementById("closeModal").addEventListener("click", function() {
         document.getElementById("modal").classList.remove("show");
+
         const style = document.createElement('style');
         style.innerHTML = 'body { overflow: auto !important; }';
         document.head.appendChild(style);
 
     });
+});
+
+
+    
 </script>
