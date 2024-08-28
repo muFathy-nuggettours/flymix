@@ -174,8 +174,10 @@ if ($post["action"]=="search_destinations"){
 		$region = getID($airport["region"], "system_database_regions");
 		$block_text = $airport[$suffix . "name"] . "، " . $country[$suffix . "name"];
 		$block_html = "<div class=search_destinations>
+			<div class=logo>
 			<i class='fas fa-plane fa-fw'></i>&nbsp;&nbsp;
 			<img src='images/countries/" . $airport["country"] . ".gif'>&nbsp;&nbsp;
+			</div>
 			<div class=title>
 				<b>" . highlightKeyword($block_text, $keyword_original) . "</b>
 				<small>" . $region[$suffix . "name"] . "</small>
